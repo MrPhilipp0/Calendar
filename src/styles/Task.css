@@ -1,0 +1,9 @@
+li {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.taskArea {
+  max-width: 250px;
+}

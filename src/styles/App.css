@@ -1,0 +1,106 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 20px;
+}
+
+div.App {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 90%;
+  color: #222;
+}
+
+.header {
+  flex-basis: 10vh;
+  height: 10%;
+  background-color: brown;
+}
+
+.importants {
+  background-color: yellow;
+  max-width: 20%;
+  margin-right: auto;
+}
+
+.calendar {
+  width: calc(7*70px + 14*5px + 4px);
+  background-color: green;
+  margin-right: auto;
+}
+
+.main {
+  display: flex;
+  flex-grow: 1;
+  padding: 30px 0;
+}
+
+/* .Calendar {
+  margin: auto;
+  padding-top: 5px;
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(7*70px + 14*10px + 4px);
+  text-align: center;
+  border: 2px solid slategray;
+  border-radius: 4px;
+  animation: backInRight;
+} */
+
+.Days {
+  --gap: 70px;
+  --marg: 5px;
+  background-color: gray;
+  text-align: center;
+  display: inline-block;
+  height: var(--gap);
+  min-width: var(--gap);
+  margin: var(--marg);
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+
+.noDays {
+  --gap: 70px;
+  --marg: 5px;
+  background-color: gray;
+  color: gray;
+  text-align: center;
+  display: inline-block;
+  height: var(--gap);
+  min-width: var(--gap);
+  margin: var(--marg);
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.actualDay {
+  background-color: tomato;
+  opacity: 1;
+}
+
+
+.Days:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.link:link {
+  color:unset;
+}
+
+.link:visited {
+  color: unset;
+}
+
+.link:active {
+  color: unset;
+}

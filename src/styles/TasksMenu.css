@@ -1,0 +1,26 @@
+.headerTasks {
+  display: flex;
+  justify-content:space-between;
+  border: solid black 2px;
+  padding: 20px;
+}
+
+.mainSectionTasks {
+  min-height: 55vh;
+  display:flex;
+  margin: 10px;
+}
+
+.leftSectionTasks {
+  width: 380px;
+  border: solid 2px black;
+}
+
+.rightSectionTasks {
+  width: 184px;
+  margin-left:  10px;
+  border: solid 2px black;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
