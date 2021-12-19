@@ -7,7 +7,7 @@ const Day = (props) => {
   const actualDay = actualDate.getDate() + '.' + actualDate.getMonth() + '.' + actualDate.getFullYear(); 
   if (actualDay === props.keys) classList += ' actualDay';
 
-  const link = `/tasks/${props.keys}`; // stała z linkiem do danego dnia
+  const link = `/Calendar/tasks/${props.keys}`; // stała z linkiem do danego dnia
 
   let noDay = Number(props.keys.slice(0,1)); // zmienna divów bez danego dnia ........ 
   

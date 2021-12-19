@@ -38,8 +38,8 @@ const AddTask = () => {
   }
 
   let location = useLocation();
-  const taskDate = location.pathname.slice(7,location.pathname.length-8).split('.');
-  const tasksLink = location.pathname.slice(7,location.pathname.length-8);
+  const taskDate = location.pathname.slice(16,location.pathname.length-8).split('.');
+  const tasksLink = location.pathname.slice(16,location.pathname.length-8);
 
   
 
@@ -70,8 +70,8 @@ const AddTask = () => {
         {/* Prawa część */}
         <div className='rightSectionTasks'>
           
-          <Link to={'/tasks/' + tasksLink}>  <button type='submit' onClick={sendTask}> SEND </button> </Link>
-          <Link to={'/tasks/' + tasksLink}> <button>Back</button> </Link>
+          <Link to={'/Calendar/tasks/' + tasksLink}>  <button type='submit' onClick={sendTask}> SEND </button> </Link>
+          <Link to={'/Calendar/tasks/' + tasksLink}> <button>Back</button> </Link>
         </div>
 
       </section>

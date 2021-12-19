@@ -7,9 +7,9 @@ import AddTask from './AddTask';
 const Pages = ({click, date}) => {
   return (
     <Routes>
-      <Route path="/" element={<Calendar click={click} date={date}/>} />
-      <Route path="/tasks/:id" element={<Tasks/>} />
-      <Route path="/tasks/:id/addTask" element ={<AddTask/>} />
+      <Route path="/Calendar/" element={<Calendar click={click} date={date}/>} />
+      <Route path="/Calendar/tasks/:id" element={<Tasks/>} />
+      <Route path="/Calendar/tasks/:id/addTask" element ={<AddTask/>} />
     </Routes>
   );
 }

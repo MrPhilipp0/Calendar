@@ -8,8 +8,8 @@ const Tasks = () => {
   const location = useLocation();
 
 
-  const taskDate = location.pathname.slice(7).split('.'); //użycie lokalizacji w celu zdobycia daty konkretnego dnia, następnie rozdzielenie do tablicy numeru dnia, miesiąca i roku
-  const linkToAddTask = `/tasks/${location.pathname.slice(7)}/addTask`;
+  const taskDate = location.pathname.slice(16).split('.'); //użycie lokalizacji w celu zdobycia daty konkretnego dnia, następnie rozdzielenie do tablicy numeru dnia, miesiąca i roku
+  const linkToAddTask = `/Calendar/tasks/${location.pathname.slice(16)}/addTask`;
 
   return ( 
     <div className="calendar">
@@ -31,7 +31,7 @@ const Tasks = () => {
         <div className='rightSectionTasks'>
           
           <Link to={linkToAddTask}> <button>Add new task</button> </Link>
-          <Link to='/'> <button>Back to calendar</button> </Link>
+          <Link to='/Calendar/'> <button>Back to calendar</button> </Link>
         </div>
         <div>
         </div>
