@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/static/css/main.b1163474.chunk.css",
-    "main.js": "/static/js/main.8db11131.chunk.js",
-    "main.js.map": "/static/js/main.8db11131.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.bd9b5e5f.js",
-    "runtime-main.js.map": "/static/js/runtime-main.bd9b5e5f.js.map",
-    "static/js/2.4b43fd66.chunk.js": "/static/js/2.4b43fd66.chunk.js",
-    "static/js/2.4b43fd66.chunk.js.map": "/static/js/2.4b43fd66.chunk.js.map",
-    "static/js/3.f129abe4.chunk.js": "/static/js/3.f129abe4.chunk.js",
-    "static/js/3.f129abe4.chunk.js.map": "/static/js/3.f129abe4.chunk.js.map",
-    "index.html": "/index.html",
-    "static/css/main.b1163474.chunk.css.map": "/static/css/main.b1163474.chunk.css.map",
-    "static/js/2.4b43fd66.chunk.js.LICENSE.txt": "/static/js/2.4b43fd66.chunk.js.LICENSE.txt"
+    "main.css": "/Calendar/static/css/main.b1163474.chunk.css",
+    "main.js": "/Calendar/static/js/main.132bb8b4.chunk.js",
+    "main.js.map": "/Calendar/static/js/main.132bb8b4.chunk.js.map",
+    "runtime-main.js": "/Calendar/static/js/runtime-main.4983db5e.js",
+    "runtime-main.js.map": "/Calendar/static/js/runtime-main.4983db5e.js.map",
+    "static/js/2.4b43fd66.chunk.js": "/Calendar/static/js/2.4b43fd66.chunk.js",
+    "static/js/2.4b43fd66.chunk.js.map": "/Calendar/static/js/2.4b43fd66.chunk.js.map",
+    "static/js/3.f129abe4.chunk.js": "/Calendar/static/js/3.f129abe4.chunk.js",
+    "static/js/3.f129abe4.chunk.js.map": "/Calendar/static/js/3.f129abe4.chunk.js.map",
+    "index.html": "/Calendar/index.html",
+    "static/css/main.b1163474.chunk.css.map": "/Calendar/static/css/main.b1163474.chunk.css.map",
+    "static/js/2.4b43fd66.chunk.js.LICENSE.txt": "/Calendar/static/js/2.4b43fd66.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.bd9b5e5f.js",
+    "static/js/runtime-main.4983db5e.js",
     "static/js/2.4b43fd66.chunk.js",
     "static/css/main.b1163474.chunk.css",
-    "static/js/main.8db11131.chunk.js"
+    "static/js/main.132bb8b4.chunk.js"
   ]
 }
