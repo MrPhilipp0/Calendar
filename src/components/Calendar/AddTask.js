@@ -1,16 +1,21 @@
 import React from 'react';
 import { NAMES_MONTH } from './Calendar';
 import { Link, useLocation } from 'react-router-dom';
-import { TaskContext } from '../Context/TaskToContext';
+import { TaskContext } from './TaskToContext';
 
-let taskCounter = 2;
+let taskCounter = 5;
 
 const AddTask = () => {
 
   const [shortText, setShortText] = React.useState(''); //stan którkiej nazwy
   const [text, setText] = React.useState(''); //stan opisu
   const {tasksList, setTasksList} = React.useContext(TaskContext);
- 
+  
+  const location = useLocation();
+  const taskDate = location.pathname.slice(16,location.pathname.length-8).split('.');
+  const tasksLink = location.pathname.slice(16,location.pathname.length-8);
+
+
   const handleSubmit = e => e.preventDefault();
 
   const handleShortTextChange = e => { //aktualizacja krótkiej nazwy
@@ -28,20 +33,21 @@ const AddTask = () => {
       id: taskCounter,
     };
     let array = [...tasksList];
-    array.push(currentTask);
+
+    let index = array.findIndex(task => task.idDay === tasksLink); 
+    if (index === -1) {
+      array.push({idDay:tasksLink, tasks:[currentTask]});
+    } else {
+      array[index].tasks.push(currentTask);
+    }
+
+    // array.push(currentTask);
     setTasksList(tasksList => array);
 
     setShortText(shortText => '');
     setText(text => '');
     taskCounter++;
-
   }
-
-  let location = useLocation();
-  const taskDate = location.pathname.slice(16,location.pathname.length-8).split('.');
-  const tasksLink = location.pathname.slice(16,location.pathname.length-8);
-
-  
 
   return (
     <div className="calendar">
