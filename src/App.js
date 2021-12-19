@@ -3,7 +3,7 @@ import Header from './components/Header/Header';
 import Importants from './components/LeftSide/Importants';
 import Pages from './components/Calendar/Pages';
 import { BrowserRouter as Router} from 'react-router-dom';
-import { TaskContext } from './components/Calendar/TaskToContext';
+import { TaskContext } from './components/Context/TaskToContext';
 
 import './styles/App.css';
 

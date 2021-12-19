@@ -1,7 +1,7 @@
 import React from 'react';
 import { NAMES_MONTH } from './Calendar';
 import { Link, useLocation } from 'react-router-dom';
-import { TaskContext } from './TaskToContext';
+import { TaskContext } from '../Context/TaskToContext';
 
 let taskCounter = 2;
 
