@@ -6,4 +6,9 @@ li {
 
 .taskArea {
   max-width: 250px;
+  display: flex;
+}
+
+input {
+  margin:5px;
 }

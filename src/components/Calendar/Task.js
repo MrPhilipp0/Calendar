@@ -6,6 +6,7 @@ const Task = (props) => {
   const [editing, setEditing] = React.useState(false); //flaga edytowania
   const [shortText, setShortText] = React.useState(props.shortName); //stan którkiej nazwy
   const [text, setText] = React.useState(props.text); //stan opisu
+  const [check, setCheck] = React.useState(props.checkbox); //stan checkboxa
   const [backText, setBackText] = React.useState({shortText, text}); //backup podczas edycji
   
   const handleSubmit = e => e.preventDefault();
@@ -39,7 +40,12 @@ const Task = (props) => {
     props.delete(props.id);
   }
 
-  const TaskVariant = () => { //wariant wyświetlania taska, w zależności czy jest w stanie edycji czy nie
+  const handleCheckedClick = e => {
+    setCheck(check => !check);
+    props.check(props.id, e.target.checked)
+  }
+
+  const TaskVariant = () => { //Wyświetlania taska, w zależności czy jest w stanie edycji czy nie
     if (editing) {
       return (
         <form onSubmit={handleSubmit}>
@@ -58,9 +64,12 @@ const Task = (props) => {
     } else {
       return (
         <li>
-          <div className='taskArea' >
-            <h3>{shortText}</h3>
-            <p>{text}</p>
+          <div className='taskArea'>
+            <input type="checkbox" onChange={handleCheckedClick} checked={check}/>
+            <div>
+              <h3>{shortText}</h3>
+              <p>{text}</p>
+            </div>
           </div>
           <div>
             <button onClick={handleEditClick}>Edit</button>

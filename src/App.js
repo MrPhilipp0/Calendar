@@ -3,7 +3,7 @@ import Header from './components/Header/Header';
 import Importants from './components/LeftSide/Importants';
 import Pages from './components/Calendar/Pages';
 import { BrowserRouter as Router} from 'react-router-dom';
-import { TaskContext } from './components/Calendar/TaskToContext';
+import { TaskContext } from './components/Context/TaskToContext';
 
 import './styles/App.css';
 
@@ -12,12 +12,14 @@ const testTasks = [ // pomocnicza tablica z taskami
     idDay:'12.11.2021',
     tasks:[
       {
-        id: 0, // id zmienione będzie na np. 8.11.2021
+        id: 0, 
+        checked: true,
         shortName: 'Short name 1',
         text: 'Text 1',
       },
       {
-        id: 2, // id zmienione będzie na np. 8.11.2021
+        id: 2, 
+        checked: false,
         shortName: 'Short name 3',
         text: 'Text 3',
       },
@@ -28,6 +30,7 @@ const testTasks = [ // pomocnicza tablica z taskami
     tasks:[
       {
         id: 1,
+        checked: false,
         shortName: 'Short name 2',
         text: 'Text 2',
       },

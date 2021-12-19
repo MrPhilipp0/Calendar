@@ -1,6 +1,6 @@
 import React  from 'react';
 import Task from './Task';
-import { TaskContext } from './TaskToContext';
+import { TaskContext } from '../Context/TaskToContext';
 import { useLocation } from 'react-router-dom';
 
 const TasksList = () => {
@@ -13,8 +13,14 @@ const TasksList = () => {
   const [dayTasks, setDayTasks] = React.useState(tasksList.filter(day => day.idDay === idDay)[0]);
 
   let array = []; // pomocnicza tablica w celu aktualizacji stanu
-  let array2 = [];
+  let array2 = [...tasksList];
   let index = null;
+
+  const updateTasksList = () => {
+    index = array2.findIndex(item => item.idDay === idDay);
+    array2[index].tasks = array;
+    setTasksList(tasks => array2);
+  }
 
   const handleSaveTask = (id, shortName, text) => { //aktualizacja stanu tasków
     array = [...dayTasks.tasks];
@@ -25,10 +31,7 @@ const TasksList = () => {
       idDay: idDay,
       tasks: array,
     }));
-    array2 = [...tasksList];
-    index = array2.findIndex(item => item.idDay === idDay);
-    array2[index].tasks = array;
-    setTasksList(tasks => array2);
+    updateTasksList();
   }
 
   const handleDeleteTask = (id) => { //usuwanie taska
@@ -38,14 +41,22 @@ const TasksList = () => {
       idDay: idDay,
       tasks: array,
     }));
-    array2 = [...tasksList];
-    index = array2.findIndex(item => item.idDay === idDay);
-    array2[index].tasks = array;
-    setTasksList(tasks => array2);
+    updateTasksList();
+  }
+
+  const handleCheckbox = (id, value) => {
+    array = [...dayTasks.tasks];
+    index = array.findIndex(item => item.id === id);
+    array[index].checked = value;
+    setDayTasks(tasks => ({
+      idDay: idDay,
+      tasks: array,
+    }));
+    updateTasksList();
   }
 
   // Wyświetlanie wszystkich zadań (aktualnie wszystkich, później z danego dnia)
-  const Tasks = () => dayTasks.tasks.map(task => <Task key={task.id} id={task.id} shortName={task.shortName} text={task.text} save={handleSaveTask} delete={handleDeleteTask}/>)
+  const Tasks = () => dayTasks.tasks.map(task => <Task key={task.id} id={task.id} shortName={task.shortName} text={task.text} checkbox={task.checked} save={handleSaveTask} delete={handleDeleteTask} check={handleCheckbox}/>)
 
   return (
     <div>

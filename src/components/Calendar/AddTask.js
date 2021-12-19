@@ -1,7 +1,7 @@
 import React from 'react';
 import { NAMES_MONTH } from './Calendar';
 import { Link, useLocation } from 'react-router-dom';
-import { TaskContext } from './TaskToContext';
+import { TaskContext } from '../Context/TaskToContext';
 
 let taskCounter = 5;
 
@@ -19,7 +19,7 @@ const AddTask = () => {
   const handleSubmit = e => e.preventDefault();
 
   const handleShortTextChange = e => { //aktualizacja krótkiej nazwy
-    setShortText(shortText => e.target.value);
+    e.target.value.length < 16 && setShortText(shortText => e.target.value);
   }
 
   const handleTextChange = e => { //aktualizacja opisu
@@ -65,7 +65,7 @@ const AddTask = () => {
           <form onSubmit={handleSubmit}>
 
             <h2>Short task name:</h2>
-            <input type='text' placeholder='Max 10 chars' value={shortText} onChange={handleShortTextChange} />
+            <input type='text' placeholder='Max 15 chars' value={shortText} onChange={handleShortTextChange} />
 
             <h2>Description: </h2>
             <textarea cols="25" rows="10" value={text} placeholder="Write task description" onChange={handleTextChange}></textarea>
