@@ -28,7 +28,7 @@ div.App {
 }
 
 .calendar {
-  width: calc(7*70px + 14*5px + 4px);
+  width: calc(7*100px + 14*5px + 4px);
   background-color: green;
   margin-right: auto;
 }
@@ -55,7 +55,7 @@ div.App {
 } */
 
 .Days {
-  --gap: 70px;
+  --gap: 100px;
   --marg: 5px;
   background-color: gray;
   text-align: center;
@@ -69,7 +69,7 @@ div.App {
 
 
 .noDays {
-  --gap: 70px;
+  --gap: 100px;
   --marg: 5px;
   background-color: gray;
   color: gray;
@@ -103,4 +103,18 @@ div.App {
 
 .link:active {
   color: unset;
+}
+
+.truncate-text-multiline {
+  overflow: hidden;
+  word-wrap: break-word;
+  display: block;
+  height: 30px;
+  margin: 0 5px;
+  font-size: 12px;
+  /* line-height: 1.4; */
+  width: 90px;
+  position: relative;
+  background-color: yellow;
+  margin-bottom: 3px;
 }

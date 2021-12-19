@@ -30,6 +30,15 @@ const Calendar = ({date, click}) => {
         {/* Button przejścia do następnego miesiąca */}
         <button onClick={click} id={'right'}>Right</button>
       </div>
+      <div style={{display:'flex', flexDirection:'inherit', justifyContent:'space-between', margin:'auto 35px'}}>
+        <p>Mon</p>
+        <p>Thu</p>
+        <p>Wed</p>
+        <p>Thr</p>
+        <p>Fr</p>
+        <p>Sat</p>
+        <p>Sun</p>
+      </div>
 
       {/* renderowanie dni w danym miesiącu */}
       <DaysList date={date}/>
