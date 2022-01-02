@@ -16,12 +16,14 @@ const testTasks = [ // pomocnicza tablica z taskami
         checked: true,
         shortName: 'Short name 1',
         text: 'Text 1',
+        important: 1,
       },
       {
         id: 2, 
         checked: false,
         shortName: 'Short name 3',
         text: 'Text 3',
+        important: 3,
       },
     ]
   },
@@ -33,6 +35,7 @@ const testTasks = [ // pomocnicza tablica z taskami
         checked: false,
         shortName: 'Short name 2',
         text: 'Text 2',
+        important: 1,
       },
     ]
   }

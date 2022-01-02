@@ -118,3 +118,7 @@ div.App {
   background-color: yellow;
   margin-bottom: 3px;
 }
+
+.importants h2{
+  margin: 0.5rem;
+}

@@ -9,6 +9,7 @@ const AddTask = () => {
 
   const [shortText, setShortText] = React.useState(''); //stan którkiej nazwy
   const [text, setText] = React.useState(''); //stan opisu
+  const [important, setImportant] = React.useState(1);
   const {tasksList, setTasksList} = React.useContext(TaskContext);
   
   const location = useLocation();
@@ -26,11 +27,17 @@ const AddTask = () => {
     setText(text => e.target.value);
   }
 
+  const handleImportantChange = e => {
+    setImportant(important => Number(e.target.value));
+  }
+
   const sendTask = () => {
     const currentTask = {
+      id: taskCounter,
+      checked: false,
       shortName: shortText,
       text: text,
-      id: taskCounter,
+      important,
     };
     let array = [...tasksList];
 
@@ -69,6 +76,13 @@ const AddTask = () => {
 
             <h2>Description: </h2>
             <textarea cols="25" rows="10" value={text} placeholder="Write task description" onChange={handleTextChange}></textarea>
+
+            <h2>Important: </h2>
+            <select name="important" onChange={handleImportantChange}>
+              <option value="1">*</option>
+              <option value="2">**</option>
+              <option value="3">***</option>
+            </select>
 
           </form>
         </div>

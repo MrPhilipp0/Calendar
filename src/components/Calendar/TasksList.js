@@ -55,8 +55,18 @@ const TasksList = () => {
     updateTasksList();
   }
 
-  // Wyświetlanie wszystkich zadań (aktualnie wszystkich, później z danego dnia)
-  const Tasks = () => dayTasks.tasks.map(task => <Task key={task.id} id={task.id} shortName={task.shortName} text={task.text} checkbox={task.checked} save={handleSaveTask} delete={handleDeleteTask} check={handleCheckbox}/>)
+  const handleImportantChange = (id, value) => {
+    array = [...dayTasks.tasks];
+    index = array.findIndex(item => item.id === id);
+    array[index].important = Number(value);
+    setDayTasks(tasks => ({
+      idDay: idDay,
+      tasks: array,
+    }));
+    updateTasksList();
+  }
+
+  const Tasks = () => dayTasks.tasks.map(task => <Task key={task.id} id={task.id} shortName={task.shortName} text={task.text} checkbox={task.checked} important={task.important} save={handleSaveTask} delete={handleDeleteTask} check={handleCheckbox} changeImportant={handleImportantChange}/>)
 
   return (
     <div>

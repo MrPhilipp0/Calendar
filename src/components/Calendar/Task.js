@@ -7,12 +7,13 @@ const Task = (props) => {
   const [shortText, setShortText] = React.useState(props.shortName); //stan którkiej nazwy
   const [text, setText] = React.useState(props.text); //stan opisu
   const [check, setCheck] = React.useState(props.checkbox); //stan checkboxa
+  const [important, setImportant] = React.useState(props.important); //stan ważności zadania
   const [backText, setBackText] = React.useState({shortText, text}); //backup podczas edycji
   
   const handleSubmit = e => e.preventDefault();
 
   const handleShortTextChange = e => { //aktualizacja krótkiej nazwy
-    setShortText(shortText => e.target.value);
+    e.target.value.length < 16 && setShortText(shortText => e.target.value);
   }
 
   const handleTextChange = e => { //aktualizacja opisu
@@ -42,7 +43,20 @@ const Task = (props) => {
 
   const handleCheckedClick = e => {
     setCheck(check => !check);
-    props.check(props.id, e.target.checked)
+    props.check(props.id, e.target.checked);
+  }
+
+  const handleImportantChange = e => {
+    setImportant(important => Number(e.target.value));
+    props.changeImportant(props.id, e.target.value);
+  }
+
+  const importantStars = () => {
+    let stars = '';
+    for (let i=0; i<important; i++) {
+      stars += '*';
+    }
+    return stars;
   }
 
   const TaskVariant = () => { //Wyświetlania taska, w zależności czy jest w stanie edycji czy nie
@@ -55,6 +69,11 @@ const Task = (props) => {
               <textarea cols="25" rows="10" value={text} placeholder="Edit task" onChange={handleTextChange}></textarea>
             </div>
             <div>
+              <select name="important" onChange={handleImportantChange} defaultValue={important}>
+                <option value='1'>*</option>
+                <option value='2'>**</option>
+                <option value='3'>***</option>
+              </select>
               <button onClick={handleSaveClick}>Save</button>
               <button onClick={handleBackClick}>Back</button>
             </div>
@@ -72,6 +91,7 @@ const Task = (props) => {
             </div>
           </div>
           <div>
+            <p>{importantStars()}</p>
             <button onClick={handleEditClick}>Edit</button>
             <button onClick={handleDeleteClick}>Delete</button>
           </div>

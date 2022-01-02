@@ -12,12 +12,12 @@
 }
 
 .leftSectionTasks {
-  width: 380px;
+  width: 500px;
   border: solid 2px black;
 }
 
 .rightSectionTasks {
-  width: 184px;
+  width: 200px;
   margin-left:  10px;
   border: solid 2px black;
   display: flex;
