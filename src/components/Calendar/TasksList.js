@@ -22,11 +22,12 @@ const TasksList = () => {
     setTasksList(tasks => array2);
   }
 
-  const handleSaveTask = (id, shortName, text) => { //aktualizacja stanu tasków
+  const handleSaveTask = (id, shortName, text, important) => { //aktualizacja stanu tasków
     array = [...dayTasks.tasks];
     index = array.findIndex(item => item.id === id);
     array[index].shortName = shortName;
     array[index].text = text;
+    array[index].important = important;
     setDayTasks(tasks => ({
       idDay: idDay,
       tasks: array,
@@ -55,18 +56,7 @@ const TasksList = () => {
     updateTasksList();
   }
 
-  const handleImportantChange = (id, value) => {
-    array = [...dayTasks.tasks];
-    index = array.findIndex(item => item.id === id);
-    array[index].important = Number(value);
-    setDayTasks(tasks => ({
-      idDay: idDay,
-      tasks: array,
-    }));
-    updateTasksList();
-  }
-
-  const Tasks = () => dayTasks.tasks.map(task => <Task key={task.id} id={task.id} shortName={task.shortName} text={task.text} checkbox={task.checked} important={task.important} save={handleSaveTask} delete={handleDeleteTask} check={handleCheckbox} changeImportant={handleImportantChange}/>)
+  const Tasks = () => dayTasks.tasks.map(task => <Task key={task.id} id={task.id} shortName={task.shortName} text={task.text} checkbox={task.checked} important={task.important} save={handleSaveTask} delete={handleDeleteTask} check={handleCheckbox}/>)
 
   return (
     <div>

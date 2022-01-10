@@ -13,6 +13,7 @@ const DaysList = ({date}) => {
 
   const objects = []; //pomocnicza tablica do tworzenia dni
   objects.length = 42;
+  const weeks = [[],[],[],[],[],[]];
 
   // iterowanie po tablicy 42 elementów (tak jakby 6 tygodni), przypisanie wartości dopiero od pierwszego dnia w miesiącu oraz dnia tygodnia
   const days = () => {
@@ -30,19 +31,26 @@ const DaysList = ({date}) => {
           key: '0' + i + '.' + month + '.' + year,
         };
       }
+      weeks[Math.floor((i)/7)].push(objects[i]);
     }
   }
   
   days();
   //obcięcie tablicy tworzącej dni do 5 tygodni, jeżeli miesiąc mieści się w nich.
-  if (objects[35].number === 0) objects.length = 35; 
+  if (weeks[5][0].number === 0) weeks.length = 5; 
 
   // mapowanie po tablicy objects w celu utworzenia wszystkich dni w miesiącu
-  const Days = objects.map(day => <Day key={day.key} keys={day.key} number={day.number} date={date}/>);
+  // const Days = objects.map(day => <Day key={day.key} keys={day.key} number={day.number} date={date}/>);
+
+  const Weeks = weeks.map(week => (
+    <div class="d-flex justify-content-center mx-0 my-1" >
+      {week.map(day => <Day key={day.key} keys={day.key} number={day.number} date={date}/>)}
+    </div>
+  ))
   
   return ( 
     <div>
-      {Days}
+      {Weeks}
     </div>
   );
 }

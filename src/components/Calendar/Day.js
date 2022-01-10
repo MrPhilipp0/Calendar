@@ -3,13 +3,20 @@ import { Link } from 'react-router-dom';
 import { TaskContext } from '../Context/TaskToContext';
 
 const Day = (props) => {
-  const {tasksList, setTasksList} = React.useContext(TaskContext);
+  const {tasksList} = React.useContext(TaskContext);
   const shortNames = tasksList.filter(item => item.idDay === props.keys)[0];
 
   const actualDate = new Date();
-  let classList = 'Days'; //zmienna zarządzająca klasami stylów 
   const actualDay = actualDate.getDate() + '.' + actualDate.getMonth() + '.' + actualDate.getFullYear(); 
-  if (actualDay === props.keys) classList += ' actualDay';
+  let dayStyle = {
+    width: '14.285714285714286%',
+    minHeight:'70px',
+    backgroundColor:'#61A5C2',
+  }; //zmienna zarządzająca klasami stylów 
+
+  if (actualDay === props.keys) {
+    dayStyle.backgroundColor = '#014F86';
+  }
 
   const link = `/Calendar/tasks/${props.keys}`; // stała z linkiem do danego dnia
 
@@ -19,7 +26,7 @@ const Day = (props) => {
     if (shortNames !== undefined) {
       return (
         shortNames.tasks.map(task => (<p className='truncate-text-multiline'>{task.shortName}</p>))
-      )
+      );
     }
   }
   
@@ -27,16 +34,22 @@ const Day = (props) => {
   const day = () => {
     if (noDay) {
       return (
-        <Link className='link' to={link} >
-          <div className={classList} key={props.keys}>
-            <h4 style={{margin:'5px'}}> {props.number} </h4>
-            {viewShortNames()}
+        <Link to={link} style={dayStyle} class="mx-md-1 border col-success text-reset text-decoration-none Days actualDayStyle">
+          <div class="d-md-flex" key={props.keys} > 
+            <div class="mt-1 w-100 flex-shrink-4">
+              {viewShortNames()}
+            </div>
+            <p class="flex-shrink-1 fw-bold text-end me-2 mt-1">
+              {props.number} 
+            </p>
           </div>
         </Link>
       )
     } else {
-      return <div className='noDays' key={props.keys}></div>
-    }
+      return (
+        <div class=" text-center mx-md-1 border" key={props.keys} style={{width: '14.285714285714286%', backgroundColor:'#A9D6E5'}}></div>
+      )
+      }
   }
   
   return ( 

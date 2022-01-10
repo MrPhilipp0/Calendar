@@ -2,20 +2,25 @@ import React from 'react';
 import { NAMES_MONTH } from './Calendar';
 import { Link, useLocation } from 'react-router-dom';
 import { TaskContext } from '../Context/TaskToContext';
+import { Form, Row, Col, Button, Tooltip, OverlayTrigger} from 'react-bootstrap';
+import ModalBackNewTask from '../Modals/BackNewTask.js';
 
 let taskCounter = 5;
 
 const AddTask = () => {
 
+  const [modalBack, setModalBack] = React.useState(false);
+  const handleModalBack = () => setModalBack(!modalBack);
+
   const [shortText, setShortText] = React.useState(''); //stan którkiej nazwy
   const [text, setText] = React.useState(''); //stan opisu
   const [important, setImportant] = React.useState(1);
+  const [category, setCategory] = React.useState('0');
   const {tasksList, setTasksList} = React.useContext(TaskContext);
   
   const location = useLocation();
   const taskDate = location.pathname.slice(16,location.pathname.length-8).split('.');
   const tasksLink = location.pathname.slice(16,location.pathname.length-8);
-
 
   const handleSubmit = e => e.preventDefault();
 
@@ -29,6 +34,10 @@ const AddTask = () => {
 
   const handleImportantChange = e => {
     setImportant(important => Number(e.target.value));
+  }
+
+  const handleCategoryChange = e => {
+    setCategory(category => e.target.value);
   }
 
   const sendTask = () => {
@@ -50,52 +59,102 @@ const AddTask = () => {
 
     // array.push(currentTask);
     setTasksList(tasksList => array);
-
-    setShortText(shortText => '');
-    setText(text => '');
     taskCounter++;
   }
 
+  const overlayTriggerSendButton = (text) => {
+    return (
+      <OverlayTrigger
+        key={'send-button'}
+        placement={'top'}
+        overlay={
+          <Tooltip id={'send-button'}>
+            {text} 
+          </Tooltip>
+        }>
+        <span className="d-inline-block">
+          <Button className="me-4" disabled> SEND </Button> 
+        </span>
+      </OverlayTrigger>
+    )
+  }
+
+  const checkNewTask = () => {
+    if (shortText.length === 0 && category === '0') {
+      return (
+        overlayTriggerSendButton('You must write short name and set category!')
+      );
+    } else if (shortText.length === 0) {
+      return (
+        overlayTriggerSendButton('You must write short name!')
+      )
+    } else if (category === '0') {
+      return (
+        overlayTriggerSendButton('You must set category!') 
+      )
+    } else {
+      return (
+        <Link class="me-4" to={'/Calendar/tasks/' + tasksLink}>
+          <Button type='submit' onClick={sendTask}> SEND </Button> 
+        </Link>
+      )
+    }
+  }
+
+  
+
   return (
-    <div className="calendar">
+    <React.Fragment>
+      <ModalBackNewTask state={modalBack} handle={handleModalBack} link={'/Calendar/tasks/' + tasksLink}/>
+      <div style={{opacity: 1}} class="d-flex flex-column border rounded-3 my-2">
 
-      {/* tzw. header */}
-      <header className='headerTasks'> 
-        <h2>ADD NEW TASK</h2>
-        <h2>{taskDate[0]} {NAMES_MONTH[taskDate[1]]} {taskDate[2]}</h2>
-      </header>
-
-      <section className='mainSectionTasks'>
-
-        {/* Lewa część */}
-        <div className='leftSectionTasks'>
-          <form onSubmit={handleSubmit}>
-
-            <h2>Short task name:</h2>
-            <input type='text' placeholder='Max 15 chars' value={shortText} onChange={handleShortTextChange} />
-
-            <h2>Description: </h2>
-            <textarea cols="25" rows="10" value={text} placeholder="Write task description" onChange={handleTextChange}></textarea>
-
-            <h2>Important: </h2>
-            <select name="important" onChange={handleImportantChange}>
-              <option value="1">*</option>
-              <option value="2">**</option>
-              <option value="3">***</option>
-            </select>
-
-          </form>
+        <div class="bg-secondary d-flex">
+          <p class="my-3 fs-3 fw-bold ms-4">ADD NEW TASK</p>
+          <p class="my-3 fs-3 fw-light ms-auto me-4"> {taskDate[0]} {NAMES_MONTH[taskDate[1]]} {taskDate[2]} </p>
         </div>
 
-        {/* Prawa część */}
-        <div className='rightSectionTasks'>
-          
-          <Link to={'/Calendar/tasks/' + tasksLink}>  <button type='submit' onClick={sendTask}> SEND </button> </Link>
-          <Link to={'/Calendar/tasks/' + tasksLink}> <button>Back</button> </Link>
+        <div class="bg-warning p-1 px-2">
+          <Form noValidate onSubmit={handleSubmit}>
+            <Row>
+              <Form.Group as={Col} md="8">
+                <Form.Label className="m-1">Short Name</Form.Label>
+                <Form.Control className="m-0 mb-3" value={shortText} onChange={handleShortTextChange}  required type="text" placeholder="Name your task"/>
+                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                <Form.Control.Feedback type="invalid">Please, write short name task.</Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group as={Col} md="2" sm="6">
+                <Form.Label>Priority</Form.Label>
+                <Form.Select onChange={handleImportantChange}>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </Form.Select>
+              </Form.Group>
+              <Form.Group as={Col} md="2" sm="6">
+                <Form.Label>Category</Form.Label>
+                <Form.Select onChange={handleCategoryChange}>
+                  <option value="0"></option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </Form.Select>
+              </Form.Group>
+            </Row>
+            <Row>
+              <Form.Group as={Col} md="12">
+                <Form.Label className="m-1">Description</Form.Label>
+                <Form.Control className="m-0 mb-3" style={{minHeight:'5rem'}} as="textarea" value={text} onChange={handleTextChange} required type="text" placeholder="Name your task"/>
+                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+              </Form.Group>
+            </Row>
+            <div class="m-2">
+              {checkNewTask()}
+              <Button onClick={handleModalBack}>BACK</Button> 
+            </div>
+          </Form>
         </div>
-
-      </section>
-    </div>
+      </div> 
+    </React.Fragment>
   );
 }
  

@@ -6,6 +6,7 @@ import { BrowserRouter as Router} from 'react-router-dom';
 import { TaskContext } from './components/Context/TaskToContext';
 
 import './styles/App.css';
+import { Col, Row, Container } from 'react-bootstrap';
 
 const testTasks = [ // pomocnicza tablica z taskami
   {
@@ -16,7 +17,7 @@ const testTasks = [ // pomocnicza tablica z taskami
         checked: true,
         shortName: 'Short name 1',
         text: 'Text 1',
-        important: 1,
+        important: 3,
       },
       {
         id: 2, 
@@ -86,19 +87,21 @@ const App = () => {
   return (
     <Router>
       <TaskContext.Provider value={{tasksList, setTasksList}}>
-        <div className='app'>
+        <div className="APP">
         
           {/* komponent header */}
           <Header />
-          <div className='main'>
-
-            {/* komponent z ważnymi zadaniami */}
-            <Importants/>
-
-            {/* Zmiana na przejście z kalendarza na zadania danego dnia */}
+        
+        <Container fluid>
+          <Row>
+            <Col md={4} lg={3} xxl={3} className="p-0 ps-2">
+              <Importants/>
+            </Col>
+            <Col md={8} lg={{ span:7, offset:1}} xxl={{ span:6, offset:1}} className="p-0">
             <Pages click={handleClick} date={date}/>
-
-          </div>
+            </Col>
+          </Row>
+        </Container>
         </div>
       </TaskContext.Provider>
     </Router>
