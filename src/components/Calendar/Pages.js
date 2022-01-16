@@ -4,10 +4,10 @@ import Calendar from './Calendar';
 import Tasks from './Tasks';
 import AddTask from './AddTask';
 
-const Pages = ({click, date}) => {
+const Pages = ({handleClick, date, handleMonth, handleYear}) => {
   return (
     <Routes>
-      <Route path="/Calendar/" element={<Calendar click={click} date={date}/>} />
+      <Route path="/Calendar/" element={<Calendar click={handleClick} date={date} setMonth={handleMonth} setYear={handleYear}/>} />
       <Route path="/Calendar/tasks/:id" element={<Tasks/>} />
       <Route path="/Calendar/tasks/:id/addTask" element ={<AddTask/>} />
     </Routes>

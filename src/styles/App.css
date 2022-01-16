@@ -2,40 +2,34 @@ body {
   background-image: linear-gradient(to bottom, #f8f9fa, #f2f6f9, #ecf3f7, #e6f1f4, #dfeef1, #d8eef0, #d2edef, #cbeded, #c3efed, #bbf1eb, #b4f2e9, #adf4e5);
   height: 100%;
 }
-
-.btn:focus {
-  outline: none;
-  box-shadow: none;
-}
-
 .APP {
   height: 100vh;
 }
 
-.actualDay {
-  background-color: tomato;
-  opacity: 1;
-}
+.btn:active,
+ .btn:focus,
+ .btn.active {
+   background-image: none;
+   outline: 0;
+   -webkit-box-shadow: none;
+   box-shadow: none;
+ }
 
 .Days:hover {
   opacity: 0.6;
   cursor: pointer;
 }
 
-.truncate-text-multiline {
-  overflow: hidden;
-  display: block;
-  height: 30px;
-  margin: 0 2px;
-  font-size: 9px;
-  /* line-height: 1.4; */
-  width: 50px;
-  position: relative;
-  /* background-color: yellow; */
-  margin-bottom: 3px;
-  color: red;
+select {
+  font-family: 'FontAwesome', 'Roboto Condensed', 'sans-serif';
 }
 
-select {
-  font-family: 'FontAwesome', 'sans-serif';
+p, div, label {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
 }

@@ -10,33 +10,42 @@ import { Col, Row, Container } from 'react-bootstrap';
 
 const testTasks = [ // pomocnicza tablica z taskami
   {
-    idDay:'12.11.2021',
+    idDay:'12.0.2022',
     tasks:[
       {
         id: 0, 
+        editing: false,
         checked: true,
         shortName: 'Short name 1',
         text: 'Text 1',
         important: 3,
+        category: 'Shopping',
+        time: '14:30',
       },
       {
         id: 2, 
+        editing: false,
         checked: false,
         shortName: 'Short name 3',
         text: 'Text 3',
         important: 3,
+        category: 'Working',
+        time: '20:15',
       },
     ]
   },
   {
-    idDay:'22.11.2021',
+    idDay:'22.0.2022',
     tasks:[
       {
         id: 1,
+        editing: false,
         checked: false,
         shortName: 'Short name 2',
         text: 'Text 2',
         important: 1,
+        category: 'Free Time',
+        time: '22:00',
       },
     ]
   }
@@ -75,13 +84,29 @@ const App = () => {
         month: month,
         year: year,
     })
-    } else if (e.target.id === 'today') {
+    } else if (e.target.id === 'currentMonth') {
       setDate({
         day: DATE.day,
         month: DATE.month,
         year: DATE.year,
     })
     }
+  }
+
+  const handleSetMonth = (index) => {
+    setDate({
+      day: date.day,
+      month: index,
+      year: date.year,
+    })
+  }
+  
+  const handleSetYear = (index) => {
+    setDate({
+      day: date.day,
+      month: date.month,
+      year: index,
+    })
   }
 
   return (
@@ -98,7 +123,7 @@ const App = () => {
               <Importants/>
             </Col>
             <Col md={8} lg={{ span:7, offset:1}} xxl={{ span:6, offset:1}} className="p-0">
-            <Pages click={handleClick} date={date}/>
+            <Pages handleClick={handleClick} handleMonth={handleSetMonth} handleYear={handleSetYear} date={date}/>
             </Col>
           </Row>
         </Container>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
-const ModalShortName = (props) => {
+const ModalShortNameEditing = (props) => {
 
   return (
     <Modal show={props.state} onHide={props.handle}>
@@ -18,4 +18,4 @@ const ModalShortName = (props) => {
   );
 }
  
-export default ModalShortName;
+export default ModalShortNameEditing;
