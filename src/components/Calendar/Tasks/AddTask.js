@@ -1,9 +1,9 @@
 import React, { useState, useContext } from 'react';
-import { NAMES_MONTH } from './Calendar';
+import { NAMES_MONTH } from '../Calendar';
 import { Link, useLocation } from 'react-router-dom';
-import { TaskContext } from '../Context/TaskToContext';
+import { TaskContext } from '../../Context/TaskToContext';
 import { Form, Row, Col, Button, Tooltip, OverlayTrigger} from 'react-bootstrap';
-import ModalBackNewTask from '../Modals/BackNewTask.js';
+import ModalBackNewTask from '../../Modals/BackNewTask.js';
 
 let taskCounter = 3;
 

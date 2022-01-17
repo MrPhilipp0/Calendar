@@ -6,7 +6,7 @@ import SimpleOverlayTriggerObject from '../OverlayTriggers/SimpleOverlayTriggerO
 import '../../styles/App.css';
 
 export const NAMES_MONTH = ['January', 'February', 'March', 'April', 'May', 'June','July','August', 'September', 'October', 'November', 'December'];
-const NAMES_DAY = ['Mon', 'Thu', 'Wed', 'Thr', 'Fr', 'Sat', 'Sun'];
+export const NAMES_WEEKDAY = ['Mon', 'Thu', 'Wed', 'Thr', 'Fr', 'Sat', 'Sun'];
 
 const Calendar = ({date, click, setMonth, setYear}) => {
   
@@ -32,6 +32,11 @@ const Calendar = ({date, click, setMonth, setYear}) => {
         return <Dropdown.Item eventKey={year} onClick={() => {setYear(year)}}> {year} </Dropdown.Item>
       }
     }))
+  }
+
+  const leftAnimation = () => {
+    click();
+
   }
 
   const leftArrow = {
@@ -118,7 +123,7 @@ const Calendar = ({date, click, setMonth, setYear}) => {
       <div class="px-0 border border-3 border-light rounded" style={{backgroundColor:'#2C7DA0'}}>
 
         <div class="d-flex justify-content-center mx-0 my-1" >
-          {NAMES_DAY.map(day => <div class=" text-center p-0 mx-md-1 border border-dark rounded" style={{width: '14.285714285714286%', backgroundColor:'#ffc4d6'}}> {day} </div> )}
+          {NAMES_WEEKDAY.map(day => <div class=" text-center p-0 mx-md-1 border border-dark rounded" style={{width: '14.285714285714286%', backgroundColor:'#ffc4d6'}}> {day} </div> )}
         </div>
 
         <DaysList date={date}/>

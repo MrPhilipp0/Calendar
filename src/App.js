@@ -7,6 +7,7 @@ import { TaskContext } from './components/Context/TaskToContext';
 
 import './styles/App.css';
 import { Col, Row, Container } from 'react-bootstrap';
+import Footer from './components/Footer';
 
 const testTasks = [ // pomocnicza tablica z taskami
   {
@@ -112,21 +113,24 @@ const App = () => {
   return (
     <Router>
       <TaskContext.Provider value={{tasksList, setTasksList}}>
-        <div className="APP">
+        <div className="d-flex flex-column APP">
         
           {/* komponent header */}
           <Header />
         
-        <Container fluid>
-          <Row>
-            <Col md={4} lg={3} xxl={3} className="p-0 ps-2">
-              <Importants/>
-            </Col>
-            <Col md={8} lg={{ span:7, offset:1}} xxl={{ span:6, offset:1}} className="p-0">
-            <Pages handleClick={handleClick} handleMonth={handleSetMonth} handleYear={handleSetYear} date={date}/>
-            </Col>
-          </Row>
-        </Container>
+          <Container fluid>
+            <Row>
+              <Col md={4} lg={3} xxl={3} className="p-0 ps-sm-2">
+                <Importants/>
+              </Col>
+              <Col md={8} lg={{ span:7, offset:1}} xxl={{ span:6, offset:1}} className="p-0">
+                <Pages handleClick={handleClick} handleMonth={handleSetMonth} handleYear={handleSetYear} date={date}/>
+              </Col>
+            </Row>
+          </Container>
+
+          <Footer/>
+
         </div>
       </TaskContext.Provider>
     </Router>

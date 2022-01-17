@@ -1,6 +1,7 @@
 import React from 'react';
 import { TaskContext } from '../Context/TaskToContext';
 import { ToggleButton } from 'react-bootstrap';
+import '../../styles/App.css';
 
 const Importants = () => {
 
@@ -30,7 +31,7 @@ tasksList.forEach(day => {
 })
 
   return (
-    <div class="flex-grow-1 border rounded text-center mt-2 p-4 mx-md-1 mx-3 fs-3" style={{backgroundColor:'#e3f2fd'}}>
+    <div class="border rounded text-center mt-2 p-4 mx-1 fs-3" style={{backgroundColor:'#e3f2fd'}}>
       <p class=""><strong>Your tasks:</strong></p>
       <div>
 
@@ -43,7 +44,7 @@ tasksList.forEach(day => {
             <i class="bi bi-star-fill" style={{color:"gold"}}></i>
           </p>
         </ToggleButton>
-          <ul class="list-group list-group-flush px-2">{checked3star && importantsList.star3}</ul>
+          <ul style={{transition:'2s'}}class="list-group list-group-flush px-2">{checked3star && importantsList.star3}</ul>
         </div>
 
 

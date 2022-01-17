@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Calendar from './Calendar';
-import Tasks from './Tasks';
-import AddTask from './AddTask';
+import Tasks from '../Calendar/Tasks/Tasks';
+import AddTask from '../Calendar/Tasks/AddTask.js'
 
 const Pages = ({handleClick, date, handleMonth, handleYear}) => {
   return (
@@ -13,5 +13,5 @@ const Pages = ({handleClick, date, handleMonth, handleYear}) => {
     </Routes>
   );
 }
- 
+
 export default Pages;

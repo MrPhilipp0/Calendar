@@ -55,11 +55,18 @@ const Day = (props) => {
     return (object);
   }
 
+  const overlayTriggerPlacement = () => {
+    if (props.weekday === "Mon" || props.weekday === "Thu" || props.weekday === "Wed") {
+      return 'right'
+    } else {
+      return 'left'
+    }
+  }
 
   const dayObject = {
     id: props.keys,
     text: dayObjectText(),
-    placement: 'left',
+    placement: overlayTriggerPlacement(),
     object: 
     <Link to={link} style={dayStyle} class="mx-md-1 border col-success text-reset text-decoration-none Days actualDayStyle">
       <div class="" key={props.keys} > 

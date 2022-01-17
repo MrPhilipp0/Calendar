@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { NAMES_MONTH } from "./Calendar";
+import { NAMES_MONTH } from "../Calendar";
 import TasksList from "./TasksList";
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
-import ModalBackToCalendarEditing from '../Modals/BackToCalendarEditing';
+import ModalBackToCalendarEditing from '../../Modals/BackToCalendarEditing';
 
 const Tasks = () => {
   const location = useLocation();

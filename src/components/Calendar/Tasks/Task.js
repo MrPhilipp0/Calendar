@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Col, Row, Form, Button, ButtonGroup, ToggleButton } from 'react-bootstrap';
-import ModalShortNameEditing from '../Modals/ShortNameEditing';
-import SimpleOverlayTriggerObject from '../OverlayTriggers/SimpleOverlayTriggerObject';
+import ModalShortNameEditing from '../../Modals/ShortNameEditing';
+import SimpleOverlayTriggerObject from '../../OverlayTriggers/SimpleOverlayTriggerObject';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBriefcase, faCarSide, faCartShopping, faCouch, faPersonRunning, faPizzaSlice, faSuitcaseRolling, faPen, faClipboard, faClipboardCheck } from '@fortawesome/free-solid-svg-icons';
-import '../../styles/App.css';
+import '../../../styles/App.css';
 
 
 const Task = (props) => {

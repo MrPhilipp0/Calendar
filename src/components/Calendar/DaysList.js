@@ -1,5 +1,6 @@
 import React from 'react';
 import Day from './Day';
+import { NAMES_WEEKDAY } from './Calendar';
 
 const DaysList = ({date}) => {
 
@@ -38,13 +39,13 @@ const DaysList = ({date}) => {
   days();
   //obcięcie tablicy tworzącej dni do 5 tygodni, jeżeli miesiąc mieści się w nich.
   if (weeks[5][0].number === 0) weeks.length = 5; 
-
+  
   // mapowanie po tablicy objects w celu utworzenia wszystkich dni w miesiącu
   // const Days = objects.map(day => <Day key={day.key} keys={day.key} number={day.number} date={date}/>);
 
   const Weeks = weeks.map(week => (
     <div class="d-flex justify-content-center mx-0 my-1" >
-      {week.map(day => <Day key={day.key} keys={day.key} number={day.number} date={date}/>)}
+      {week.map((day,index) => <Day key={day.key} keys={day.key} number={day.number} date={date} weekday={NAMES_WEEKDAY[index]}/>)}
     </div>
   ))
   

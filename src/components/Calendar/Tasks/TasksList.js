@@ -1,6 +1,6 @@
 import React, { useState, useContext }  from 'react';
 import Task from './Task';
-import { TaskContext } from '../Context/TaskToContext';
+import { TaskContext } from '../../Context/TaskToContext.js';
 import { useLocation } from 'react-router-dom';
 
 const TasksList = ({ editingMod }) => {
