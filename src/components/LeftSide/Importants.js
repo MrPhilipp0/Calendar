@@ -5,6 +5,7 @@ import { Col,Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
+import SimpleOverlayTriggerObject from '../OverlayTriggers/SimpleOverlayTriggerObject';
 
 import { IconsCategory } from '../../App';
 import '../../styles/App.css';
@@ -14,38 +15,46 @@ const Importants = () => {
 const {tasksList} = React.useContext(TaskContext);
 const {blockFlag} = React.useContext(BlockFlagContext);
 
-const tasks = [];
+const tasks = {};
 
 tasksList.forEach(day => {
+  let idDayArray = day.idDay.split('.');
+  idDayArray[0] = idDayArray[0].length === 1 ? '0' + idDayArray[0] : idDayArray[0];
+  idDayArray[1] = idDayArray[1].length === 1 ? '0' + idDayArray[1] : idDayArray[1];
+  let d = new Date(idDayArray[2], idDayArray[1]-1, idDayArray[0], 0, 0);
+  let opts = { weekday: 'long'}
+  d = Intl.DateTimeFormat("en-US", opts).format(d);
+  idDayArray = idDayArray.join(".");
+  if (!tasks[idDayArray]) {
+    tasks[idDayArray] = {
+      weekDay: d,
+      tasks: [],
+      link: `/Calendar/tasks/${day.idDay}`,
+    }
+  }
+
   day.tasks.forEach(task => {
-    const idDayArray = day.idDay.split('.');
-    idDayArray[0] = idDayArray[0].length === 1 ? '0' + idDayArray[0] : idDayArray[0];
-    idDayArray[1] = idDayArray[1].length === 1 ? '0' + idDayArray[1] : idDayArray[1];
-    task.day = idDayArray.join('.');
+
+    task.day = idDayArray;
     task.link = `/Calendar/tasks/${day.idDay}`;
-    tasks.push(task);
+    tasks[idDayArray].tasks.push(task);
   }) 
 })
 
-const [tasksLength, setTasksLength] = React.useState(tasks.length);
+console.log(tasks);
 const priorityWrapper = useRef(null);
 
-useEffect(() => {
-  if (tasks.length !== tasksLength) {
-    setTasksLength(tasks.length)
-  }
-},[tasks.length, tasksLength])
 
-useEffect(() => {
-  const priorityLayout = priorityWrapper.current;
-  const [...elements] = priorityLayout.children[2].children;
+// useEffect(() => {
+//   const priorityLayout = priorityWrapper.current;
+//   const [...elements] = priorityLayout.children[2].children;
 
-  gsap.set([priorityLayout, ...elements], {x:'-=300'})
-  const lt = gsap.timeline({defaults: {ease: 'expo'}});
+//   gsap.set([priorityLayout, ...elements], {x:'-=500'})
+//   const lt = gsap.timeline({defaults: {ease: 'expo'}});
 
-  lt.to(priorityLayout, {duration: 2, x:'+=300'}, '+=.5')
-    .to([...elements], {duration: 2, x:'+=300', stagger:'.5'}, '-=1.5')
-},[])
+//   lt.to(priorityLayout, {duration: 2, x:'+=500'}, '+=.5')
+//     .to([...elements], {duration: 2, x:'+=500', stagger:'.5'}, '-=1.5');
+// },[])
 
 
 
@@ -71,41 +80,71 @@ const importantStars = (taskPriority) => {
       <div className="py-2 border-bottom border-top"></div>
       <Row id="PriorityElements" className="m-0" style={style}>
 
+      {
+        Object.entries(tasks).map(day => (
+          <Col md={12} className="border-bottom py-2" key={day[0]}>
+            <div className="d-flex ms-0 h5 justify-content-between">
+              <label className="fw-bold">
+                {day[1].weekDay}
+              </label>
+              <div>
+                <label className="pe-2">
+                  {day[0]}
+                </label>
 
-      {tasks.map(task => (
-        <Col md={12} className="border-bottom py-2" key={task.id}>
-          <Row>
-            <Col xs={1} className="ps-2">
-              <FontAwesomeIcon icon={IconsCategory[task.category]}/>
-            </Col>
-            <Col xs={9}>
-              {task.shortName}
-            </Col>
-            <Col xs={1} className="ps-0">
-              <Link to={!blockFlag ? task.link : '#'}>
-                <FontAwesomeIcon disable={blockFlag} icon={IconsCategory.goToTask} />
-              </Link>
-            </Col>
-            <Col xs={1} className="ps-0">
-              <FontAwesomeIcon color={task.checked ? 'green' : 'red'} icon={task.checked ? IconsCategory.check : IconsCategory.noCheck}/>
-            </Col>
-          </Row>
-          <Row className="mt-1">
-            <Col xs={5} className="ps-2 text-start">
-              {task.day}
-            </Col>
-            <Col xs={3}>
-              {task.time}
-            </Col>
-            
-            <Col xs={4} className="me-0 pe-1 pe-sm-0">
-              {importantStars(task.important)}
-            </Col>
-          </Row>
-        </Col>
-        ))}
+                {/* Go to task */}
+                
+                <SimpleOverlayTriggerObject 
+                  id={day[0]} 
+                  text="Click to go to day" 
+                  placement="top" 
+                  object={
+                    <Link to={!blockFlag ? day[1].link : '#'} className="pe-2">
+                      <FontAwesomeIcon disable={blockFlag} icon={IconsCategory.goToTask} className="p-0"/>
+                    </Link>
+                  } 
+                />
+              </div>
+            </div>
 
+            {
+              day[1].tasks.map(task => (
+                <Col md={12} className="border-bottom py-2" key={task.id}>
+                  <Row className="justify-content-between">
+                    <Col xs={4} className="d-flex">
 
+                      {/* Icon */}
+                      <FontAwesomeIcon className="pe-3 mt-1" icon={IconsCategory[task.category]}/>
+
+                      {/* Time */}
+                      <span className="me-2" style={{color:'rgba(250, 221, 225,0.6)'}}>{task.time || 'All day'}</span>
+                    </Col>
+                    <Col xs={1} className="d-flex me-3">
+
+                      {/* Check */}
+                      <FontAwesomeIcon className="p-0 mt-1"  color={task.checked ? 'green' : 'red'} icon={task.checked ? IconsCategory.check : IconsCategory.noCheck}/>
+                    </Col>
+                  </Row>
+
+                  <Row className="mt-1">
+                    <Col xs={8} style={{color:'#fadde1'}} className="d-flex justify-content-start ms-4 ps-4">
+
+                      {/* Short Name */}
+                      {task.shortName}
+                    </Col>
+                    <Col xs={3} className="pe-2">
+
+                      {/* Priority */}
+                      {importantStars(task.important)}
+                    </Col>
+
+                  </Row>
+                </Col>
+              ))
+            }
+          </Col>
+        ))
+          }
       </Row>
     </div>
   );
