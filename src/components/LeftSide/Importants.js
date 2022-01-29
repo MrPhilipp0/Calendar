@@ -45,16 +45,16 @@ console.log(tasks);
 const priorityWrapper = useRef(null);
 
 
-// useEffect(() => {
-//   const priorityLayout = priorityWrapper.current;
-//   const [...elements] = priorityLayout.children[2].children;
+useEffect(() => {
+  const priorityLayout = priorityWrapper.current;
+  const [...elements] = priorityLayout.children[2].children;
 
-//   gsap.set([priorityLayout, ...elements], {x:'-=500'})
-//   const lt = gsap.timeline({defaults: {ease: 'expo'}});
+  gsap.set([priorityLayout, ...elements], {x:'-=500'})
+  const lt = gsap.timeline({defaults: {ease: 'expo'}});
 
-//   lt.to(priorityLayout, {duration: 2, x:'+=500'}, '+=.5')
-//     .to([...elements], {duration: 2, x:'+=500', stagger:'.5'}, '-=1.5');
-// },[])
+  lt.to(priorityLayout, {duration: 2, x:'+=500'}, '+=.5')
+    .to([...elements], {duration: 2, x:'+=500', stagger:'.5'}, '-=1.5');
+},[])
 
 
 
