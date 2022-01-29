@@ -1,9 +1,14 @@
 body {
-  background-image: linear-gradient(to bottom, #f8f9fa, #f2f6f9, #ecf3f7, #e6f1f4, #dfeef1, #d8eef0, #d2edef, #cbeded, #c3efed, #bbf1eb, #b4f2e9, #adf4e5);
+  /* background-image: linear-gradient(to bottom, #f8f9fa, #f2f6f9, #ecf3f7, #e6f1f4, #dfeef1, #d8eef0, #d2edef, #cbeded, #c3efed, #bbf1eb, #b4f2e9, #adf4e5); */
+  background-image: url(D:\PROGRAMOWANIE\HTML,CSS,JS\PROJECTS\calendar\src\SVG\bg.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
   height: 100%;
+  overflow-x: hidden
 }
 .APP {
   height: 100vh;
+  max-width: 100vw;
 }
 
 .btn:active,
@@ -21,8 +26,7 @@ body {
 
 .Days:hover {
   cursor: pointer;
-  animation: pulse;
-  animation-duration: 0.3s;
+  transform: scale(1.1);
 }
 
 select {

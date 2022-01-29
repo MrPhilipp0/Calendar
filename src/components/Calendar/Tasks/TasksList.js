@@ -3,18 +3,21 @@ import Task from './Task';
 import { TaskContext } from '../../Context/TaskToContext.js';
 import { useLocation } from 'react-router-dom';
 
-const TasksList = ({ editingMod }) => {
-
+const TasksList = () => {
+  
   const location = useLocation();
   const idDay = location.pathname.slice(16);
   
   const {tasksList, setTasksList} = useContext(TaskContext);
-
   const [dayTasks, setDayTasks] = useState(tasksList.filter(day => day.idDay === idDay)[0]);
-
+  
   let array = dayTasks === undefined ?  null : [...dayTasks.tasks] ; // pomocnicza tablica w celu aktualizacji stanu
   let array2 = [...tasksList];
   let index = null;
+  
+  React.useEffect(() => {
+    setDayTasks(tasksList.filter(day => day.idDay === idDay)[0]);
+  },[tasksList, idDay])
 
   const updateTasksList = () => {
     index = array2.findIndex(item => item.idDay === idDay);
@@ -64,14 +67,16 @@ const TasksList = ({ editingMod }) => {
       tasks: array,
     }));
     updateTasksList();
-    (dayTasks.tasks.filter(task => task.editing === true )).length > 0 ? editingMod(true) : editingMod(false);
+    // (dayTasks.tasks.filter(task => task.editing === true )).length > 0 ? editingMod(true) : editingMod(false);
   }
 
   const Tasks = () => dayTasks.tasks.map(task => <Task key={task.id} id={task.id} shortName={task.shortName} text={task.text} checkbox={task.checked} important={task.important} category={task.category} time={task.time} save={handleSaveTask} delete={handleDeleteTask} check={handleCheckbox} editingMod={handleEditingMod}/>)
 
+  const noTasks = () =>  <p className="h4 text-center fw-bold p-1 my-3">You have no tasks for this day.</p>
+
   return (
     <div>
-      {dayTasks && Tasks()}
+      {dayTasks ? Tasks() : noTasks()}
     </div>
   );
 }

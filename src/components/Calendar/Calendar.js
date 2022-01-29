@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import DaysList from './DaysList';
 import { Button, Dropdown } from 'react-bootstrap';
 import SimpleOverlayTriggerObject from '../OverlayTriggers/SimpleOverlayTriggerObject';
+import { actualDate } from '../../App';
+import gsap from 'gsap';
 
 import '../../styles/App.css';
 
@@ -9,7 +11,6 @@ export const NAMES_MONTH = ['January', 'February', 'March', 'April', 'May', 'Jun
 export const NAMES_WEEKDAY = ['Mon', 'Thu', 'Wed', 'Thr', 'Fr', 'Sat', 'Sun'];
 
 const Calendar = ({date, click, setMonth, setYear}) => {
-  
   const icons = {
     leftArrow: <i id="left" class="bi bi-arrow-left px-sm-4 p-2"></i>,
     rightArrow: <i id="right" class="bi bi-arrow-right px-sm-4 p-2"></i>,
@@ -17,10 +18,23 @@ const Calendar = ({date, click, setMonth, setYear}) => {
     month: <i class="bi bi-calendar-month "></i>,
     year: <i class="bi bi-calendar3 "></i>,
   }
+
+  const calendarWrapper = useRef(null);
+
+  useEffect(() => {
+    const calendar = calendarWrapper.current;
+    const weeksList = [...calendar.children[1].children[1].children];
+
+    gsap.set([...weeksList, calendar], {autoAlpha:0})
+    
+    const lt = gsap.timeline({defaults: {ease:'expo'}});
+    lt.to(calendar, {duration: 2, autoAlpha:1})
+      .to([...weeksList],{duration:1, autoAlpha:1, stagger:'0.2'}, '-=2')
+  },[])
   
   const dropdownYearOptions = () => {
-    const currentYear = date.year;
-    let years = [];
+    const currentYear = actualDate.getFullYear();
+    let years = [currentYear];
     for (let i = currentYear-10; i <= currentYear+10; i++) {
       years.push(i)
     }
@@ -34,29 +48,24 @@ const Calendar = ({date, click, setMonth, setYear}) => {
     }))
   }
 
-  const leftAnimation = () => {
-    click();
-
-  }
-
   const leftArrow = {
     id: 'left',
     text: 'Previous month',
-    placement: 'top',
+    placement: 'bottom',
     object: <Button className="p-0 my-2 mx-1 mx-sm-3 shadow-none"  onClick={click} id='left'> {icons.leftArrow} </Button>
   }
 
   const rightArrow = {
     id: 'right',
     text: 'Next month',
-    placement: 'top',
+    placement: 'bottom',
     object: <Button className="p-0 my-2 mx-1 mx-sm-3 shadow-none"  onClick={click} id='right'> {icons.rightArrow} </Button>
   }
 
   const currentMonth = {
     id: 'currentMonth',
     text: 'Actual month',
-    placement: 'top',
+    placement: 'bottom',
     object: <Button className="p-0 my-2 mx-1 mx-sm-3 shadow-none"  onClick={click} id='currentMonth'> {icons.currentMonth} </Button>
   }
 
@@ -92,24 +101,24 @@ const Calendar = ({date, click, setMonth, setYear}) => {
 
 
   return ( 
-    <div style={{margin:'0 5px'}} class="flex-shrink-0 border rounded-3 my-2 mx-md-2">
+    <div style={{margin:'0 5px'}} className='flex-shrink-0 rounded-3 my-3 mx-md-2' id="Calendar" ref={calendarWrapper}>
 
-      <div class="d-flex rounded justify-content-between" style={{backgroundColor:'#014F86'}}>
-        <div class="d-flex">
+      <div className="d-flex rounded justify-content-between" style={{backgroundColor:'rgba(1, 79, 134, 0.8)'}}>
+        <div className="d-flex">
           {SimpleOverlayTriggerObject({ ...leftArrow})}
           
-          <div>
-            <p class="m-0 mt-1 mx-1 mx-sm-3 fs-4"> <strong> {date.year} </strong> </p>
-            <p class="m-0 p-0 mx-1 mx-sm-3 fs-4 fw-light"> {NAMES_MONTH[date.month]} </p>
+          <div style={{color:'#fff0f3'}}>
+            <p className="m-0 mt-1 mx-1 mx-sm-3 fs-4"> <strong> {date.year} </strong> </p>
+            <p className="m-0 p-0 mx-1 mx-sm-3 fs-4 fw-light"> {NAMES_MONTH[date.month]} </p>
           </div>
 
         </div>
 
-        <div class="d-flex">
-          <div class="d-flex flex-column my-auto">
+        <div className="d-flex">
+          <div className="d-flex flex-column my-auto">
             {SimpleOverlayTriggerObject({...currentMonth})}
 
-            <div class="d-flex">
+            <div className="d-flex">
               {SimpleOverlayTriggerObject({...changeMonth})}
               {SimpleOverlayTriggerObject({...changeYear})}
             </div>
@@ -120,10 +129,16 @@ const Calendar = ({date, click, setMonth, setYear}) => {
 
       </div>
       
-      <div class="px-0 border border-3 border-light rounded" style={{backgroundColor:'#2C7DA0'}}>
+      <div className="px-0 border border-3 border-light rounded" style={{backgroundColor:'#2C7DA0'}}>
 
-        <div class="d-flex justify-content-center mx-0 my-1" >
-          {NAMES_WEEKDAY.map(day => <div class=" text-center p-0 mx-md-1 border border-dark rounded" style={{width: '14.285714285714286%', backgroundColor:'#ffc4d6'}}> {day} </div> )}
+        <div className="d-flex justify-content-center border-bottom" >
+          {NAMES_WEEKDAY.map(day => 
+            <div className=" text-center py-1 border-start border-end" 
+            style={{width: '14.285714285714286%'}}> 
+              <strong>
+                {day} 
+              </strong>
+            </div> )}
         </div>
 
         <DaysList date={date}/>

@@ -3,10 +3,9 @@ import { Col, Row, Form, Button, ButtonGroup, ToggleButton } from 'react-bootstr
 import ModalShortNameEditing from '../../Modals/ShortNameEditing';
 import SimpleOverlayTriggerObject from '../../OverlayTriggers/SimpleOverlayTriggerObject';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBriefcase, faCarSide, faCartShopping, faCouch, faPersonRunning, faPizzaSlice, faSuitcaseRolling, faPen, faClipboard, faClipboardCheck } from '@fortawesome/free-solid-svg-icons';
 import '../../../styles/App.css';
-
+import { IconsCategory } from '../../../App';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Task = (props) => {
   
@@ -22,18 +21,7 @@ const Task = (props) => {
   const [time, setTime] = useState(props.time);
   const [backUp, setBackUp] = useState({shortText, text, important}); //backup podczas edycji
   
-  const iconsCategory = {
-    Shopping: faCartShopping,
-    Working: faBriefcase,
-    Food: faPizzaSlice,
-    'Free Time': faCouch,
-    Sport: faPersonRunning,
-    Travel: faCarSide,
-    Holiday : faSuitcaseRolling,
-    Other: faPen,
-    noCheck: faClipboard,
-    check: faClipboardCheck,
-  }
+
 
   const categoryOverlayTrigger = {
     id: category,
@@ -41,7 +29,7 @@ const Task = (props) => {
     placement: 'top',
     object: 
     <label className="my-auto ms-2 fs-4">
-      <FontAwesomeIcon icon={iconsCategory[`${category}`]}/>
+      <FontAwesomeIcon icon={IconsCategory[category]}/>
     </label>
   }
 
@@ -110,7 +98,7 @@ const Task = (props) => {
     let stars = [];
     stars.length = important;
     for (let i=0; i<stars.length; i++) {
-      stars[i] = <i class="bi bi-star-fill lh-1" style={{color:"gold"}}></i>
+      stars[i] = <i className="bi bi-star-fill lh-1" style={{color:"gold"}}></i>
     }
     return stars;
   }
@@ -134,7 +122,7 @@ const Task = (props) => {
 
             <Form.Group as={Col} sm="2" className="lh-1 mt-2 mt-sm-0">
               <Form.Label>
-                <div class="text-center m-0 p-0">
+                <div className="text-center m-0 p-0">
                   { /*importantStars() */}
                   Priority
                 </div>
@@ -183,19 +171,19 @@ const Task = (props) => {
       )
     } else {
       return (
-        <div style={{backgroundColor:'#0096c7'}} class="d-flex border m-2 rounded">
-          <div class="flex-grow-1 border-end">
-            <div class="d-flex border-bottom justify-content-between">
+        <div style={{backgroundColor:'#0096c7'}} className="d-flex border m-2 rounded">
+          <div className="flex-grow-1 border-end">
+            <div className="d-flex border-bottom justify-content-between">
               {SimpleOverlayTriggerObject({...categoryOverlayTrigger})}
-              <p class="h4 text-center fw-bold p-1 my-1">{shortText}</p>
-              <p class="my-auto me-2 p-1"><strong>{time}</strong></p>
+              <p className="h4 text-center fw-bold p-1 my-1">{shortText}</p>
+              <p className="my-auto me-2 p-1"><strong>{time}</strong></p>
             </div>
-            <p class="text-break m-1">{text}</p>
+            <p className="text-break m-1">{text}</p>
           </div>
-          <div class="d-flex flex-column justify-content-center m-1 ms-2">
+          <div className="d-flex flex-column justify-content-center m-1 ms-2">
             {importantStars()}
           </div>
-          <div class="my-4 mx-2 btn-group" aria-label="Basic outlined example">
+          <div className="my-4 mx-2 btn-group" aria-label="Basic outlined example">
             <ButtonGroup className="mb-2">
               <ToggleButton
                 className="shadow-none"
@@ -206,13 +194,13 @@ const Task = (props) => {
                 value="1"
                 onChange={handleCheckedClick}
               >
-                <FontAwesomeIcon className="fs-4" icon={check ? iconsCategory.check : iconsCategory.noCheck}/>
+                <FontAwesomeIcon className="fs-4" icon={check ? IconsCategory.check : IconsCategory.noCheck}/>
               </ToggleButton>
             </ButtonGroup>
           </div>
-          <div class="d-flex flex-column justify-content-between">
-            <button class="m-1 btn btn-dark" onClick={handleEditClick}>Edit</button>
-            <button class="m-1 btn btn-dark" onClick={handleDeleteClick}>Delete</button>
+          <div className="d-flex flex-column justify-content-between">
+            <button className="m-1 btn btn-dark" onClick={handleEditClick}>Edit</button>
+            <button className="m-1 btn btn-dark" onClick={handleDeleteClick}>Delete</button>
           </div>
         </div>
       )

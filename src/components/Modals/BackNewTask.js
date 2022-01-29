@@ -4,6 +4,19 @@ import { Link } from 'react-router-dom';
 
 const ModalBackNewTask = (props) => {
 
+  const backFunction = () => {
+    if(props.changeFlag !== undefined) {
+      return (
+        props.handle,
+        props.changeFlag
+      )
+    } else {
+      return (
+        props.handle
+      )
+    }
+  }
+
   return (
     <Modal show={props.state} onHide={props.handle}>
       <Modal.Header closeButton>
@@ -14,7 +27,7 @@ const ModalBackNewTask = (props) => {
       </Modal.Body>
       <Modal.Footer>
         <Link to={props.link}>
-          <Button variant="primary" onClick={props.handle}> Yes </Button>
+          <Button variant="primary" onClick={backFunction}> Yes </Button>
         </Link>
         <Button variant="primary" onClick={props.handle}> No, back to adding </Button>
       </Modal.Footer>

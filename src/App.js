@@ -1,24 +1,27 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Header from './components/Header/Header';
 import Importants from './components/LeftSide/Importants';
 import Pages from './components/Calendar/Pages';
 import { BrowserRouter as Router} from 'react-router-dom';
 import { TaskContext } from './components/Context/TaskToContext';
+import { BlockFlagContext } from './components/Context/BlockFlagContext';
 
 import './styles/App.css';
 import { Col, Row, Container } from 'react-bootstrap';
 import Footer from './components/Footer';
 
+import { faBriefcase, faCarSide, faCartShopping, faCouch, faPersonRunning, faPizzaSlice, faSuitcaseRolling, faPen, faClipboard, faClipboardCheck, faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
+
 const testTasks = [ // pomocnicza tablica z taskami
   {
-    idDay:'12.0.2022',
+    idDay:'12.1.2022',
     tasks:[
       {
         id: 0, 
         editing: false,
         checked: true,
-        shortName: 'Short name 1',
-        text: 'Text 1',
+        shortName: 'Example 1',
+        text: 'Example text 1',
         important: 3,
         category: 'Shopping',
         time: '14:30',
@@ -27,8 +30,8 @@ const testTasks = [ // pomocnicza tablica z taskami
         id: 2, 
         editing: false,
         checked: false,
-        shortName: 'Short name 3',
-        text: 'Text 3',
+        shortName: 'Example 3',
+        text: 'Example text 3',
         important: 3,
         category: 'Working',
         time: '20:15',
@@ -36,14 +39,14 @@ const testTasks = [ // pomocnicza tablica z taskami
     ]
   },
   {
-    idDay:'22.0.2022',
+    idDay:'22.1.2022',
     tasks:[
       {
         id: 1,
         editing: false,
         checked: false,
-        shortName: 'Short name 2',
-        text: 'Text 2',
+        shortName: 'Example 2',
+        text: 'Example text 2',
         important: 1,
         category: 'Free Time',
         time: '22:00',
@@ -52,11 +55,36 @@ const testTasks = [ // pomocnicza tablica z taskami
   }
 ];
 
+export const IconsCategory = {
+  Shopping: faCartShopping,
+  Working: faBriefcase,
+  Food: faPizzaSlice,
+  'Free Time': faCouch,
+  Sport: faPersonRunning,
+  Travel: faCarSide,
+  Holiday : faSuitcaseRolling,
+  Other: faPen,
+  noCheck: faClipboard,
+  check: faClipboardCheck,
+  goToTask: faArrowUpRightFromSquare,
+}
+
 
 const App = () => {
   
   const [date, setDate] = useState(DATE); //główny stan zarządzający datą
   const [tasksList, setTasksList] = useState(testTasks);
+  const [blockFlag, setBlockFlag] = useState(false);
+
+  useEffect(()=> {
+    let editingCounter = 0;
+    tasksList.forEach(day => {
+      day.tasks.forEach(task => {
+        task.editing && editingCounter++;
+      })
+    });
+    editingCounter > 0 ? setBlockFlag(true) : setBlockFlag(false);
+  },[tasksList])
 
   // funkcja zarządzająca przyciskami na głównej stronie kalendarza (przejście w lewo, prawo, today itd)
   const handleClick = e => {
@@ -116,16 +144,20 @@ const App = () => {
         <div className="d-flex flex-column APP">
         
           {/* komponent header */}
-          <Header />
+          
         
           <Container fluid>
             <Row>
-              <Col md={4} lg={3} xxl={3} className="p-0 ps-sm-2">
-                <Importants/>
-              </Col>
-              <Col md={8} lg={{ span:7, offset:1}} xxl={{ span:6, offset:1}} className="p-0">
-                <Pages handleClick={handleClick} handleMonth={handleSetMonth} handleYear={handleSetYear} date={date}/>
-              </Col>
+           
+              <BlockFlagContext.Provider value={{blockFlag, setBlockFlag}}>
+                <Col md={4} lg={3} xxl={3} className="p-0 px-1 ps-sm-2" style={{backgroundColor:"rgba(1, 22, 39, 0.85)"}}>
+                  <Header />
+                  <Importants/>
+                </Col>
+                <Col md={8} lg={{ span:7, offset:1}} xxl={{ span:6, offset:1}} className="p-0">
+                  <Pages handleClick={handleClick} handleMonth={handleSetMonth} handleYear={handleSetYear} date={date}/>
+                </Col>
+              </BlockFlagContext.Provider>
             </Row>
           </Container>
 
@@ -137,8 +169,8 @@ const App = () => {
   );
 };
 
-// zczytywanie aktualnej daty podczas pierwszego włączenia apki
-const actualDate = new Date();
+// wczytywanie aktualnej daty podczas pierwszego włączenia apki
+export const actualDate = new Date();
 // const time = actualDate.getTime();
 const DATE = {
   day: actualDate.getDate(),

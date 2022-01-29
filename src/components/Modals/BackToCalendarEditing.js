@@ -14,7 +14,7 @@ const ModalBackToCalendarEditing = (props) => {
       </Modal.Body>
       <Modal.Footer>
         <Link to={props.link}>
-          <Button variant="primary" onClick={props.handle}> Yes </Button>
+          <Button variant="primary" onClick={props.setNoEditingAllTasks}> Yes </Button>
         </Link>
         <Button variant="primary" onClick={props.handle}> No, back to editing </Button>
       </Modal.Footer>

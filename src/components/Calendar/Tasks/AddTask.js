@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { NAMES_MONTH } from '../Calendar';
 import { Link, useLocation } from 'react-router-dom';
 import { TaskContext } from '../../Context/TaskToContext';
+import { BlockFlagContext } from '../../Context/BlockFlagContext';
 import { Form, Row, Col, Button, Tooltip, OverlayTrigger} from 'react-bootstrap';
 import ModalBackNewTask from '../../Modals/BackNewTask.js';
 
@@ -18,6 +19,7 @@ const AddTask = () => {
   const [category, setCategory] = useState('0');
   const [time, setTime] = useState();
   const {tasksList, setTasksList} = useContext(TaskContext);
+  const {setBlockFlag} = useContext(BlockFlagContext);
   
   const location = useLocation();
   const taskDate = location.pathname.slice(16,location.pathname.length-8).split('.');
@@ -66,6 +68,7 @@ const AddTask = () => {
 
     // array.push(currentTask);
     setTasksList(tasksList => array);
+    setBlockFlag(false);
     taskCounter++;
   }
 
@@ -73,7 +76,7 @@ const AddTask = () => {
     if (shortText.length === 0 && text.length === 0) { 
       return (
         <Link to={'/Calendar/tasks/' + tasksLink}>
-          <Button variant="primary">BACK</Button>
+          <Button variant="primary" onClick={setBlockFlag(false)}>BACK</Button>
         </Link>
       )
     } else {
@@ -122,19 +125,17 @@ const AddTask = () => {
     }
   }
 
-  
-
   return (
     <React.Fragment>
       <ModalBackNewTask state={modalBack} handle={handleModalBack} link={'/Calendar/tasks/' + tasksLink}/>
-      <div style={{opacity: 1}} class="d-flex flex-column border rounded-3 my-2 mx-md-2">
+      <div style={{opacity: 1}} className="d-flex flex-column border rounded-3 my-2 mx-md-2">
 
-        <div style={{ backgroundColor:'#014F86'}} class="d-flex mb-1 rounded">
-          <p class="my-3 fs-3 fw-bold ms-4">ADD NEW TASK</p>
-          <p class="my-3 fs-3 fw-light ms-auto me-4"> {taskDate[0]} {NAMES_MONTH[taskDate[1]]} {taskDate[2]} </p>
+        <div style={{ backgroundColor:'#014F86'}} className="d-flex mb-1 rounded">
+          <p className="my-3 fs-3 fw-bold ms-4">ADD NEW TASK</p>
+          <p className="my-3 fs-3 fw-light ms-auto me-4"> {taskDate[0]} {NAMES_MONTH[taskDate[1]]} {taskDate[2]} </p>
         </div>
 
-        <div style={{ backgroundImage: 'linear-gradient(to right top, #fdc5f5, #edcbfe, #ddd2ff, #d0d7ff, #c6dbff, #bcdbff, #b2dafe, #a7dafc, #95d6fa, #81d1f7, #69cdf4, #4cc9f0)'}} class="p-1 px-2">
+        <div style={{ backgroundImage: 'linear-gradient(to right top, #fdc5f5, #edcbfe, #ddd2ff, #d0d7ff, #c6dbff, #bcdbff, #b2dafe, #a7dafc, #95d6fa, #81d1f7, #69cdf4, #4cc9f0)'}} className="p-1 px-2">
           <Form noValidate onSubmit={handleSubmit}>
             <Row>
               <Form.Group as={Col} md="6">
@@ -177,7 +178,7 @@ const AddTask = () => {
                 <Form.Control className="ps-2" id="inputTime" type="time" onChange={handleTimeChange} value={time}/>
               </Form.Group>
             </Row>
-            <div class="m-2">
+            <div className="m-2">
               {checkNewTask()}
               {backButton()}
             </div>

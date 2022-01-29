@@ -23,13 +23,13 @@ const DaysList = ({date}) => {
       if(i >= indexOfFirstDayOfMonth - 1 && i <= numberOfLastDayOfMonth - 2 + indexOfFirstDayOfMonth) {
         objects[i] = {
           number: j,
-          key: j + '.' + month + '.' + year,
+          key: j + '.' + Number(month +1) + '.' + year,
         };
         j++;
       } else { 
         objects[i] = {
           number: 0,
-          key: '0' + i + '.' + month + '.' + year,
+          key: '0' + i + '.' + Number(month +1) +'.' + year,
         };
       }
       weeks[Math.floor((i)/7)].push(objects[i]);
@@ -38,19 +38,19 @@ const DaysList = ({date}) => {
   
   days();
   //obcięcie tablicy tworzącej dni do 5 tygodni, jeżeli miesiąc mieści się w nich.
-  if (weeks[5][0].number === 0) weeks.length = 5; 
+  // if (weeks[5][0].number === 0) weeks.length = 5; 
   
   // mapowanie po tablicy objects w celu utworzenia wszystkich dni w miesiącu
   // const Days = objects.map(day => <Day key={day.key} keys={day.key} number={day.number} date={date}/>);
 
   const Weeks = weeks.map(week => (
-    <div class="d-flex justify-content-center mx-0 my-1" >
+    <div className="d-flex justify-content-center mx-0 my-0" >
       {week.map((day,index) => <Day key={day.key} keys={day.key} number={day.number} date={date} weekday={NAMES_WEEKDAY[index]}/>)}
     </div>
   ))
   
   return ( 
-    <div>
+    <div className="dayList">
       {Weeks}
     </div>
   );

@@ -2,13 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { TaskContext } from '../Context/TaskToContext';
 import SimpleOverlayTriggerObject from '../OverlayTriggers/SimpleOverlayTriggerObject';
+import { actualDate } from '../../App';
 
 const Day = (props) => {
   const {tasksList} = React.useContext(TaskContext);
   const daysWithTasks = tasksList.filter(item => item.idDay === props.keys)[0];
 
-  const actualDate = new Date();
-  const actualDay = actualDate.getDate() + '.' + actualDate.getMonth() + '.' + actualDate.getFullYear(); 
+  const actualDay = actualDate.getDate() + '.' + Number(actualDate.getMonth()+1) + '.' + actualDate.getFullYear(); 
   let dayStyle = {
     width: '14.285714285714286%',
     minHeight:'70px',
@@ -25,10 +25,10 @@ const Day = (props) => {
   const dayTasksCounter = () => {
     if (daysWithTasks) {
       return (
-        <div class="">
-          <svg class="mb-0"viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" width="45">
+        <div>
+          <svg className="mb-0"viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" width="45">
             <path fill="#f72585" d="M45.2,-51.4C58.8,-42.5,70.2,-28.4,72.9,-12.9C75.6,2.6,69.6,19.7,61.1,36C52.5,52.4,41.5,68.1,26.5,74.2C11.5,80.2,-7.6,76.7,-22.9,68.6C-38.2,60.5,-49.8,48,-59.7,33.3C-69.5,18.6,-77.5,1.8,-78,-16.9C-78.5,-35.6,-71.3,-56.1,-57.1,-64.8C-42.8,-73.6,-21.4,-70.7,-2.8,-67.3C15.8,-64,31.6,-60.3,45.2,-51.4Z" transform="translate(100 80)" />
-            <text fontSize="450%" class="fw-bold" x="75" y="125" width="300%" height="300%" fill="black" transform="translate(0 -20)" >{daysWithTasks.tasks.length}</text>
+            <text fontSize="450%" className="fw-bold" x="75" y="125" width="300%" height="300%" fill="black" transform="translate(0 -20)" >{daysWithTasks.tasks.length}</text>
           </svg>
         </div>
 
@@ -68,12 +68,12 @@ const Day = (props) => {
     text: dayObjectText(),
     placement: overlayTriggerPlacement(),
     object: 
-    <Link to={link} style={dayStyle} class="mx-md-1 border col-success text-reset text-decoration-none Days actualDayStyle">
-      <div class="" key={props.keys} > 
-        <p class="flex-shrink-1 fw-bold text-end me-2 mt-1 mb-0 lh-1">
+    <Link to={link} style={dayStyle} className="border col-success text-reset text-decoration-none Days actualDayStyle">
+      <div key={props.keys} > 
+        <p className="flex-shrink-1 fw-bold text-end me-2 mt-1 mb-0 lh-1">
           {props.number} 
         </p>
-        <div class="mt-1 w-100 flex-shrink-1">
+        <div className="mt-1 w-100 flex-shrink-1">
           {dayTasksCounter()}
         </div>
       </div>
@@ -94,7 +94,7 @@ const Day = (props) => {
       }
     } else {
       return (
-        <div class=" text-center mx-md-1 border" key={props.keys} style={{width: '14.285714285714286%', backgroundColor:'#A9D6E5'}}></div>
+        <div className=" text-center border" key={props.keys} style={{width: '14.285714285714286%', backgroundColor:'#A9D6E5',minHeight:'70px'}}></div>
       )
     }
   }
