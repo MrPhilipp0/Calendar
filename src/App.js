@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState } from 'react';
 import Header from './components/Header/Header';
 import Importants from './components/LeftSide/Importants';
 import Pages from './components/Calendar/Pages';
-import { BrowserRouter as Router} from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { TaskContext } from './components/Context/TaskToContext';
 import { BlockFlagContext } from './components/Context/BlockFlagContext';
 
@@ -10,12 +10,14 @@ import './styles/App.css';
 import { Col, Row, Container } from 'react-bootstrap';
 import Footer from './components/Footer';
 
-import { faBriefcase, faCarSide, faCartShopping, faCouch, faPersonRunning, faPizzaSlice, faSuitcaseRolling, faPen, faClipboard, faClipboardCheck, faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
+import { faBriefcase, faCarSide, faCartShopping, faCouch, faPersonRunning, faPizzaSlice, faSuitcaseRolling, faPen, faClipboard, faClipboardCheck, faArrowUpRightFromSquare, faUndo, faPlusSquare, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 const testTasks = [ // pomocnicza tablica z taskami
   {
-    idDay:'12.1.2022',
-    tasks:[
+    idDay: '12.02.2022',
+    link: '/Calendar/tasks/12.02.2022',
+    weekDay: 'Saturday',
+    tasks: [
       {
         id: 0, 
         editing: false,
@@ -39,7 +41,9 @@ const testTasks = [ // pomocnicza tablica z taskami
     ]
   },
   {
-    idDay:'22.1.2022',
+    idDay:'22.02.2022',
+    link: '/Calendar/tasks/22.02.2022',
+    weekDay: 'Tuesday',
     tasks:[
       {
         id: 1,
@@ -64,27 +68,36 @@ export const IconsCategory = {
   Travel: faCarSide,
   Holiday : faSuitcaseRolling,
   Other: faPen,
+
   noCheck: faClipboard,
   check: faClipboardCheck,
+
   goToTask: faArrowUpRightFromSquare,
+  back: faUndo,
+  add: faPlusSquare,
+  delete: faTrashAlt,
 }
 
 
 const App = () => {
-  
+
   const [date, setDate] = useState(DATE); //główny stan zarządzający datą
   const [tasksList, setTasksList] = useState(testTasks);
   const [blockFlag, setBlockFlag] = useState(false);
 
-  useEffect(()=> {
-    let editingCounter = 0;
-    tasksList.forEach(day => {
-      day.tasks.forEach(task => {
-        task.editing && editingCounter++;
-      })
-    });
-    editingCounter > 0 ? setBlockFlag(true) : setBlockFlag(false);
-  },[tasksList])
+  const handleSetBlockFlag = (value) => {
+    setBlockFlag(value);
+  }
+
+  // useEffect(()=> {
+  //   let editingCounter = 0;
+  //   tasksList.forEach(day => {
+  //     day.tasks.forEach(task => {
+  //       task.editing && editingCounter++;
+  //     })
+  //   });
+  //   editingCounter > 0 ? setBlockFlag(true) : setBlockFlag(false);
+  // },[tasksList])
 
   // funkcja zarządzająca przyciskami na głównej stronie kalendarza (przejście w lewo, prawo, today itd)
   const handleClick = e => {
@@ -138,6 +151,7 @@ const App = () => {
     })
   }
 
+
   return (
     <Router>
       <TaskContext.Provider value={{tasksList, setTasksList}}>
@@ -155,7 +169,7 @@ const App = () => {
                   <Importants/>
                 </Col>
                 <Col md={8} lg={{ span:7, offset:1}} xxl={{ span:6, offset:1}} className="p-0">
-                  <Pages handleClick={handleClick} handleMonth={handleSetMonth} handleYear={handleSetYear} date={date}/>
+                  <Pages handleClick={handleClick} handleMonth={handleSetMonth} handleYear={handleSetYear} date={date} handleSetBlockFlag={handleSetBlockFlag}/>
                 </Col>
               </BlockFlagContext.Provider>
             </Row>

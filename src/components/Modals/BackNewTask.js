@@ -5,17 +5,12 @@ import { Link } from 'react-router-dom';
 const ModalBackNewTask = (props) => {
 
   const backFunction = () => {
-    if(props.changeFlag !== undefined) {
-      return (
-        props.handle,
-        props.changeFlag
-      )
-    } else {
-      return (
-        props.handle
-      )
-    }
+    props.setBlockFlag(false);
+    return (
+      props.handle
+    )
   }
+
 
   return (
     <Modal show={props.state} onHide={props.handle}>

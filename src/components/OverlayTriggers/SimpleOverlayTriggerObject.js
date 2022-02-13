@@ -14,7 +14,7 @@ import { OverlayTrigger, Popover } from 'react-bootstrap';
 const SimpleOverlayTriggerObject = (props) => {
   return ( 
     <OverlayTrigger
-        key={props.id}
+        key={props.id + '_overlayTrigger'}
         placement={props.placement}
         overlay={
           <Popover>

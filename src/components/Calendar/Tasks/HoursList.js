@@ -1,16 +1,21 @@
-import React, { useState, useContext }  from 'react';
+import React, { useContext, useState } from 'react';
+import { Col, Row } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IconsCategory } from '../../../App';
+import { Link, useLocation } from 'react-router-dom';
+import { TaskContext } from '../../Context/TaskToContext';
 import Task from './Task';
-import { TaskContext } from '../../Context/TaskToContext.js';
-import { useLocation } from 'react-router-dom';
 
-const TasksList = () => {
-  
+
+const HoursList = () => {
+
   const location = useLocation();
+  const linkToAddTask = `/Calendar/tasks/${location.pathname.slice(16)}/addTask`;
   const idDay = location.pathname.slice(16);
-  
+
   const {tasksList, setTasksList} = useContext(TaskContext);
   const [dayTasks, setDayTasks] = useState(tasksList.filter(day => day.idDay === idDay)[0]);
-  
+
   let array = dayTasks === undefined ?  null : [...dayTasks.tasks] ; // pomocnicza tablica w celu aktualizacji stanu
   let array2 = [...tasksList];
   let index = null;
@@ -70,18 +75,44 @@ const TasksList = () => {
     // (dayTasks.tasks.filter(task => task.editing === true )).length > 0 ? editingMod(true) : editingMod(false);
   }
 
-  const Tasks = () => dayTasks.tasks.map(task => 
-    <Task key={task.id} id={task.id} shortName={task.shortName} text={task.text} checkbox={task.checked} important={task.important} category={task.category} time={task.time} save={handleSaveTask} delete={handleDeleteTask} check={handleCheckbox} editingMod={handleEditingMod}
-    />
-    )
+  const checkTasksHour = (tasksArray, hour) => {
+    const tasksInHour = tasksArray.filter(task => (Number(task.time.split(':')[0]) === hour));
+    // if (tasksInHour.length !== 0) return <div>aa</div>
 
-  const noTasks = () =>  <p className="h4 text-center fw-bold p-1 my-3">You have no tasks for this day.</p>
+    return tasksInHour.map(task => (
+      <Task key={task.id + '_task'} id={task.id} shortName={task.shortName} text={task.text} checkbox={task.checked} important={task.important} category={task.category} time={task.time} save={handleSaveTask} delete={handleDeleteTask} check={handleCheckbox} editingMod={handleEditingMod}
+      />
+    ))
+  }
 
+  const hoursList = [];
+  for (let i=0; i<24; i++) {
+    hoursList.push(i);
+  }
+  
   return (
-    <div>
-      {dayTasks ? Tasks() : noTasks()}
+    <div className="my-2">
+      {
+        hoursList.map(hour => (
+          <Row key={hour + '_hour'} className="mx-1 py-1 border-3 border-bottom border-dark">
+            <Col xs={1} className="p-0 m-0 justify-content-center d-flex">
+              <p className="fw-bold h5">{hour}{':00'}</p>
+            </Col>
+            <Col xs={10}>
+              <Row style={{ transition:'2s'}}yl>
+                {dayTasks && checkTasksHour(dayTasks.tasks, hour)}
+              </Row>
+            </Col>
+            <Col xs={1} className="d-flex justify-content-center">
+              <Link to={linkToAddTask}>
+                <FontAwesomeIcon className="fs-4" icon={IconsCategory.add}/>
+              </Link>
+            </Col>
+          </Row>
+        ))
+      }
     </div>
   );
 }
  
-export default TasksList;
+export default HoursList;

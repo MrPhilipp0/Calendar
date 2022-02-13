@@ -13,7 +13,7 @@ const Timer = () => {
   }, [time])
 
   return ( 
-    <div className="me-3 display-6">
+    <div className="me-3 display-6 pb-2">
       <label >{time.getHours()}</label>
       :
       {time.getMinutes() < 10 ? <label>0{time.getMinutes()}</label> : <label>{time.getMinutes()}</label>}

@@ -20,16 +20,19 @@ const DaysList = ({date}) => {
   const days = () => {
     let j=1;
     for(let i=0; i < objects.length; i++) {
+      const dayNumber = j < 10 ? '0' + j : j;
+      const monthNumber = Number(month +1) < 10 ? '0' + Number(month +1) : Number(month +1);
+
       if(i >= indexOfFirstDayOfMonth - 1 && i <= numberOfLastDayOfMonth - 2 + indexOfFirstDayOfMonth) {
         objects[i] = {
           number: j,
-          key: j + '.' + Number(month +1) + '.' + year,
+          id: dayNumber + '.' + monthNumber + '.' + year,
         };
         j++;
       } else { 
         objects[i] = {
           number: 0,
-          key: '0' + i + '.' + Number(month +1) +'.' + year,
+          id: '-' + i + '.' + monthNumber + '.' + year,
         };
       }
       weeks[Math.floor((i)/7)].push(objects[i]);
@@ -37,15 +40,16 @@ const DaysList = ({date}) => {
   }
   
   days();
-  //obcięcie tablicy tworzącej dni do 5 tygodni, jeżeli miesiąc mieści się w nich.
-  // if (weeks[5][0].number === 0) weeks.length = 5; 
+
+  // obcięcie tablicy tworzącej dni do 5 tygodni, jeżeli miesiąc mieści się w nich.
+  if (weeks[5][0].number === 0) weeks.length = 5; 
   
   // mapowanie po tablicy objects w celu utworzenia wszystkich dni w miesiącu
   // const Days = objects.map(day => <Day key={day.key} keys={day.key} number={day.number} date={date}/>);
 
-  const Weeks = weeks.map(week => (
-    <div className="d-flex justify-content-center mx-0 my-0" >
-      {week.map((day,index) => <Day key={day.key} keys={day.key} number={day.number} date={date} weekday={NAMES_WEEKDAY[index]}/>)}
+  const Weeks = weeks.map((week, index) => (
+    <div key={index + '_week'} className="d-flex justify-content-center mx-0 my-0" >
+      {week.map((day,index) => <Day key={day.id} id={day.id} number={day.number} date={date} weekday={NAMES_WEEKDAY[index]}/>)}
     </div>
   ))
   

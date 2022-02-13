@@ -29,11 +29,21 @@ body {
   transform: scale(1.1);
 }
 
+.taskInHoursList:hover {
+  cursor: pointer;
+  transition: 0.2s;
+  transform: scale(1.03);
+  box-shadow: 3px 2px 8px black;
+}
+
 select {
   font-family: 'FontAwesome', 'Roboto Condensed', 'sans-serif';
 }
 
 p, div, label {
   user-select: none;
+}
 
+a {
+  transition: 0.7s;
 }

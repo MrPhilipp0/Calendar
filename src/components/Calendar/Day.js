@@ -6,7 +6,7 @@ import { actualDate } from '../../App';
 
 const Day = (props) => {
   const {tasksList} = React.useContext(TaskContext);
-  const daysWithTasks = tasksList.filter(item => item.idDay === props.keys)[0];
+  const daysWithTasks = tasksList.filter(item => item.idDay === props.id)[0];
 
   const actualDay = actualDate.getDate() + '.' + Number(actualDate.getMonth()+1) + '.' + actualDate.getFullYear(); 
   let dayStyle = {
@@ -15,12 +15,10 @@ const Day = (props) => {
     backgroundColor:'#61A5C2',
   }; //zmienna zarządzająca klasami stylów 
 
-  if (actualDay === props.keys) {
+  if (actualDay === props.id) {
     dayStyle.backgroundColor = '#014F86';
   }
-  const link = `/Calendar/tasks/${props.keys}`; // stała z linkiem do danego dnia
-
-  const trueDay = Number(props.keys.slice(0,1)); // zmienna divów bez danego dnia ........ 
+  const link = `/Calendar/tasks/${props.id}`; // stała z linkiem do danego dnia
 
   const dayTasksCounter = () => {
     if (daysWithTasks) {
@@ -37,12 +35,12 @@ const Day = (props) => {
   }
 
   const dayObjectText = () => {
-    const day = tasksList.filter(day => day.idDay === props.keys);
+    const day = tasksList.filter(day => day.idDay === props.id);
     let object = null;
     if (day.length) {
-      object = day[0].tasks.map(task => {
+      object = day[0].tasks.map((task, index) => {
         return (
-          <div>
+          <div key={index + '_text'}>
             <label><strong>{task.shortName}</strong></label>
             <div className="d-flex justify-content-between">
               <p className="me-2">{task.category}</p>
@@ -64,12 +62,12 @@ const Day = (props) => {
   }
 
   const dayObject = {
-    id: props.keys,
+    id: props.id,
     text: dayObjectText(),
     placement: overlayTriggerPlacement(),
     object: 
     <Link to={link} style={dayStyle} className="border col-success text-reset text-decoration-none Days actualDayStyle">
-      <div key={props.keys} > 
+      <div> 
         <p className="flex-shrink-1 fw-bold text-end me-2 mt-1 mb-0 lh-1">
           {props.number} 
         </p>
@@ -82,7 +80,7 @@ const Day = (props) => {
   
   // funkcja która dla dnia który istnieje tworzy konkretny blok z linkiem do niego, jeżeli nie istnieje to tworzy pusty div.
   const day = () => {
-    if (trueDay) {
+    if (props.number) {
       if (daysWithTasks) {
         return (
           SimpleOverlayTriggerObject({...dayObject})

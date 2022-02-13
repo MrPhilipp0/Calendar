@@ -12,15 +12,14 @@ export const NAMES_WEEKDAY = ['Mon', 'Thu', 'Wed', 'Thr', 'Fr', 'Sat', 'Sun'];
 
 const Calendar = ({date, click, setMonth, setYear}) => {
   const icons = {
-    leftArrow: <i id="left" class="bi bi-arrow-left px-sm-4 p-2"></i>,
-    rightArrow: <i id="right" class="bi bi-arrow-right px-sm-4 p-2"></i>,
-    currentMonth: <i id="currentMonth" class="bi bi-calendar2-check p-3"></i>,
-    month: <i class="bi bi-calendar-month "></i>,
-    year: <i class="bi bi-calendar3 "></i>,
+    leftArrow: <i id="left" className="bi bi-arrow-left px-sm-4 p-2"></i>,
+    rightArrow: <i id="right" className="bi bi-arrow-right px-sm-4 p-2"></i>,
+    currentMonth: <i id="currentMonth" className="bi bi-calendar2-check p-3"></i>,
+    month: <i className="bi bi-calendar-month "></i>,
+    year: <i className="bi bi-calendar3 "></i>,
   }
 
   const calendarWrapper = useRef(null);
-
   useEffect(() => {
     const calendar = calendarWrapper.current;
     const weeksList = [...calendar.children[1].children[1].children];
@@ -29,24 +28,8 @@ const Calendar = ({date, click, setMonth, setYear}) => {
     
     const lt = gsap.timeline({defaults: {ease:'expo'}});
     lt.to(calendar, {duration: 2, autoAlpha:1})
-      .to([...weeksList],{duration:1, autoAlpha:1, stagger:'0.2'}, '-=2')
+      .to([...weeksList],{duration:1, autoAlpha:1, stagger:'0.1'}, '-=1.8')
   },[])
-  
-  const dropdownYearOptions = () => {
-    const currentYear = actualDate.getFullYear();
-    let years = [currentYear];
-    for (let i = currentYear-10; i <= currentYear+10; i++) {
-      years.push(i)
-    }
-    
-    return (years.map(year => {
-      if (year === currentYear) {
-        return <Dropdown.Item className="border-3 border-top border-bottom" tabIndex="-1" eventKey={year} onClick={() => {setYear(year)}}> {year} </Dropdown.Item>
-      } else {
-        return <Dropdown.Item eventKey={year} onClick={() => {setYear(year)}}> {year} </Dropdown.Item>
-      }
-    }))
-  }
 
   const leftArrow = {
     id: 'left',
@@ -79,9 +62,25 @@ const Calendar = ({date, click, setMonth, setYear}) => {
           {icons.month}
         </Dropdown.Toggle>
         <Dropdown.Menu style={{maxHeight:"10rem", overflowY:'auto'}} >
-          {NAMES_MONTH.map((month,index) => (<Dropdown.Item eventKey={index} onClick={() => {setMonth(index)}}> {month} </Dropdown.Item>))}
+          {NAMES_MONTH.map((month,index) => (<Dropdown.Item key={index + '_month'} eventKey={index} onClick={() => {setMonth(index)}}> {month} </Dropdown.Item>))}
         </Dropdown.Menu>
       </Dropdown>
+  }
+
+  const dropdownYearOptions = () => {
+    const currentYear = actualDate.getFullYear();
+    let years = [currentYear];
+    for (let i = currentYear-10; i <= currentYear+10; i++) {
+      years.push(i)
+    }
+    
+    return (years.map((year, index) => {
+      if (year === currentYear) {
+        return <Dropdown.Item key={index + '_year'} className="border-3 border-top border-bottom" tabIndex="-1" eventKey={year} onClick={() => {setYear(year)}}> {year} </Dropdown.Item>
+      } else {
+        return <Dropdown.Item key={index + '_year'} eventKey={year} onClick={() => {setYear(year)}}> {year} </Dropdown.Item>
+      }
+    }))
   }
 
   const changeYear = {
@@ -132,8 +131,8 @@ const Calendar = ({date, click, setMonth, setYear}) => {
       <div className="px-0 border border-3 border-light rounded" style={{backgroundColor:'#2C7DA0'}}>
 
         <div className="d-flex justify-content-center border-bottom" >
-          {NAMES_WEEKDAY.map(day => 
-            <div className=" text-center py-1 border-start border-end" 
+          {NAMES_WEEKDAY.map((day, index) => 
+            <div key={index + '_weekday'} className=" text-center py-1 border-start border-end" 
             style={{width: '14.285714285714286%'}}> 
               <strong>
                 {day} 

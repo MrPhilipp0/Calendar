@@ -11,96 +11,96 @@ import { IconsCategory } from '../../App';
 import '../../styles/App.css';
 
 const Importants = () => {
+  
+  const {tasksList} = React.useContext(TaskContext);
+  const {blockFlag} = React.useContext(BlockFlagContext);
 
-const {tasksList} = React.useContext(TaskContext);
-const {blockFlag} = React.useContext(BlockFlagContext);
+  let tasksArray = [...tasksList];
+  
+  const priorityWrapper = useRef(null);
 
-const tasks = {};
+  let style = null;
+  if (document.body.clientWidth < 768) {
+    style = {maxHeight:"30vh", overflowY:'auto'};
+  } else {
+    style = {maxHeight:"60vh", overflowY:'auto'};
+  }
 
-tasksList.forEach(day => {
-  let idDayArray = day.idDay.split('.');
-  idDayArray[0] = idDayArray[0].length === 1 ? '0' + idDayArray[0] : idDayArray[0];
-  idDayArray[1] = idDayArray[1].length === 1 ? '0' + idDayArray[1] : idDayArray[1];
-  let d = new Date(idDayArray[2], idDayArray[1]-1, idDayArray[0], 0, 0);
-  let opts = { weekday: 'long'}
-  d = Intl.DateTimeFormat("en-US", opts).format(d);
-  idDayArray = idDayArray.join(".");
-  if (!tasks[idDayArray]) {
-    tasks[idDayArray] = {
-      weekDay: d,
-      tasks: [],
-      link: `/Calendar/tasks/${day.idDay}`,
+  const importantStars = (taskPriority) => {
+    let stars = [];
+    stars.length = taskPriority;
+    for (let i=0; i<stars.length; i++) {
+      stars[i] = <i key={i} className="bi bi-star-fill lh-1 me-sm-1" style={{color:"gold"}}></i>
     }
+    return <div className="d-flex justify-content-end">{stars}</div>;
   }
 
-  day.tasks.forEach(task => {
+  useEffect(() => {
+    const priorityLayout = priorityWrapper.current;
+    const [...elements] = priorityLayout.querySelectorAll( '.importantShortTask');
+    // const [...dayElements] =  priorityLayout.querySelectorAll( '.dayElement');
+    const titleImportant = priorityLayout.querySelector('.titleImportant');
 
-    task.day = idDayArray;
-    task.link = `/Calendar/tasks/${day.idDay}`;
-    tasks[idDayArray].tasks.push(task);
-  }) 
-})
+    gsap.set([priorityLayout, ...elements, titleImportant], {x:'-=500'})
+    const lt = gsap.timeline({defaults: {ease: 'expo'}});
 
-console.log(tasks);
-const priorityWrapper = useRef(null);
+    lt.addLabel('time')
+      .to(priorityLayout, {duration: 2, x:'+=500'}, '+=.5')
+      .to([...elements], {duration: 2, x:'+=500', stagger:'.2'}, '-=1.5')
+      .to(titleImportant, {duration: 3, x:'+=500'}, 'time');
 
+  },[])
 
-useEffect(() => {
-  const priorityLayout = priorityWrapper.current;
-  const [...elements] = priorityLayout.children[2].children;
-
-  gsap.set([priorityLayout, ...elements], {x:'-=500'})
-  const lt = gsap.timeline({defaults: {ease: 'expo'}});
-
-  lt.to(priorityLayout, {duration: 2, x:'+=500'}, '+=.5')
-    .to([...elements], {duration: 2, x:'+=500', stagger:'.5'}, '-=1.5');
-},[])
-
-
-
-let style = null;
-if (document.body.clientWidth < 768) {
-  style = {maxHeight:"30vh", overflowY:'auto'};
-} else {
-  style = {maxHeight:"60vh", overflowY:'auto'};
-}
-
-const importantStars = (taskPriority) => {
-  let stars = [];
-  stars.length = taskPriority;
-  for (let i=0; i<stars.length; i++) {
-    stars[i] = <i className="bi bi-star-fill lh-1 me-sm-1" style={{color:"gold"}}></i>
+  const sortingTasksFunctionByDate = (a, b) => {
+    let date1 = a.idDay.split('.');
+    let date2 = b.idDay.split('.');
+    date1 = new Date(date1[2], date1[1]-1, date1[0], 0, 0);
+    date2 = new Date(date2[2], date2[1]-1, date2[0], 0, 0);
+    date1 = date1.getTime();
+    date2 = date2.getTime();
+    return date1 - date2
   }
-  return <div className="d-flex justify-content-end">{stars}</div>;
-}
+
+  const sortingTasksFunctionByTime = (a, b) => {
+    let time1 = a.time.split(':');
+    let time2 = b.time.split(':');
+    time1 = 60 * time1[0] + time1[1];
+    time2 = 60 * time2[0] + time2[1];
+    return time1 - time2
+  }
+
+  tasksArray.sort(sortingTasksFunctionByDate);
+  tasksArray.forEach(day => {
+    day.tasks.sort(sortingTasksFunctionByTime);
+  });
 
   return (
-    <div ref={priorityWrapper} id="Priority" className="rounded text-center mt-2 mb-5 pt-3 mx-1 fs-6" style={{color:'rgba(240, 239, 235)'}}>
-      <p className="fs-2"><strong>Your tasks:</strong></p>
+    <div ref={priorityWrapper} className="rounded text-center mt-2 mb-5 pt-3 mx-1 fs-6" style={{color:'rgba(240, 239, 235)'}}>
+      <p className="fs-2 titleImportant"><strong>Your tasks:</strong></p>
       <div className="py-2 border-bottom border-top"></div>
-      <Row id="PriorityElements" className="m-0" style={style}>
+      <Row key='rowKey' className="m-0" style={style}>
 
       {
-        Object.entries(tasks).map(day => (
-          <Col md={12} className="border-bottom py-2" key={day[0]}>
-            <div className="d-flex ms-0 h5 justify-content-between">
+        tasksArray.map(day => (
+          <Col key={day.idDay} md={12} className="border-bottom py-1">
+            <div className="d-flex ms-0 h5 justify-content-between dayElement">
               <label className="fw-bold">
-                {day[1].weekDay}
+                {day.weekDay}
               </label>
               <div>
                 <label className="pe-2">
-                  {day[0]}
+                  {day.idDay}
                 </label>
 
                 {/* Go to task */}
                 
                 <SimpleOverlayTriggerObject 
-                  id={day[0]} 
+                  id={day.idDay} 
                   text="Click to go to day" 
                   placement="top" 
                   object={
-                    <Link to={!blockFlag ? day[1].link : '#'} className="pe-2">
-                      <FontAwesomeIcon disable={blockFlag} icon={IconsCategory.goToTask} className="p-0"/>
+                    <Link to={!blockFlag ? day.link : '#'} className="pe-2" style={blockFlag ? {pointerEvents:'none', color:'grey'} : null}>
+                      <FontAwesomeIcon icon={IconsCategory.goToTask} className="p-0"/>
                     </Link>
                   } 
                 />
@@ -108,8 +108,8 @@ const importantStars = (taskPriority) => {
             </div>
 
             {
-              day[1].tasks.map(task => (
-                <Col md={12} className="border-bottom py-2" key={task.id}>
+              day.tasks.map(task => (
+                <Col md={12} className="border-bottom py-1 importantShortTask" key={task.id + '_object'}>
                   <Row className="justify-content-between">
                     <Col xs={4} className="d-flex">
 
