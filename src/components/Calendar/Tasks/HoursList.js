@@ -27,8 +27,8 @@ const HoursList = () => {
   const updateTasksList = () => {
     index = array2.findIndex(item => item.idDay === idDay);
     array2[index].tasks = array;
-    array2 = array2.filter(day => day.tasks.length !== 0);
-    setTasksList(tasks => array2);
+    array2 = array2.filter(day => day.tasks.length > 0);
+    setTasksList(array2);
   }
 
   const handleSaveTask = (id, shortName, text, important, category, time) => { //aktualizacja stanu tasków

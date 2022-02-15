@@ -1,4 +1,4 @@
-import React, {useRef, useEffect} from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { TaskContext } from '../Context/TaskToContext';
 import { BlockFlagContext } from '../Context/BlockFlagContext';
 import { Col,Row } from 'react-bootstrap';
@@ -6,18 +6,66 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import SimpleOverlayTriggerObject from '../OverlayTriggers/SimpleOverlayTriggerObject';
+import { actualDate } from '../../App';
 
 import { IconsCategory } from '../../App';
 import '../../styles/App.css';
+import Filter from './Filter';
+
+
+const DEFAULT_CATEGORIES = [
+  {
+    name: 'Shopping',
+    status: true,
+    type: 'category',
+  },
+  {
+    name: 'Working',
+    status: true,
+    type: 'category',
+  },
+  {
+    name:'Food',
+    status: true,
+    type: 'category',
+  },
+  {
+    name: 'Free Time',
+    status: true,
+    type: 'category',
+  },
+  {
+    name: 'Sport',
+    status: true,
+    type: 'category',
+  },
+  {
+    name: 'Travel',
+    status: true,
+    type: 'category', 
+  },
+  {
+    name: 'Holiday',
+    status: true,
+    type: 'category',
+  },
+  {
+    name: 'Other',
+    status: true,
+    type: 'category',
+  },
+];
+const DEFAULT_FILTER_OBJECT = {
+  categories: DEFAULT_CATEGORIES,
+  verified: 'NoVerified',
+  time: 'Future',
+}
 
 const Importants = () => {
   
   const {tasksList} = React.useContext(TaskContext);
   const {blockFlag} = React.useContext(BlockFlagContext);
 
-  let tasksArray = [...tasksList];
-  
-  const priorityWrapper = useRef(null);
 
   let style = null;
   if (document.body.clientWidth < 768) {
@@ -35,6 +83,8 @@ const Importants = () => {
     return <div className="d-flex justify-content-end">{stars}</div>;
   }
 
+  const priorityWrapper = useRef(null);
+    
   useEffect(() => {
     const priorityLayout = priorityWrapper.current;
     const [...elements] = priorityLayout.querySelectorAll( '.importantShortTask');
@@ -50,7 +100,7 @@ const Importants = () => {
       .to(titleImportant, {duration: 3, x:'+=500'}, 'time');
 
   },[])
-
+  
   const sortingTasksFunctionByDate = (a, b) => {
     let date1 = a.idDay.split('.');
     let date2 = b.idDay.split('.');
@@ -69,19 +119,72 @@ const Importants = () => {
     return time1 - time2
   }
 
-  tasksArray.sort(sortingTasksFunctionByDate);
-  tasksArray.forEach(day => {
+  let tasks = [...tasksList];
+  tasks.sort(sortingTasksFunctionByDate);
+  tasks.forEach(day => {
     day.tasks.sort(sortingTasksFunctionByTime);
   });
+
+  const [mainTasksArray, setMainTasksArray] = useState(tasks);
+  const [tasksArrayWithFilter, setTasksArrayWithFilter] = useState(mainTasksArray);
+
+  const [filter, setFilter] = useState(DEFAULT_FILTER_OBJECT);
+
+  useEffect(() => {
+    let tasks = [...tasksList];
+    tasks.sort(sortingTasksFunctionByDate);
+    tasks.forEach(day => {
+      day.tasks.sort(sortingTasksFunctionByTime);
+    });
+    // tasks = tasks.filter(day => day.tasks.length > 0);
+    setMainTasksArray(tasks.filter(day => day.tasks.length > 0));
+  },[tasksList])
+
+
+  useEffect(() => {
+    let arrayTasks = JSON.parse(JSON.stringify(mainTasksArray));
+    arrayTasks.map(day => {
+      day.tasks = day.tasks.filter(task => (
+
+        // Filtration by verification
+        (filter.verified === 'All' ? true : (filter.verified === 'Check' ? task.checked : !task.checked))
+        &&
+
+        // Filtration by categories
+        (filter.categories.some(category => category.status && category.name === task.category))
+      ));
+
+        // Filtration by date
+      day.tasks = day.tasks.filter(task => {
+        const taskDay = day.idDay.split('.');
+        const taskTime = task.time.split(':');
+        const taskDate = new Date(taskDay[2], taskDay[1]-1, taskDay[0], taskTime[0], taskTime[1]);
+
+        if (filter.time === 'Future') {
+          return taskDate > actualDate
+        } else if (filter.time === 'Past') {
+          return taskDate < actualDate
+        } else {
+          return true;
+        }
+      })
+
+      return day
+    });
+    setTasksArrayWithFilter(arrayTasks.filter(day => day.tasks.length > 0));
+
+  },[filter, mainTasksArray])
 
   return (
     <div ref={priorityWrapper} className="rounded text-center mt-2 mb-5 pt-3 mx-1 fs-6" style={{color:'rgba(240, 239, 235)'}}>
       <p className="fs-2 titleImportant"><strong>Your tasks:</strong></p>
-      <div className="py-2 border-bottom border-top"></div>
+      <div className="py-2 border-bottom border-top">
+        <Filter setFilter={setFilter} categories={DEFAULT_CATEGORIES}/>
+      </div>
       <Row key='rowKey' className="m-0" style={style}>
 
       {
-        tasksArray.map(day => (
+        tasksArrayWithFilter.map(day => (
           <Col key={day.idDay} md={12} className="border-bottom py-1">
             <div className="d-flex ms-0 h5 justify-content-between dayElement">
               <label className="fw-bold">
