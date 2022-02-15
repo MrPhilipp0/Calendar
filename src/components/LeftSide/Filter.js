@@ -59,7 +59,7 @@ const Filter = ({setFilter, categories}) => {
     };
     setFilter(filterObject);
 
-  }, [categoryCheckboxes, verifiedCheckboxes, timeCheckboxes])
+  }, [categoryCheckboxes, verifiedCheckboxes, timeCheckboxes, setFilter])
 
   return (
   <Dropdown className="d-grid static" autoClose="outside" >
