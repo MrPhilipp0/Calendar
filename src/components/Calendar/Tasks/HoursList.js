@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-import { Col, Row } from 'react-bootstrap';
+import React, { useContext, useEffect, useState } from 'react';
+import { Col, Row, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconsCategory } from '../../../App';
 import { Link, useLocation } from 'react-router-dom';
@@ -72,12 +72,10 @@ const HoursList = () => {
       tasks: array,
     }));
     updateTasksList();
-    // (dayTasks.tasks.filter(task => task.editing === true )).length > 0 ? editingMod(true) : editingMod(false);
   }
 
   const checkTasksHour = (tasksArray, hour) => {
     const tasksInHour = tasksArray.filter(task => (Number(task.time.split(':')[0]) === hour));
-    // if (tasksInHour.length !== 0) return <div>aa</div>
 
     return tasksInHour.map(task => (
       <Task key={task.id + '_task'} id={task.id} shortName={task.shortName} text={task.text} checkbox={task.checked} important={task.important} category={task.category} time={task.time} save={handleSaveTask} delete={handleDeleteTask} check={handleCheckbox} editingMod={handleEditingMod}
@@ -90,8 +88,17 @@ const HoursList = () => {
     hoursList.push(i);
   }
   
+
+  //Przy odpaleniu danego dnia, automatyczne scrolowanie do pierwszego taska
+  const referenceToScroll = React.useRef(null);
+
+  useEffect(() => {
+    const element = [...referenceToScroll.current.querySelectorAll('.TASK')];
+    element.length > 0 && element[0].scrollIntoView({behavior: "smooth", block: "center"});
+  },[])
+
   return (
-    <div className="my-2">
+    <div className="my-2" ref={referenceToScroll}>
       {
         hoursList.map(hour => (
           <Row key={hour + '_hour'} className="mx-1 py-1 border-3 border-bottom border-dark">
@@ -99,7 +106,7 @@ const HoursList = () => {
               <p className="fw-bold h5">{hour}{':00'}</p>
             </Col>
             <Col xs={10}>
-              <Row style={{ transition:'2s'}}yl>
+              <Row style={{ transition:'2s'}}>
                 {dayTasks && checkTasksHour(dayTasks.tasks, hour)}
               </Row>
             </Col>

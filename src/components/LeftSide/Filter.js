@@ -7,8 +7,8 @@ const Filter = ({setFilter, categories}) => {
 
   const [switchAllCategories, setSwitchAllCategories] = useState(true);
   const [categoryCheckboxes, setCategoryCheckboxes] = useState(categories);
-  const [verifiedCheckboxes, setVerifiedCheckboxes] = useState('NoVerified');
-  const [timeCheckboxes, setTimeCheckboxes] = useState('Future');
+  const [verifiedCheckboxes, setVerifiedCheckboxes] = useState('All');
+  const [timeCheckboxes, setTimeCheckboxes] = useState('AllTime');
 
   const handleCheckboxChange = e => {
     const checkbox = e.target;
@@ -62,13 +62,13 @@ const Filter = ({setFilter, categories}) => {
   }, [categoryCheckboxes, verifiedCheckboxes, timeCheckboxes, setFilter])
 
   return (
-  <Dropdown className="d-grid static" autoClose="outside" >
+  <Dropdown className="d-grid static" autoClose="outside">
     <Dropdown.Toggle id="dropdown-autoclose-outside">
       Filter
     </Dropdown.Toggle>
 
-    <Dropdown.Menu className="w-100 align-items-center">
-      <div className="d-inlineblock mx-2">
+    <Dropdown.Menu className="w-100 align-items-center position-absolute" style={{zIndex: 9999}}>
+      <div className="d-inlineblock mx-2 ">
         <Row className="justify-content-center">
 
           <Col className="d-inline border-end">
@@ -90,7 +90,7 @@ const Filter = ({setFilter, categories}) => {
             <div>
               <p className="d-flex justify-content-center">Verification</p>
               <div key={'check0'} className="form-check">
-                <input className="form-check-input mt-0 verified" type="radio" value='All' name="Verified radio" id="All" onChange={handleCheckboxChange}/>
+                <input className="form-check-input mt-0 verified" type="radio" value='All' name="Verified radio" id="All" defaultChecked onChange={handleCheckboxChange}/>
                 <label className="form-check-label" htmlFor="All">{'\xa0'} All </label>
               </div>
               <div key={'check1'} className="form-check">
@@ -98,7 +98,7 @@ const Filter = ({setFilter, categories}) => {
                 <label className="form-check-label" htmlFor="Verified">{'\xa0'} Done </label>
               </div>
               <div key={'check2'} className="form-check">
-                <input className="form-check-input mt-0 verified" type="radio" value='noCheck' name="Verified radio" id="NoVerified" defaultChecked onChange={handleCheckboxChange}/>
+                <input className="form-check-input mt-0 verified" type="radio" value='noCheck' name="Verified radio" id="NoVerified" onChange={handleCheckboxChange}/>
                 <label className="form-check-label" htmlFor="NoVerified">{'\xa0'} Not done </label>
               </div>
             </div>
@@ -110,11 +110,11 @@ const Filter = ({setFilter, categories}) => {
                 <label className="form-check-label" htmlFor="Past">{'\xa0'} Past </label>
               </div>
               <div key={'time1'} className="form-check">
-                <input className="form-check-input mt-0 time" type="radio" value='AllTime' name="Time radio" id="AllTime" onChange={handleCheckboxChange}/>
+                <input className="form-check-input mt-0 time" type="radio" value='AllTime' name="Time radio" id="AllTime" defaultChecked onChange={handleCheckboxChange}/>
                 <label className="form-check-label" htmlFor="AllTime">{'\xa0'} All tasks </label>
               </div>
               <div key={'time2'} className="form-check">
-                <input className="form-check-input mt-0 time" type="radio" value='Future' name="Time radio" id="Future" defaultChecked onChange={handleCheckboxChange}/>
+                <input className="form-check-input mt-0 time" type="radio" value='Future' name="Time radio" id="Future" onChange={handleCheckboxChange}/>
                 <label className="form-check-label" htmlFor="Future">{'\xa0'} Future </label>
               </div>
             </div>

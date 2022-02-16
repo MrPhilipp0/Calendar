@@ -12,7 +12,6 @@ import { IconsCategory } from '../../App';
 import '../../styles/App.css';
 import Filter from './Filter';
 
-
 const DEFAULT_CATEGORIES = [
   {
     name: 'Shopping',
@@ -55,10 +54,11 @@ const DEFAULT_CATEGORIES = [
     type: 'category',
   },
 ];
+
 const DEFAULT_FILTER_OBJECT = {
   categories: DEFAULT_CATEGORIES,
-  verified: 'NoVerified',
-  time: 'Future',
+  verified: 'All',
+  time: 'AllTime',
 }
 
 const Importants = () => {
@@ -96,7 +96,7 @@ const Importants = () => {
 
     lt.addLabel('time')
       .to(priorityLayout, {duration: 2, x:'+=500'}, '+=.5')
-      .to([...elements], {duration: 2, x:'+=500', stagger:'.2'}, '-=1.5')
+      .to([...elements], {duration: 2, x:'+=500', stagger:'.2'}, '-=1.2')
       .to(titleImportant, {duration: 3, x:'+=500'}, 'time');
 
   },[])
@@ -217,7 +217,17 @@ const Importants = () => {
                     <Col xs={4} className="d-flex">
 
                       {/* Icon */}
-                      <FontAwesomeIcon className="pe-3 mt-1" icon={IconsCategory[task.category]}/>
+                      <SimpleOverlayTriggerObject 
+                        id={task.id}
+                        text={task.category}
+                        placement="top"
+                        object = {
+                          <div>
+                            <FontAwesomeIcon className="pe-3 mt-1" icon={IconsCategory[task.category]}/>
+                          </div>
+                        }
+                      />
+                      
 
                       {/* Time */}
                       <span className="me-2" style={{color:'rgba(250, 221, 225,0.6)'}}>{task.time || 'All day'}</span>

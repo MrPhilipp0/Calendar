@@ -115,15 +115,24 @@ const Calendar = ({date, click, setMonth, setYear}) => {
 
         <div className="d-flex">
           <div className="d-flex flex-column my-auto">
-            {SimpleOverlayTriggerObject({...currentMonth})}
+            
+            <SimpleOverlayTriggerObject 
+              {...currentMonth}
+            />
 
-            <div className="d-flex">
-              {SimpleOverlayTriggerObject({...changeMonth})}
-              {SimpleOverlayTriggerObject({...changeYear})}
+            <div className="d-flex position-relative" style={{zIndex: 0}} >
+              <SimpleOverlayTriggerObject 
+                {...changeMonth}
+              />
+              <SimpleOverlayTriggerObject 
+                {...changeYear}
+              />
             </div>
 
           </div>
-          {SimpleOverlayTriggerObject({...rightArrow})}
+          <SimpleOverlayTriggerObject 
+            {...rightArrow}
+          />
         </div>
 
       </div>

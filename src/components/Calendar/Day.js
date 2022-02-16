@@ -8,7 +8,13 @@ const Day = (props) => {
   const {tasksList} = React.useContext(TaskContext);
   const daysWithTasks = tasksList.filter(item => item.idDay === props.id)[0];
 
-  const actualDay = actualDate.getDate() + '.' + Number(actualDate.getMonth()+1) + '.' + actualDate.getFullYear(); 
+  const actualDay = 
+  (actualDate.getDate() < 10 ? '0' + actualDate.getDate() : actualDate.getDate())
+   + '.' + 
+  (Number(actualDate.getMonth()+1) < 10 ? '0' + Number(actualDate.getMonth()+1) : Number(actualDate.getMonth()+1))
+   + '.' + 
+  actualDate.getFullYear(); 
+  
   let dayStyle = {
     width: '14.285714285714286%',
     minHeight:'70px',
