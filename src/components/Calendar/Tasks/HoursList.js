@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Col, Row, Button } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconsCategory } from '../../../App';
 import { Link, useLocation } from 'react-router-dom';
@@ -111,7 +111,7 @@ const HoursList = () => {
               </Row>
             </Col>
             <Col xs={1} className="d-flex justify-content-center">
-              <Link to={linkToAddTask}>
+              <Link to={linkToAddTask} state={{defaultTime: hour}}>
                 <FontAwesomeIcon className="fs-4" icon={IconsCategory.add}/>
               </Link>
             </Col>

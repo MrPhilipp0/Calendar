@@ -4,14 +4,6 @@ import { Link } from 'react-router-dom';
 
 const ModalBackNewTask = (props) => {
 
-  const backFunction = () => {
-    props.setBlockFlag(false);
-    return (
-      props.handle
-    )
-  }
-
-
   return (
     <Modal show={props.state} onHide={props.handle}>
       <Modal.Header closeButton>
@@ -22,7 +14,7 @@ const ModalBackNewTask = (props) => {
       </Modal.Body>
       <Modal.Footer>
         <Link to={props.link}>
-          <Button variant="primary" onClick={backFunction}> Yes </Button>
+          <Button variant="primary" onClick={props.backFunction}> Yes </Button>
         </Link>
         <Button variant="primary" onClick={props.handle}> No, back to adding </Button>
       </Modal.Footer>

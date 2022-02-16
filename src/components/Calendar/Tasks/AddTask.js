@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { NAMES_MONTH } from '../Calendar';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation} from 'react-router-dom';
 import { TaskContext } from '../../Context/TaskToContext';
 import { Form, Row, Col, Button, Tooltip, OverlayTrigger} from 'react-bootstrap';
 import ModalBackNewTask from '../../Modals/BackNewTask.js';
@@ -8,6 +8,13 @@ import ModalBackNewTask from '../../Modals/BackNewTask.js';
 let taskCounter = 3;
 
 const AddTask = ({setBlockFlag}) => {
+    
+  const location = useLocation();
+  const {defaultTime} = location.state;
+  const taskDate = location.pathname.slice(16,location.pathname.length-8).split('.');
+  const idDay = location.pathname.slice(16,location.pathname.length-8);
+
+  console.log(defaultTime);
 
   const [modalBack, setModalBack] = useState(false);
   const handleModalBack = () => setModalBack(!modalBack);
@@ -16,12 +23,9 @@ const AddTask = ({setBlockFlag}) => {
   const [text, setText] = useState(''); //stan opisu
   const [important, setImportant] = useState(1);
   const [category, setCategory] = useState('0');
-  const [time, setTime] = useState();
+  const [time, setTime] = useState(defaultTime + ':00');
   const {tasksList, setTasksList} = useContext(TaskContext);
-  
-  const location = useLocation();
-  const taskDate = location.pathname.slice(16,location.pathname.length-8).split('.');
-  const idDay = location.pathname.slice(16,location.pathname.length-8);
+
 
   const handleSubmit = e => e.preventDefault();
 
@@ -82,7 +86,7 @@ const AddTask = ({setBlockFlag}) => {
   }
 
   const backButton = () => {
-    if (shortText.length === 0 && text.length === 0 && time === undefined) { 
+    if (shortText.length === 0 && text.length === 0) { 
       return (
         <Link to={'/Calendar/tasks/' + idDay}>
           <Button variant="primary" onClick={() => setBlockFlag(false)}>BACK</Button>
@@ -93,6 +97,13 @@ const AddTask = ({setBlockFlag}) => {
         <Button onClick={handleModalBack}>BACK</Button> 
       )
     }
+  }
+
+  const backModalFunction = () => {
+    setBlockFlag(false);
+    return (
+      handleModalBack()
+    )
   }
 
   const overlayTriggerSendButton = (text) => {
@@ -137,7 +148,7 @@ const AddTask = ({setBlockFlag}) => {
   return (
     <React.Fragment>
       {setBlockFlag(true)}
-      <ModalBackNewTask state={modalBack} handle={handleModalBack} link={'/Calendar/tasks/' + idDay} setBlockFlag={setBlockFlag}/>
+      <ModalBackNewTask state={modalBack} handle={handleModalBack} link={'/Calendar/tasks/' + idDay} backFunction={backModalFunction}/>
       <div className="d-flex flex-column rounded-3 my-2 mx-md-2">
 
         <div style={{ backgroundColor:'#014F86', color:'#fff0f3'}} className="d-flex mb-1 rounded">
