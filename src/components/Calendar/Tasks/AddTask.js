@@ -10,7 +10,8 @@ let taskCounter = 3;
 const AddTask = ({setBlockFlag}) => {
     
   const location = useLocation();
-  const {defaultTime} = location.state;
+  let {defaultTime} = location.state;
+  defaultTime = (defaultTime < 10 ? '0' + defaultTime : defaultTime) + ':00'
   const taskDate = location.pathname.slice(16,location.pathname.length-8).split('.');
   const idDay = location.pathname.slice(16,location.pathname.length-8);
 
@@ -23,7 +24,7 @@ const AddTask = ({setBlockFlag}) => {
   const [text, setText] = useState(''); //stan opisu
   const [important, setImportant] = useState(1);
   const [category, setCategory] = useState('0');
-  const [time, setTime] = useState(defaultTime + ':00');
+  const [time, setTime] = useState(defaultTime);
   const {tasksList, setTasksList} = useContext(TaskContext);
 
 
