@@ -1,8 +1,9 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Schedule",
+  "name": "Simple schedule App",
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "background_color": "#ffffff",
+  "homepage": "https://mrphilipp0.github.io/Calendar/"
 }
