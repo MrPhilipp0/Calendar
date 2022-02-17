@@ -43,8 +43,10 @@ const Day = (props) => {
   const dayObjectText = () => {
     const day = tasksList.filter(day => day.idDay === props.id);
     let object = null;
-    if (day.length) {
-      object = day[0].tasks.map((task, index) => {
+    if (day.length > 0) {
+      object = JSON.parse(JSON.stringify(day[0].tasks));
+      object.length = object.length > 5 ? 5 : object.length;
+      object = object.map((task, index) => {
         return (
           <div key={index + '_text'}>
             <label><strong>{task.shortName}</strong></label>
@@ -55,6 +57,11 @@ const Day = (props) => {
           </div>
         )
       })
+      day[0].tasks.length > 5 && object.push(
+        <div key={object.length + 1 + '_dots'} className="d-flex justify-content-center">
+          <label><strong> ... </strong></label>
+        </div>
+      );
     }
     return (object);
   }

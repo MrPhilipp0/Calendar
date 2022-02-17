@@ -5,6 +5,7 @@ import { Button, ButtonGroup, Col, ToggleButton } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconsCategory } from '../../../../App';
 import '../../../../styles/App.css';
+import { TasksColors } from '../../../../App';
 
 const TaskInHoursList = ({
   shortText, text, time, important, check, id, category, 
@@ -33,12 +34,12 @@ const TaskInHoursList = ({
   return (
     <Col style={{boxShadow: '4px 3px 8px black'}}>
       <ModalDeleteTask state={modalDelete} handle={handleModalDelete} deleteFunction={handleDeleteClick}/>
-      <div style={{backgroundColor:'#0096c7'}} className="d-flex taskInHoursList" id={`NoEditingTask${id}`} >
+      <div style={{background:TasksColors[category]}} className="d-flex taskInHoursList" id={`NoEditingTask${id}`} >
 
         <div className="flex-grow-1" onClick={() => handleEditClick()}>
           <div className="d-flex">
             <p className="ms-1 p-1 mb-0"><strong>{time}</strong></p>
-            <p className="h5 text-center fw-bold p-1 ms-2 mt-1 mb-0">{shortText}</p>
+            <p className="h5 text-center fw-bold p-1 ms-2 mt-1 mb-0" style={{textDecoration: check && 'line-through'}}>{shortText}</p>
           </div>
           <div className="d-flex">
             <div className="mx-2 mt-1">
@@ -48,7 +49,7 @@ const TaskInHoursList = ({
           </div>
         </div>
         <div className="mt-1 mb-1 my-auto mx-1">
-          <ButtonGroup vertical>
+          <ButtonGroup vertical className="py-1">
             <ToggleButton
               className="shadow-none"
               id={id}

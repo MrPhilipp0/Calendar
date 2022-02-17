@@ -24,8 +24,10 @@ const Tasks = () => {
     lt.to(element, {duration: 1, autoAlpha:1})
   },[location])
 
+  // gradient -> backgroundImage: 'linear-gradient(to bottom, #90e0ef, #9bddff, #b7d6ff, #dcceff, #fdc5f5)'
+
   return ( 
-    <div className="rounded-3 my-2 mx-md-2" ref={!blockFlag ? wrapper : null}>
+    <div className="rounded-3 my-2 mx-1 mx-md-2" ref={!blockFlag ? wrapper : null}>
 
       <div style={{ backgroundColor:'#014F86', color:'#fff0f3'}} className="d-flex rounded">
         <Link to={!blockFlag && '/Calendar/'}> 
@@ -35,7 +37,7 @@ const Tasks = () => {
         <p className="my-3 fs-3 fw-light ms-auto me-4"> {taskDate[0]} {NAMES_MONTH[taskDate[1] - 1]} {taskDate[2]} </p>
       </div>
 
-      <div style={{backgroundImage: 'linear-gradient(to bottom, #90e0ef, #9bddff, #b7d6ff, #dcceff, #fdc5f5)', maxHeight:"60vh", overflowY:'auto', overflowX: 'hidden'}} className='flex-grow-1 border border-3 border-light'>
+      <div style={{background:'rgba(255, 255, 255, 0.8)', maxHeight:"60vh", overflowY:'auto', overflowX: 'hidden'}} className='flex-grow-1 border border-3 border-light'>
         <HoursList key={taskDate}/>
       </div>
     </div>

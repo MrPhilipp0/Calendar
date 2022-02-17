@@ -216,21 +216,23 @@ const Importants = () => {
                   <Row className="justify-content-between">
                     <Col xs={4} className="d-flex">
 
-                      {/* Icon */}
+                      {/* Category icon */}
                       <SimpleOverlayTriggerObject 
                         id={task.id}
                         text={task.category}
                         placement="top"
                         object = {
                           <div>
-                            <FontAwesomeIcon className="pe-3 mt-1" icon={IconsCategory[task.category]}/>
+                            <FontAwesomeIcon className="pe-3 mt-1" icon={IconsCategory[task.category]} color={task.checked ? '#b5c99a' : '#ffc8dd'}/>
                           </div>
                         }
                       />
                       
 
                       {/* Time */}
-                      <span className="me-2" style={{color:'rgba(250, 221, 225,0.6)'}}>{task.time || 'All day'}</span>
+                      <span className="me-2" style={{color: task.checked ? '#87986a' : '#ffb3c1'}}>
+                        {task.time}
+                      </span>
                     </Col>
                     <Col xs={1} className="d-flex me-3">
 
@@ -243,7 +245,9 @@ const Importants = () => {
                     <Col xs={8} style={{color:'#fadde1'}} className="d-flex justify-content-start ms-4 ps-4">
 
                       {/* Short Name */}
-                      {task.shortName}
+                      <p className="mb-1" style={{textDecoration: task.checked && 'line-through'}}>
+                        {task.shortName}
+                      </p>
                     </Col>
                     <Col xs={3} className="pe-2">
 

@@ -5,6 +5,7 @@ import { IconsCategory } from '../../../App';
 import { Link, useLocation } from 'react-router-dom';
 import { TaskContext } from '../../Context/TaskToContext';
 import Task from './Task';
+import SimpleOverlayTriggerObject from '../../OverlayTriggers/SimpleOverlayTriggerObject';
 
 
 const HoursList = () => {
@@ -103,17 +104,25 @@ const HoursList = () => {
         hoursList.map(hour => (
           <Row key={hour + '_hour'} className="mx-1 py-1 border-3 border-bottom border-dark">
             <Col xs={1} className="p-0 m-0 justify-content-center d-flex">
-              <p className="fw-bold h5">{hour}{':00'}</p>
+              <p className="fw-bold h6 ps-2 ps-sm-0">{hour}{':00'}</p>
             </Col>
             <Col xs={10}>
-              <Row style={{ transition:'2s'}}>
+              <Row style={{ transition:'2s'}} className="ps-2 ps-sm-0">
                 {dayTasks && checkTasksHour(dayTasks.tasks, hour)}
               </Row>
             </Col>
             <Col xs={1} className="d-flex justify-content-center">
-              <Link to={linkToAddTask} state={{defaultTime: hour}}>
-                <FontAwesomeIcon className="fs-4" icon={IconsCategory.add}/>
-              </Link>
+            <SimpleOverlayTriggerObject
+              id={hour + '_addTask'}
+              text="Add task"
+              placement="left"
+              object = {
+                <Link to={linkToAddTask} state={{defaultTime: hour}}>
+                  <FontAwesomeIcon className="fs-4" icon={IconsCategory.add}/>
+                </Link>
+              }
+            />
+              
             </Col>
           </Row>
         ))

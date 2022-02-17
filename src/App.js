@@ -34,9 +34,49 @@ const testTasks = [ // pomocnicza tablica z taskami
         checked: false,
         shortName: 'Example 3',
         text: 'Example text 3',
-        important: 3,
+        important: 2,
         category: 'Working',
         time: '20:15',
+      },
+      {
+        id: 3, 
+        editing: false,
+        checked: true,
+        shortName: 'Example 4',
+        text: 'Example text 4',
+        important: 1,
+        category: 'Travel',
+        time: '06:15',
+      },
+      {
+        id: 4, 
+        editing: false,
+        checked: false,
+        shortName: 'Example 5',
+        text: 'Example text 5',
+        important: 2,
+        category: 'Free Time',
+        time: '14:15',
+      },
+      {
+        id: 5, 
+        editing: false,
+        checked: false,
+        shortName: 'Example 6',
+        text: 'Example text 6',
+        important: 3,
+        category: 'Shopping',
+        time: '04:15',
+      },
+      {
+        id: 6, 
+        editing: false,
+        checked: true,
+        shortName: 'Example 7',
+        text: 'Example text 7',
+        important: 1,
+        category: 'Working',
+        time: '10:15',
       },
     ]
   },
@@ -76,6 +116,19 @@ export const IconsCategory = {
   back: faUndo,
   add: faPlusSquare,
   delete: faTrashAlt,
+}
+
+export const TasksColors = {
+  Shopping: "rgba(155, 93, 229,1)",
+  Working: "rgba(198, 92, 205,1)",
+  Food: "rgba(241, 91, 181,1)",
+  'Free Time': "rgba(248, 160, 123,1)",
+  Sport: "rgba(254, 228, 64,1)",
+  Travel: "rgba(127, 208, 157,1)",
+  Holiday : "rgba(0, 187, 249,1)",
+  Other: "rgba(0, 245, 212,1)",
+
+  noCheck: faClipboard,
 }
 
 

@@ -32,7 +32,7 @@ const ModalEditTask = ({
 
 
   return (
-    <Modal size="lg" show={modalEdit} onHide={handleModalEdit} backdrop="static" keyboard={false} >
+    <Modal size="xl" show={modalEdit} onHide={handleModalEdit} backdrop="static" keyboard={false} >
       <Modal.Header style={{ backgroundColor:'#014F86', color:'#fff0f3'}} closeButton={false}>
         <Modal.Title><strong>Editing Task</strong></Modal.Title>
       </Modal.Header>

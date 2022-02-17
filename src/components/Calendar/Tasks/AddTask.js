@@ -15,8 +15,6 @@ const AddTask = ({setBlockFlag}) => {
   const taskDate = location.pathname.slice(16,location.pathname.length-8).split('.');
   const idDay = location.pathname.slice(16,location.pathname.length-8);
 
-  console.log(defaultTime);
-
   const [modalBack, setModalBack] = useState(false);
   const handleModalBack = () => setModalBack(!modalBack);
 
@@ -152,6 +150,7 @@ const AddTask = ({setBlockFlag}) => {
       <ModalBackNewTask state={modalBack} handle={handleModalBack} link={'/Calendar/tasks/' + idDay} backFunction={backModalFunction}/>
       <div className="d-flex flex-column rounded-3 my-2 mx-md-2">
 
+        {/* Header */}
         <div style={{ backgroundColor:'#014F86', color:'#fff0f3'}} className="d-flex mb-1 rounded">
           <p className="my-3 fs-3 fw-bold ms-4">ADD NEW TASK</p>
           <p className="my-3 fs-3 fw-light ms-auto me-4"> {taskDate[0]} {NAMES_MONTH[taskDate[1]]} {taskDate[2]} </p>
@@ -160,12 +159,16 @@ const AddTask = ({setBlockFlag}) => {
         <div style={{ backgroundImage: 'linear-gradient(to right top, #fdc5f5, #edcbfe, #ddd2ff, #d0d7ff, #c6dbff, #bcdbff, #b2dafe, #a7dafc, #95d6fa, #81d1f7, #69cdf4, #4cc9f0)'}} className="p-1 px-2">
           <Form noValidate onSubmit={handleSubmit}>
             <Row>
+
+              {/* Short name */}
               <Form.Group as={Col} md="6">
-                <Form.Label className="m-1 fw-bold">SHORT NAME</Form.Label>
+                <Form.Label className="my-1 fw-bold">SHORT NAME</Form.Label>
                 <Form.Control className="m-0 mb-2" value={shortText} onChange={handleShortTextChange}  required type="text" placeholder="Name your task"/>
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                 <Form.Control.Feedback type="invalid">Please, write short name task.</Form.Control.Feedback>
               </Form.Group>
+
+              {/* Priority */}
               <Form.Group as={Col} md="3" sm="6">
                 <Form.Label className="my-1 fw-bold">PRIORITY</Form.Label>
                 <Form.Select onChange={handleImportantChange}>
@@ -174,6 +177,8 @@ const AddTask = ({setBlockFlag}) => {
                   <option value="3">3</option>
                 </Form.Select>
               </Form.Group>
+
+              {/* Category */}
               <Form.Group as={Col} md="3" sm="6">
                 <Form.Label className="my-1 fw-bold">CATEGORY</Form.Label>
                 <Form.Select className="ps-1 pe-0" onChange={handleCategoryChange}>
@@ -190,16 +195,22 @@ const AddTask = ({setBlockFlag}) => {
               </Form.Group>
             </Row>
             <Row>
+
+              {/* Description */}
               <Form.Group as={Col} md="9">
-                <Form.Label className="m-1 fw-bold">DESCRIPTION</Form.Label>
+                <Form.Label className="my-1 fw-bold">DESCRIPTION</Form.Label>
                 <Form.Control className="m-0 mb-2" style={{minHeight:'5rem'}} as="textarea" value={text} onChange={handleTextChange} required type="text" placeholder="Describe your task"/>
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               </Form.Group>
+
+              {/* Time */}
               <Form.Group as={Col} sm="3">
                 <Form.Label className="mb-1 fw-bold">TIME</Form.Label>
                 <Form.Control className="ps-2" id="inputTime" type="time" onChange={handleTimeChange} value={time} step='3000'/>
               </Form.Group>
             </Row>
+
+            {/* Buttons */}
             <div className="m-2">
               {addNewTaskButton()}
               {backButton()}
