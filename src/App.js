@@ -10,7 +10,7 @@ import './styles/App.css';
 import { Col, Row, Container } from 'react-bootstrap';
 import Footer from './components/Footer';
 
-import { faBriefcase, faCarSide, faCartShopping, faCouch, faPersonRunning, faPizzaSlice, faSuitcaseRolling, faPen, faClipboard, faClipboardCheck, faArrowUpRightFromSquare, faUndo, faPlusSquare, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faBriefcase, faCarSide, faCartShopping, faCouch, faPersonRunning, faPizzaSlice, faSuitcaseRolling, faPen, faClipboard, faClipboardCheck, faArrowUpRightFromSquare, faUndo, faPlusSquare, faTrashAlt, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
 
 const testTasks = [ // pomocnicza tablica z taskami
   {
@@ -113,6 +113,9 @@ export const IconsCategory = {
   check: faClipboardCheck,
 
   goToTask: faArrowUpRightFromSquare,
+  showTasks: faSortDown,
+  hiddenTasks: faSortUp,
+
   back: faUndo,
   add: faPlusSquare,
   delete: faTrashAlt,

@@ -4,7 +4,7 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   height: 100%;
-  overflow-x: hidden
+  overflow-x: hidden;
 }
 .APP {
   height: 100vh;
@@ -47,3 +47,4 @@ p, div, label {
 a {
   transition: 0.7s;
 }
+

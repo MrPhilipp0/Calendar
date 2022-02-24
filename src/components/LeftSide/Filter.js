@@ -1,19 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Col, Dropdown, Row } from 'react-bootstrap';
 import '../../styles/App.css';
+import gsap from 'gsap';
 
-
-const Filter = ({setFilter, categories}) => {
+const Filter = ({setFilter, categories, animation}) => {
 
   const [switchAllCategories, setSwitchAllCategories] = useState(true);
   const [categoryCheckboxes, setCategoryCheckboxes] = useState(categories);
   const [verifiedCheckboxes, setVerifiedCheckboxes] = useState('All');
   const [timeCheckboxes, setTimeCheckboxes] = useState('AllTime');
+  const [isActive, setIsActive] = useState(false);
+
+  const handleIsActive = () => {
+    isActive && animation(0);
+    setIsActive(!isActive);
+  };
 
   const handleCheckboxChange = e => {
     const checkbox = e.target;
     let item = {};
-    // console.log(e.target.classList.contains('category'));
     if (checkbox.classList.contains('category')) {
       const arrayCategories = [...categoryCheckboxes];
       const index = arrayCategories.findIndex(item => item.name === checkbox.value);
@@ -37,6 +42,7 @@ const Filter = ({setFilter, categories}) => {
     }
   }
 
+  // switch all categories
   const handleChangeSwitchAllCategories = (prop) => {
     if (prop === 'Some category not active') {
       setSwitchAllCategories(false);
@@ -51,6 +57,7 @@ const Filter = ({setFilter, categories}) => {
     }
   }
 
+  // updating filter
   useEffect(() => {
     const filterObject = {
       categories: categoryCheckboxes,
@@ -59,15 +66,31 @@ const Filter = ({setFilter, categories}) => {
     };
     setFilter(filterObject);
 
-  }, [categoryCheckboxes, verifiedCheckboxes, timeCheckboxes, setFilter])
+  }, [categoryCheckboxes, verifiedCheckboxes, timeCheckboxes, setFilter]);
+
+  //dropdown-menu
+  const wrapper = useRef(null);
+
+  // const animationMenu = () => {
+  //   const menu = wrapper.current.querySelector('.dropdown-menu');
+  //   console.log(menu);
+  // }
+
+  useEffect(() => {
+    const menu = wrapper.current;
+    isActive && gsap.fromTo(menu, {opacity: 0}, {duration: .8, opacity: 1});
+    // !isActive && gsap.fromTo(menu, {opacity: 1}, {duration: .8, opacity: 0});
+
+    // console.log(menu);
+  },[isActive])
 
   return (
-  <Dropdown className="d-grid static" autoClose="outside">
-    <Dropdown.Toggle id="dropdown-autoclose-outside">
+  <Dropdown ref={wrapper} className="d-grid static" autoClose="outside" onToggle={handleIsActive} drop={isActive ? 'up' : 'down'}  x-placement="bottom-end">
+    <Dropdown.Toggle id="dropdown-autoclose-outside" >
       Filter
     </Dropdown.Toggle>
 
-    <Dropdown.Menu className="w-100 align-items-center position-absolute" style={{zIndex: 9999}}>
+    <Dropdown.Menu className="w-100 align-items-center" ref={wrapper}>
       <div className="d-inlineblock mx-2 ">
         <Row className="justify-content-center">
 
@@ -78,9 +101,9 @@ const Filter = ({setFilter, categories}) => {
               <label className="form-check-label" htmlFor="flexSwitchCheckChecked">All</label>
             </div>
             {categoryCheckboxes.map((category, index) => (
-              <div key={index} className="input-group-text">
+              <div key={index} className="input-group-text py-1">
                 <input className="form-check-input mt-0 category" type="checkbox" value={category.name} checked={category.status} aria-label="Checkbox for following text input" onChange={handleCheckboxChange}/>
-                <span>{'\xa0'} {category.name} </span>
+                <label>{'\xa0'} {category.name} </label>
               </div>
             ))}
           </Col>

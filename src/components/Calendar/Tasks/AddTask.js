@@ -5,7 +5,7 @@ import { TaskContext } from '../../Context/TaskToContext';
 import { Form, Row, Col, Button, Tooltip, OverlayTrigger} from 'react-bootstrap';
 import ModalBackNewTask from '../../Modals/BackNewTask.js';
 
-let taskCounter = 3;
+let taskCounter = 10;
 
 const AddTask = ({setBlockFlag}) => {
     
