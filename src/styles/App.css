@@ -6,6 +6,7 @@ body {
   height: 100%;
   overflow-x: hidden;
 }
+
 .APP {
   height: 100vh;
   max-width: 100vw;
@@ -48,3 +49,25 @@ a {
   transition: 0.7s;
 }
 
+.startSide {
+  display: grid;
+  background-image: linear-gradient(to bottom, #f8f9fa, #f2f6f9, #ecf3f7, #e6f1f4, #dfeef1, #d8eef0, #d2edef, #cbeded, #c3efed, #bbf1eb, #b4f2e9, #adf4e5);
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100vh;
+}
+
+.startSideSVGWrapper {
+  display: flex;
+  width: 90%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  border-radius: 1rem;
+  box-shadow: 3px 2px 8px black;
+}
+
+.startSideSVGWrapper svg {
+  max-width: 90%;
+}

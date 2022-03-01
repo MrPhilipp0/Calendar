@@ -24,7 +24,7 @@ const Day = (props) => {
   if (actualDay === props.id) {
     dayStyle.backgroundColor = '#014F86';
   }
-  const link = `/Calendar/tasks/${props.id}`; // stała z linkiem do danego dnia
+  const link = `/calendar/tasks/${props.id}`; // stała z linkiem do danego dnia
 
   const dayTasksCounter = () => {
     if (daysWithTasks) {

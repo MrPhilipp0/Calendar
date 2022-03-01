@@ -72,7 +72,7 @@ const AddTask = ({setBlockFlag}) => {
       array.push({
         idDay: idDay, 
         tasks: [currentTask],
-        link:`/Calendar/tasks/${idDay}`,
+        link:`/calendar/tasks/${idDay}`,
         weekDay: d,
       });
     } else {
@@ -87,7 +87,7 @@ const AddTask = ({setBlockFlag}) => {
   const backButton = () => {
     if (shortText.length === 0 && text.length === 0) { 
       return (
-        <Link to={'/Calendar/tasks/' + idDay}>
+        <Link to={'/calendar/tasks/' + idDay}>
           <Button variant="primary" onClick={() => setBlockFlag(false)}>BACK</Button>
         </Link>
       )
@@ -137,7 +137,7 @@ const AddTask = ({setBlockFlag}) => {
       return overlayTriggerSendButton(message);
     } else {
       return (
-        <Link className="me-4" to={'/Calendar/tasks/' + idDay}>
+        <Link className="me-4" to={'/calendar/tasks/' + idDay}>
           <Button type='submit' onClick={sendTask}> SEND </Button> 
         </Link>
       )
@@ -147,7 +147,7 @@ const AddTask = ({setBlockFlag}) => {
   return (
     <React.Fragment>
       {setBlockFlag(true)}
-      <ModalBackNewTask state={modalBack} handle={handleModalBack} link={'/Calendar/tasks/' + idDay} backFunction={backModalFunction}/>
+      <ModalBackNewTask state={modalBack} handle={handleModalBack} link={'/calendar/tasks/' + idDay} backFunction={backModalFunction}/>
       <div className="d-flex flex-column rounded-3 my-2 mx-md-2">
 
         {/* Header */}

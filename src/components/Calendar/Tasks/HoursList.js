@@ -11,7 +11,7 @@ import SimpleOverlayTriggerObject from '../../OverlayTriggers/SimpleOverlayTrigg
 const HoursList = () => {
 
   const location = useLocation();
-  const linkToAddTask = `/Calendar/tasks/${location.pathname.slice(16)}/addTask`;
+  const linkToAddTask = `/calendar/tasks/${location.pathname.slice(16)}/addTask`;
   const idDay = location.pathname.slice(16);
 
   const {tasksList, setTasksList} = useContext(TaskContext);

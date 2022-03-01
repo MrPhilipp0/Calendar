@@ -8,9 +8,9 @@ const Pages = ({handleClick, date, handleMonth, handleYear, handleSetBlockFlag})
 
   return (
     <Routes>
-      <Route path="/Calendar/" element={<Calendar click={handleClick} date={date} setMonth={handleMonth} setYear={handleYear}/>} />
-      <Route path="/Calendar/tasks/:id" element={<Tasks/>} />
-      <Route path="/Calendar/tasks/:id/addTask" element ={<AddTask setBlockFlag={handleSetBlockFlag}/>} />
+      <Route path="/" element={<Calendar click={handleClick} date={date} setMonth={handleMonth} setYear={handleYear}/>} />
+      <Route path="/calendar/tasks/:id" element={<Tasks/>} />
+      <Route path="/calendar/tasks/:id/addTask" element ={<AddTask setBlockFlag={handleSetBlockFlag}/>} />
       {/*<Route path="/Calendar/tasks/:id/addTask/:id" element ={<AddTask/>} /> */}
     </Routes>
   );

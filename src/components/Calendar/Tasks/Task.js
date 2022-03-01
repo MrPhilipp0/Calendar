@@ -55,6 +55,7 @@ const Task = (props) => {
   const handleEditClick = (e) => { //button edit task
     editingModFunction();
     handleModalEdit();
+    console.log(props);
     const back = {shortText, text, important, category, time};
     setBackUp(backText => back);
   }

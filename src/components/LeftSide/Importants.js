@@ -199,6 +199,7 @@ const Importants = () => {
     }
   };
 
+  // eslint-disable-next-line
   useEffect(() => animationFunction(),[]);
 
   return (

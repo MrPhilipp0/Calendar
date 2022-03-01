@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Header from './components/Header/Header';
 import Importants from './components/LeftSide/Importants';
 import Pages from './components/Calendar/Pages';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import { TaskContext } from './components/Context/TaskToContext';
 import { BlockFlagContext } from './components/Context/BlockFlagContext';
 
@@ -11,6 +11,7 @@ import { Col, Row, Container } from 'react-bootstrap';
 import Footer from './components/Footer';
 
 import { faBriefcase, faCarSide, faCartShopping, faCouch, faPersonRunning, faPizzaSlice, faSuitcaseRolling, faPen, faClipboard, faClipboardCheck, faArrowUpRightFromSquare, faUndo, faPlusSquare, faTrashAlt, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
+import StartSide from './layouts/StartSide';
 
 const testTasks = [ // pomocnicza tablica z taskami
   {
@@ -209,33 +210,31 @@ const App = () => {
 
 
   return (
-    <Router>
-      <TaskContext.Provider value={{tasksList, setTasksList}}>
-        <div className="d-flex flex-column APP">
+    <TaskContext.Provider value={{tasksList, setTasksList}}>
+      <div className="d-flex flex-column APP">
         
-          {/* komponent header */}
-          
+      
+        {/* komponent header */}
         
-          <Container fluid>
-            <Row>
-           
-              <BlockFlagContext.Provider value={{blockFlag, setBlockFlag}}>
-                <Col md={4} lg={3} xxl={3} className="p-0 px-1 ps-sm-2" style={{backgroundColor:"rgba(1, 22, 39, 0.85)"}}>
-                  <Header />
-                  <Importants/>
-                </Col>
-                <Col md={8} lg={{ span:7, offset:1}} xxl={{ span:6, offset:1}} className="p-0">
-                  <Pages handleClick={handleClick} handleMonth={handleSetMonth} handleYear={handleSetYear} date={date} handleSetBlockFlag={handleSetBlockFlag}/>
-                </Col>
-              </BlockFlagContext.Provider>
-            </Row>
-          </Container>
+      
+        <Container fluid>
+          <Row>
+        
+            <BlockFlagContext.Provider value={{blockFlag, setBlockFlag}}>
+              <Col md={4} lg={3} xxl={3} className="p-0 px-1 ps-sm-2" style={{backgroundColor:"rgba(1, 22, 39, 0.85)"}}>
+                <Header />
+                <Importants/>
+              </Col>
+              <Col md={8} lg={{ span:7, offset:1}} xxl={{ span:6, offset:1}} className="p-0">
+                <Pages handleClick={handleClick} handleMonth={handleSetMonth} handleYear={handleSetYear} date={date} handleSetBlockFlag={handleSetBlockFlag}/>
+              </Col>
+            </BlockFlagContext.Provider>
+          </Row>
+        </Container>
+        <Footer/>
 
-          <Footer/>
-
-        </div>
-      </TaskContext.Provider>
-    </Router>
+      </div>
+    </TaskContext.Provider>
   );
 };
 
@@ -248,4 +247,15 @@ const DATE = {
   year: actualDate.getFullYear(),
 }
 
-export default App;
+const APPP = () => {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/start-side/" element={<StartSide />} />
+        <Route path="*" element={<App/>} />
+      </Routes>
+    </Router>
+  )
+}
+
+export default APPP;
