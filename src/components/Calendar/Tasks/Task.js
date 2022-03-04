@@ -6,89 +6,30 @@ import { Col } from 'react-bootstrap';
 import ModalEditTask from '../../Modals/ModalEditTask';
 import gsap from 'gsap/all';
 
-const Task = (props) => {
+import { connect } from 'react-redux';
+import { deleteTask, checkTask } from '../../../actions/taskActions';
 
+const Task = (props) => {
+  
   const [modalDelete, setModalDelete] = useState(false);
   const handleModalDelete = () => setModalDelete(!modalDelete);
 
   const [modalEdit, setModalEdit] = useState(false);
   const handleModalEdit = () => setModalEdit(!modalEdit);
 
-  
-  const [editing, setEditing] = useState(false); //editing flag
-  const [shortText, setShortText] = useState(props.shortName);
-  const [text, setText] = useState(props.text);
-  const [check, setCheck] = useState(props.checkbox);
-  const [important, setImportant] = useState(props.important);
-  const [category, setCategory] = useState(props.category);
-  const [time, setTime] = useState(props.time);
-  const [backUp, setBackUp] = useState({shortText, text, important}); //backUp state
+  const task = props.tasksCurrent.filter(task => task.id === props.id)[0];
 
-
-  const handleShortTextChange = e => { //change short text
-    e.target.value.length < 16 && setShortText(e.target.value);
-  }
-
-  const handleTextChange = e => { //change description task
-    e.target.value.length < 80 && setText(e.target.value);
-  }
-
-  const handleImportantChange = e => { //change priority task
-    setImportant(Number(e.target.value));
-  }
-
-  const handleCategoryChange = e => { //change category
-    setCategory(e.target.value);
-  }
-
-  const handleTimeChange = e => { //change time
-    setTime(e.target.value);
-  }
-
-
-  
-  const editingModFunction = () => { //edit function
-    setEditing(!editing);
-    props.editingMod(props.id, !editing);
-  }
-
-  const handleEditClick = (e) => { //button edit task
-    editingModFunction();
-    handleModalEdit();
-    console.log(props);
-    const back = {shortText, text, important, category, time};
-    setBackUp(backText => back);
-  }
-
-  const handleBackClick = () => { //buttona back editing task
-    editingModFunction();
-    setShortText(backUp.shortText);
-    setText(backUp.text);
-    setImportant(backUp.important);
-    setCategory(backUp.category);
-    setTime(backUp.time);
-  }
-
-  const handleSaveClick = () => { //button save
-    if(shortText.length === 0) {
-      setShortText(backUp.shortText);
-    } else {
-      editingModFunction();
-      props.save(props.id, shortText, text, important, category, time);
-    }
-  }
-
+ 
   const handleDeleteClick = () => { //button delete task
     deleteTaskAnimation();
     handleModalDelete();
     setTimeout(() => {
-      props.delete(props.id);
+      props.deleteTaskFromState(task.id);
     },500)
   }
 
-  const handleCheckedClick = e => { //button check task
-    setCheck(!check);
-    props.check(props.id, e.target.checked);
+  const handleCheckClick = () => { //button check task
+    props.checkTaskInState(task.id);
   }
 
   const taskWrapper = useRef(null);
@@ -101,22 +42,33 @@ const Task = (props) => {
     <Col xl={6} className="mb-1 TASK" ref={taskWrapper}>
       <ModalEditTask 
         modalEdit={modalEdit} handleModalEdit={handleModalEdit}
-        shortText={shortText} handleShortTextChange={handleShortTextChange} 
-        important={important} handleImportantChange={handleImportantChange} 
-        category={category} handleCategoryChange={handleCategoryChange} 
-        time={time} handleTimeChange={handleTimeChange} 
-        text={text} handleTextChange={handleTextChange}
-        id={props.id}
-        handleSaveClick={handleSaveClick} handleBackClick={handleBackClick} 
-      />
+        task={task}
+        />
       <TaskInHoursList 
-        key={`NoEditingTask_${props.id}`}
-        shortText={shortText} text={text} time={time} important={important} check={check} id={props.id} category={category}
-        handleDeleteClick={handleDeleteClick} handleCheckedClick={handleCheckedClick} handleEditClick={handleEditClick} 
+        key={`NoEditingTask_${props.id}`} task={task} 
+        deleteTask={handleDeleteClick} checkTask={handleCheckClick}
         modalDelete={modalDelete} handleModalDelete={handleModalDelete}
-      />
+        handleModalEdit={handleModalEdit}
+        />
     </Col>
   )
 }
+
+const mapStateToProps = state => {
+  return {
+    tasksCurrent: state.TasksReducer.tasks,
+  };
+} 
+
+const mapDispatchToProps = dispatch => {
+  return {
+    deleteTaskFromState : id => {
+      dispatch(deleteTask(id));
+    }, 
+    checkTaskInState : id => {
+      dispatch(checkTask(id));
+    }
+  }
+}
  
-export default Task;
+export default connect(mapStateToProps, mapDispatchToProps)(Task);

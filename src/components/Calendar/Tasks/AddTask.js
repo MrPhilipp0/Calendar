@@ -1,94 +1,97 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { NAMES_MONTH } from '../Calendar';
 import { Link, useLocation} from 'react-router-dom';
-import { TaskContext } from '../../Context/TaskToContext';
-import { Form, Row, Col, Button, Tooltip, OverlayTrigger} from 'react-bootstrap';
+import { Form, Row, Col, Button } from 'react-bootstrap';
 import ModalBackNewTask from '../../Modals/BackNewTask.js';
+import SimpleOverlayTriggerObject from '../../OverlayTriggers/SimpleOverlayTriggerObject';
 
-let taskCounter = 10;
+import { connect } from 'react-redux';
+import { addTask } from '../../../actions/taskActions';
 
-const AddTask = ({setBlockFlag}) => {
-    
+const AddTask = (props) => {
+  
   const location = useLocation();
-  let {defaultTime} = location.state;
+  let {defaultTime} = location.state || '00:00';
   defaultTime = (defaultTime < 10 ? '0' + defaultTime : defaultTime) + ':00'
   const taskDate = location.pathname.slice(16,location.pathname.length-8).split('.');
   const idDay = location.pathname.slice(16,location.pathname.length-8);
 
-  const [modalBack, setModalBack] = useState(false);
-  const handleModalBack = () => setModalBack(!modalBack);
+    let weekDay = new Date(taskDate[2], taskDate[1]-1, taskDate[0], 0, 0);
+    weekDay = Intl.DateTimeFormat("en-US", { weekday: 'long'}).format(weekDay);
 
-  const [shortText, setShortText] = useState(''); //stan którkiej nazwy
-  const [text, setText] = useState(''); //stan opisu
-  const [important, setImportant] = useState(1);
-  const [category, setCategory] = useState('0');
-  const [time, setTime] = useState(defaultTime);
-  const {tasksList, setTasksList} = useContext(TaskContext);
-
-
-  const handleSubmit = e => e.preventDefault();
-
-  const handleShortTextChange = e => { //aktualizacja krótkiej nazwy
-    e.target.value.length < 16 && setShortText(shortText => e.target.value);
+  const START_TASK = {
+    name: '',
+    text: '',
+    priority: 1,
+    category: '0',
+    time: defaultTime,
+    idDay,
+    weekDay,
+    link: `/calendar/tasks/${idDay}`,
   }
 
-  const handleTextChange = e => { //aktualizacja opisu
-    setText(text => e.target.value);
+  const [newTask, setNewTask] = useState(START_TASK);
+
+  const handleChange = e => {
+    const prevTask = JSON.parse(JSON.stringify(newTask));
+    if (e.target.name === 'name') {
+      if (e.target.value.length < 16) {
+        prevTask[e.target.name] = e.target.value;
+      }
+    } else if (e.target.name === 'text') {
+      if (e.target.value.length < 80) {
+        prevTask[e.target.name] = e.target.value;
+      }
+    } else {
+      prevTask[e.target.name] = e.target.value;
+    }
+    setNewTask(prevTask);
   }
 
-  const handleImportantChange = e => {
-    setImportant(important => Number(e.target.value));
-  }
-
-  const handleCategoryChange = e => {
-    setCategory(category => e.target.value);
-  }
-
-  const handleTimeChange = e => {
-    setTime(time => e.target.value);
+  const handleSubmit = e => {
+    e.preventDefault();
   }
 
   const sendTask = () => {
-    const currentTask = {
-      id: taskCounter,
-      checked: false,
-      shortName: shortText,
-      text,
-      important,
-      category,
-      time,
-    };
-    let array = [...tasksList];
+    props.addTaskToState(newTask);
+    props.setBlockFlag(false);
+    setNewTask(START_TASK);
+  }
 
-    let index = array.findIndex(task => task.idDay === idDay); 
+  const addNewTaskButton = () => {
+    if (newTask.name.length === 0 || newTask.category === '0' || newTask.time === undefined) {
+      const elements = [];
 
-    let splitIdDay = idDay.split('.');
-    let d = new Date(splitIdDay[2], splitIdDay[1]-1, splitIdDay[0], 0, 0);
-    let opts = { weekday: 'long'}
-    d = Intl.DateTimeFormat("en-US", opts).format(d);
+      !newTask.name.length && elements.push(' short name');
+      newTask.category === "0" && elements.push(' category');
+      !newTask.time && elements.push(' time');
 
-    if (index === -1) {
-      
-      array.push({
-        idDay: idDay, 
-        tasks: [currentTask],
-        link:`/calendar/tasks/${idDay}`,
-        weekDay: d,
-      });
+      const options = elements.toString();
+      const message = `Please, check${options} task`;
+
+      return <SimpleOverlayTriggerObject 
+        id={newTask.id} 
+        text={message} 
+        placement={'top'} 
+        object= {(
+          <span className="d-inline-block">
+            <Button className="me-4" disabled> SEND </Button> 
+          </span>
+        )}/>
     } else {
-      array[index].tasks.push(currentTask);
+      return (
+        <Link className="me-4" to={newTask.link}>
+          <Button type='submit' onClick={sendTask}> SEND </Button> 
+        </Link>
+      )
     }
-
-    setTasksList(array);
-    setBlockFlag(false);
-    taskCounter++;
   }
 
   const backButton = () => {
-    if (shortText.length === 0 && text.length === 0) { 
+    if (newTask.name.length === 0 && newTask.text.length === 0) { 
       return (
         <Link to={'/calendar/tasks/' + idDay}>
-          <Button variant="primary" onClick={() => setBlockFlag(false)}>BACK</Button>
+          <Button variant="primary" onClick={() => props.setBlockFlag(false)}>BACK</Button>
         </Link>
       )
     } else {
@@ -98,55 +101,19 @@ const AddTask = ({setBlockFlag}) => {
     }
   }
 
+  
+  const [modalBack, setModalBack] = useState(false);
+  const handleModalBack = () => setModalBack(!modalBack);
   const backModalFunction = () => {
-    setBlockFlag(false);
+    props.setBlockFlag(false);
     return (
       handleModalBack()
     )
   }
 
-  const overlayTriggerSendButton = (text) => {
-    return (
-      <OverlayTrigger
-        key={'send-button'}
-        placement={'top'}
-        overlay={
-          <Tooltip
-            id={'send-button'}>
-            {text} 
-          </Tooltip>
-        }>
-        <span className="d-inline-block">
-          <Button className="me-4" disabled> SEND </Button> 
-        </span>
-      </OverlayTrigger>
-    )
-  }
-
-  const addNewTaskButton = () => {
-    if (shortText.length === 0 || category === '0' || time === undefined) {
-      const elements = [];
-
-      !shortText.length && elements.push(' short name');
-      category === "0" && elements.push(' category');
-      !time && elements.push(' time');
-
-      const options = elements.toString();
-      const message = `Please, check${options} task`;
-
-      return overlayTriggerSendButton(message);
-    } else {
-      return (
-        <Link className="me-4" to={'/calendar/tasks/' + idDay}>
-          <Button type='submit' onClick={sendTask}> SEND </Button> 
-        </Link>
-      )
-    }
-  }
-
   return (
     <React.Fragment>
-      {setBlockFlag(true)}
+      {props.setBlockFlag(true)}
       <ModalBackNewTask state={modalBack} handle={handleModalBack} link={'/calendar/tasks/' + idDay} backFunction={backModalFunction}/>
       <div className="d-flex flex-column rounded-3 my-2 mx-md-2">
 
@@ -160,28 +127,26 @@ const AddTask = ({setBlockFlag}) => {
           <Form noValidate onSubmit={handleSubmit}>
             <Row>
 
-              {/* Short name */}
+              {/* Name */}
               <Form.Group as={Col} md="6">
                 <Form.Label className="my-1 fw-bold">SHORT NAME</Form.Label>
-                <Form.Control className="m-0 mb-2" value={shortText} onChange={handleShortTextChange}  required type="text" placeholder="Name your task"/>
-                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                <Form.Control.Feedback type="invalid">Please, write short name task.</Form.Control.Feedback>
+                <Form.Control className="m-0 mb-2" name='name' value={newTask.name} onChange={handleChange} required type="text" placeholder="Name your task"/>
               </Form.Group>
 
               {/* Priority */}
               <Form.Group as={Col} md="3" sm="6">
                 <Form.Label className="my-1 fw-bold">PRIORITY</Form.Label>
-                <Form.Select onChange={handleImportantChange}>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
+                <Form.Select name='priority' onChange={handleChange}>
+                  <option value={1}>1</option>
+                  <option value={2}>2</option>
+                  <option value={3}>3</option>
                 </Form.Select>
               </Form.Group>
 
               {/* Category */}
               <Form.Group as={Col} md="3" sm="6">
                 <Form.Label className="my-1 fw-bold">CATEGORY</Form.Label>
-                <Form.Select className="ps-1 pe-0" onChange={handleCategoryChange}>
+                <Form.Select name='category' className="ps-1 pe-0" onChange={handleChange}>
                   <option value="0"></option>
                   <option value="Shopping">Shopping</option>
                   <option value="Working">Working</option>
@@ -199,14 +164,13 @@ const AddTask = ({setBlockFlag}) => {
               {/* Description */}
               <Form.Group as={Col} md="9">
                 <Form.Label className="my-1 fw-bold">DESCRIPTION</Form.Label>
-                <Form.Control className="m-0 mb-2" style={{minHeight:'5rem'}} as="textarea" value={text} onChange={handleTextChange} required type="text" placeholder="Describe your task"/>
-                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                <Form.Control className="m-0 mb-2" style={{minHeight:'5rem'}} as="textarea" name='text' value={newTask.text} onChange={handleChange} required type="text" placeholder="Describe your task"/>
               </Form.Group>
 
               {/* Time */}
               <Form.Group as={Col} sm="3">
                 <Form.Label className="mb-1 fw-bold">TIME</Form.Label>
-                <Form.Control className="ps-2" id="inputTime" type="time" onChange={handleTimeChange} value={time} step='3000'/>
+                <Form.Control className="ps-2" id="inputTime" type="time" name="time" onChange={handleChange} value={newTask.time} step='3000'/>
               </Form.Group>
             </Row>
 
@@ -218,8 +182,40 @@ const AddTask = ({setBlockFlag}) => {
           </Form>
         </div>
       </div> 
+
+      <div>
+        {props.currentTasks.map(task => (
+          <div>
+            <p>name = {task.name}</p>
+            <p>priority = {task.priority}</p>
+            <p>category = {task.category}</p>
+            <p>text = {task.text}</p>
+            <p>time = {task.time}</p>
+            <p>idDay = {task.idDay}</p>
+            <p>weekDay = {task.weekDay}</p>
+            <p>link = {task.link}</p>
+            <p>id = {task.id}</p>
+            <p>check = {task.check}</p>
+          </div>
+        ))}
+      </div>
     </React.Fragment>
   );
 }
- 
-export default AddTask;
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addTaskToState : task => {
+      dispatch(addTask(task));
+    }
+  }
+}
+
+//chwilowo do wyświetlenia tasksów
+const mapStateToProps = state => {
+  return {
+    currentTasks: state.TasksReducer.tasks,
+  };
+} 
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddTask);

@@ -1,86 +1,28 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconsCategory } from '../../../App';
 import { Link, useLocation } from 'react-router-dom';
-import { TaskContext } from '../../Context/TaskToContext';
 import Task from './Task';
 import SimpleOverlayTriggerObject from '../../OverlayTriggers/SimpleOverlayTriggerObject';
 
+import { connect } from 'react-redux';
 
-const HoursList = () => {
+
+const HoursList = (props) => {
 
   const location = useLocation();
   const linkToAddTask = `/calendar/tasks/${location.pathname.slice(16)}/addTask`;
   const idDay = location.pathname.slice(16);
 
-  const {tasksList, setTasksList} = useContext(TaskContext);
-  const [dayTasks, setDayTasks] = useState(tasksList.filter(day => day.idDay === idDay)[0]);
+  const dayTasks = props.currentTasks.filter(task => task.idDay === idDay)
 
-  let array = dayTasks === undefined ?  null : [...dayTasks.tasks] ; // pomocnicza tablica w celu aktualizacji stanu
-  let array2 = [...tasksList];
-  let index = null;
-  
-  React.useEffect(() => {
-    setDayTasks(tasksList.filter(day => day.idDay === idDay)[0]);
-  },[tasksList, idDay])
 
-  const updateTasksList = () => {
-    index = array2.findIndex(item => item.idDay === idDay);
-    array2[index].tasks = array;
-    array2 = array2.filter(day => day.tasks.length > 0);
-    setTasksList(array2);
-  }
-
-  const handleSaveTask = (id, shortName, text, important, category, time) => { //aktualizacja stanu tasków
-    index = array.findIndex(item => item.id === id);
-    array[index].shortName = shortName;
-    array[index].text = text;
-    array[index].important = important;
-    array[index].category = category;
-    array[index].time = time;
-    setDayTasks(tasks => ({
-      idDay: idDay,
-      tasks: array,
-    }));
-    updateTasksList();
-  }
-
-  const handleDeleteTask = (id) => { //usuwanie taska
-    array = array.filter(task => task.id !== id);
-    setDayTasks(tasks => ({
-      idDay: idDay,
-      tasks: array,
-    }));
-    updateTasksList();
-  }
-
-  const handleCheckbox = (id, value) => {
-    index = array.findIndex(item => item.id === id);
-    array[index].checked = value;
-    setDayTasks(tasks => ({
-      idDay: idDay,
-      tasks: array,
-    }));
-    updateTasksList();
-  }
-
-  const handleEditingMod = (id, editState) => {
-    index = array.findIndex(item => item.id === id);
-    array[index].editing = editState;
-    setDayTasks(tasks => ({
-      idDay: idDay,
-      tasks: array,
-    }));
-    updateTasksList();
-  }
-
-  const checkTasksHour = (tasksArray, hour) => {
-    const tasksInHour = tasksArray.filter(task => (Number(task.time.split(':')[0]) === hour));
+  const checkTasksHour = hour => {
+    const tasksInHour = dayTasks.filter(task => (Number(task.time.split(':')[0]) === hour));
 
     return tasksInHour.map(task => (
-      <Task key={task.id + '_task'} id={task.id} shortName={task.shortName} text={task.text} checkbox={task.checked} important={task.important} category={task.category} time={task.time} save={handleSaveTask} delete={handleDeleteTask} check={handleCheckbox} editingMod={handleEditingMod}
-      />
+      <Task key={task.id + '_task'} id={task.id}/>
     ))
   }
 
@@ -108,7 +50,7 @@ const HoursList = () => {
             </Col>
             <Col xs={10}>
               <Row style={{ transition:'2s'}} className="ps-2 ps-sm-0">
-                {dayTasks && checkTasksHour(dayTasks.tasks, hour)}
+                {dayTasks && checkTasksHour(hour)}
               </Row>
             </Col>
             <Col xs={1} className="d-flex justify-content-center">
@@ -130,5 +72,11 @@ const HoursList = () => {
     </div>
   );
 }
+
+const mapStateToProps = state => {
+  return {
+    currentTasks: state.TasksReducer.tasks,
+  };
+} 
  
-export default HoursList;
+export default connect(mapStateToProps)(HoursList);

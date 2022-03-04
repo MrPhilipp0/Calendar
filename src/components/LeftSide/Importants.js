@@ -1,18 +1,22 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { TaskContext } from '../Context/TaskToContext';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+
 import { BlockFlagContext } from '../Context/BlockFlagContext';
+import { actualDate } from '../../App';
+import SimpleOverlayTriggerObject from '../OverlayTriggers/SimpleOverlayTriggerObject';
+import Filter from './Filter';
+import { checkTask } from '../../actions/taskActions';
+
 import { Button, Col,Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link } from 'react-router-dom';
-import gsap from 'gsap';
-import SimpleOverlayTriggerObject from '../OverlayTriggers/SimpleOverlayTriggerObject';
-import { actualDate } from '../../App';
-
 import { IconsCategory } from '../../App';
-import '../../styles/App.css';
-import Filter from './Filter';
+import gsap from 'gsap';
 
-const DEFAULT_CATEGORIES = [
+import '../../styles/App.css';
+
+
+const DEFAULT_FILTER_CATEGORIES = [
   {
     name: 'Shopping',
     status: true,
@@ -55,28 +59,75 @@ const DEFAULT_CATEGORIES = [
   },
 ];
 
+// Domyślne ustawienia filtra
 const DEFAULT_FILTER_OBJECT = {
-  categories: DEFAULT_CATEGORIES,
+  categories: DEFAULT_FILTER_CATEGORIES,
   verified: 'All',
   time: 'AllTime',
 }
 
-const Importants = () => {
+const sortingTasksFunctionByDate = (a, b) => {
+  let date1 = a.idDay.split('.');
+  let date2 = b.idDay.split('.');
+  date1 = new Date(date1[2], date1[1]-1, date1[0], 0, 0);
+  date2 = new Date(date2[2], date2[1]-1, date2[0], 0, 0);
+  date1 = date1.getTime();
+  date2 = date2.getTime();
+  return date1 - date2
+}
 
-  const [visibilityTasksList, setVisibilityTasksList] = useState(true);
+const sortingTasksFunctionByTime = (a, b) => {
+  let time1 = a.time.split(':');
+  let time2 = b.time.split(':');
+  time1 = 60 * time1[0] + time1[1];
+  time2 = 60 * time2[0] + time2[1];
+  return time1 - time2
+}
+
+const setStyle = () => {
+  return document.body.clientWidth < 768 ?
+    {maxHeight:"30vh", overflowY:'auto'}
+    : {maxHeight:"60vh", overflowY:'auto'}
+}
+
+const Importants = ({currentTasks, checkTaskInState}) => {
+
+  const mapStorageTasks = () => {
+    let tasks = [];
+    [...currentTasks].forEach(element => {
+      !tasks.includes(element.idDay) && tasks.push(element.idDay);
+    });
   
-  const {tasksList} = React.useContext(TaskContext);
-  const {blockFlag} = React.useContext(BlockFlagContext);
-
-
-  let style = null;
-  if (document.body.clientWidth < 768) {
-    style = {maxHeight:"30vh", overflowY:'auto'};
-  } else {
-    style = {maxHeight:"60vh", overflowY:'auto'};
+    tasks = tasks.map(idDay => {
+      const dayArr = [...currentTasks].filter(task => task.idDay === idDay);
+      dayArr.sort(sortingTasksFunctionByTime);
+      const day = {
+        idDay,
+        weekDay: dayArr[0].weekDay,
+        link: dayArr[0].link,
+        tasks: dayArr,
+      }
+      return day;
+    })
+  
+    tasks.sort(sortingTasksFunctionByDate);
+    return tasks;
   }
 
-  const importantStars = (taskPriority) => {
+  const {blockFlag} = React.useContext(BlockFlagContext);
+
+  const [mainTasksArray, setMainTasksArray] = useState(mapStorageTasks());
+  const [tasksArrayWithFilter, setTasksArrayWithFilter] = useState(mainTasksArray);
+  const [filter, setFilter] = useState(DEFAULT_FILTER_OBJECT);
+
+  const [visibilityTasksList, setVisibilityTasksList] = useState(true);
+
+  const handleSetVisibilityTasksList = () => {
+    !visibilityTasksList && animationFunction(0);
+    setVisibilityTasksList(!visibilityTasksList);
+  }
+
+  const priorityStars = (taskPriority) => {
     let stars = [];
     stars.length = taskPriority;
     for (let i=0; i<stars.length; i++) {
@@ -85,88 +136,9 @@ const Importants = () => {
     return <div className="d-flex justify-content-end">{stars}</div>;
   }
 
-  const handleSetVisibilityTasksList = () => {
-    !visibilityTasksList && animationFunction(0);
-    setVisibilityTasksList(!visibilityTasksList);
-  }
 
-  const sortingTasksFunctionByDate = (a, b) => {
-    let date1 = a.idDay.split('.');
-    let date2 = b.idDay.split('.');
-    date1 = new Date(date1[2], date1[1]-1, date1[0], 0, 0);
-    date2 = new Date(date2[2], date2[1]-1, date2[0], 0, 0);
-    date1 = date1.getTime();
-    date2 = date2.getTime();
-    return date1 - date2
-  }
-
-  const sortingTasksFunctionByTime = (a, b) => {
-    let time1 = a.time.split(':');
-    let time2 = b.time.split(':');
-    time1 = 60 * time1[0] + time1[1];
-    time2 = 60 * time2[0] + time2[1];
-    return time1 - time2
-  }
-
-  let tasks = [...tasksList];
-  tasks.sort(sortingTasksFunctionByDate);
-  tasks.forEach(day => {
-    day.tasks.sort(sortingTasksFunctionByTime);
-  });
-
-  const [mainTasksArray, setMainTasksArray] = useState(tasks);
-  const [tasksArrayWithFilter, setTasksArrayWithFilter] = useState(mainTasksArray);
-
-  const [filter, setFilter] = useState(DEFAULT_FILTER_OBJECT);
-
-  useEffect(() => {
-    let tasks = [...tasksList];
-    tasks.sort(sortingTasksFunctionByDate);
-    tasks.forEach(day => {
-      day.tasks.sort(sortingTasksFunctionByTime);
-    });
-    setMainTasksArray(tasks.filter(day => day.tasks.length > 0));
-  },[tasksList])
-
-
-  // Filtration
-  useEffect(() => {
-    let arrayTasks = JSON.parse(JSON.stringify(mainTasksArray));
-    arrayTasks.map(day => {
-      day.tasks = day.tasks.filter(task => (
-
-        // Filtration by verification
-        (filter.verified === 'All' ? true : (filter.verified === 'Check' ? task.checked : !task.checked))
-        &&
-
-        // Filtration by categories
-        (filter.categories.some(category => category.status && category.name === task.category))
-      ));
-
-        // Filtration by date
-      day.tasks = day.tasks.filter(task => {
-        const taskDay = day.idDay.split('.');
-        const taskTime = task.time.split(':');
-        const taskDate = new Date(taskDay[2], taskDay[1]-1, taskDay[0], taskTime[0], taskTime[1]);
-
-        if (filter.time === 'Future') {
-          return taskDate > actualDate
-        } else if (filter.time === 'Past') {
-          return taskDate < actualDate
-        } else {
-          return true;
-        }
-      })
-
-      return day
-    });
-    setTasksArrayWithFilter(arrayTasks.filter(day => day.tasks.length > 0));
-
-  },[filter, mainTasksArray])
-
-  
-  
-  // Animations (GSAP)
+// **************************************
+  // ANIMATIONS (GSAP)
   const wrapper = useRef(null);
 
   gsap.registerEffect({
@@ -202,6 +174,47 @@ const Importants = () => {
   // eslint-disable-next-line
   useEffect(() => animationFunction(),[]);
 
+  // Uploading main tasks state
+  useEffect(() => {
+    setMainTasksArray(mapStorageTasks());
+  // eslint-disable-next-line
+  },[currentTasks])
+  
+  // Filtration main tasks state
+  useEffect(() => {
+    let arrayTasks = JSON.parse(JSON.stringify(mainTasksArray));
+    arrayTasks.map(day => {
+      day.tasks = day.tasks.filter(task => (
+
+        // Filtration by verification
+        (filter.verified === 'All' ? true : (filter.verified === 'Check' ? task.checked : !task.checked))
+        &&
+
+        // Filtration by categories
+        (filter.categories.some(category => category.status && category.name === task.category))
+      ));
+
+        // Filtration by date
+      day.tasks = day.tasks.filter(task => {
+        const taskDay = day.idDay.split('.');
+        const taskTime = task.time.split(':');
+        const taskDate = new Date(taskDay[2], taskDay[1]-1, taskDay[0], taskTime[0], taskTime[1]);
+
+        if (filter.time === 'Future') {
+          return taskDate > actualDate
+        } else if (filter.time === 'Past') {
+          return taskDate < actualDate
+        } else {
+          return true;
+        }
+      })
+
+      return day
+    });
+    setTasksArrayWithFilter(arrayTasks.filter(day => day.tasks.length > 0));
+
+  },[filter, mainTasksArray])
+
   return (
     <div ref={wrapper} className="rounded text-center mt-2 mb-5 pt-3 mx-1 fs-6" style={{color:'rgba(240, 239, 235)'}} onLoad={animationFunction}>
       <div className="d-flex justify-content-center titleImportant">
@@ -214,10 +227,10 @@ const Importants = () => {
       </div>
 
       <div className="py-2 border-bottom border-top" >
-        <Filter setFilter={setFilter} categories={DEFAULT_CATEGORIES} animation={animationFunction}/>
+        <Filter setFilter={setFilter} categories={DEFAULT_FILTER_CATEGORIES} animation={animationFunction}/>
       </div>
 
-      <Row key='rowKey' className="m-0 tasksList" style={style} hidden={!visibilityTasksList}>
+      <Row key='rowKey' className="m-0 tasksList" style={setStyle()} hidden={!visibilityTasksList}>
         {
           tasksArrayWithFilter.map(day => (
             <Col key={day.idDay} md={12} className="border-bottom py-1">
@@ -257,36 +270,46 @@ const Importants = () => {
                           placement="top"
                           object = {
                             <div>
-                              <FontAwesomeIcon className="pe-3 mt-1" icon={IconsCategory[task.category]} color={task.checked ? '#b5c99a' : '#ffc8dd'}/>
+                              <FontAwesomeIcon className="pe-3 mt-1" icon={IconsCategory[task.category]} color={task.check ? '#b5c99a' : '#ffc8dd'}/>
                             </div>
                           }
                         />
                         
 
                         {/* Time */}
-                        <span className="me-2" style={{color: task.checked ? '#87986a' : '#ffb3c1'}}>
+                        <span className="me-2" style={{color: task.check ? '#87986a' : '#ffb3c1'}}>
                           {task.time}
                         </span>
                       </Col>
                       <Col xs={1} className="d-flex me-3">
 
                         {/* Check */}
-                        <FontAwesomeIcon className="p-0 mt-1"  color={task.checked ? 'green' : 'red'} icon={task.checked ? IconsCategory.check : IconsCategory.noCheck}/>
+                        <SimpleOverlayTriggerObject 
+                          id={task.id}
+                          text={task.check ? 'Not done!' : 'Done!'}
+                          placement="top"
+                          object = {
+                            <div style={{cursor:'pointer'}}>
+                              <FontAwesomeIcon className="p-0 mt-1"  color={task.check ? 'green' : 'red'} icon={task.check ? IconsCategory.check : IconsCategory.noCheck} onClick={() => checkTaskInState(task.id)}/>
+                            </div>
+                          }
+                        />
+                        
                       </Col>
                     </Row>
 
                     <Row className="mt-1">
                       <Col xs={8} style={{color:'#fadde1'}} className="d-flex justify-content-start ms-4 ps-4">
 
-                        {/* Short Name */}
-                        <p className="mb-1" style={{textDecoration: task.checked && 'line-through'}}>
-                          {task.shortName}
+                        {/*  Name */}
+                        <p className="mb-1" style={{textDecoration: task.check && 'line-through', color: task.check ? '#87986a' : '#ffb3c1'}}>
+                          {task.name}
                         </p>
                       </Col>
                       <Col xs={3} className="pe-2">
 
                         {/* Priority */}
-                        {importantStars(task.important)}
+                        {priorityStars(task.priority)}
                       </Col>
 
                     </Row>
@@ -306,5 +329,19 @@ const Importants = () => {
   );
 }
 
+const mapStateToProps = state => {
+  return {
+    currentTasks: state.TasksReducer.tasks,
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    checkTaskInState : id => {
+      dispatch(checkTask(id));
+    }
+  }
+}
+
  
-export default Importants;
+export default connect(mapStateToProps, mapDispatchToProps)(Importants);

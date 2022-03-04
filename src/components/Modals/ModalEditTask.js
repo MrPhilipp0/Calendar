@@ -2,32 +2,45 @@ import React, { useEffect, useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import EditingTask from '../Calendar/Tasks/TaskVariants/EditingTask';
 
-const ModalEditTask = ({
-  modalEdit, handleModalEdit,
-  shortText, handleShortTextChange, 
-  important, handleImportantChange, 
-  category, handleCategoryChange, 
-  time, handleTimeChange,
-  text, handleTextChange,
-  id,
-  handleSaveClick, handleBackClick, 
-  modalShortName, handleModalShortName
-}) => {
+import { connect } from 'react-redux';
+import { updateTask } from '../../actions/taskActions';
+
+const ModalEditTask = ({ 
+  task, modalEdit, handleModalEdit,
+  updateTaskInState}) => {
 
   const [alertShortName, setAlertShortName] = useState(false); 
 
+  const [editTask, setEditTask] = useState(task);
+
+  const handleChange = e => {
+    const prevTask = JSON.parse(JSON.stringify(editTask));
+    if (e.target.name === 'name') {
+      if (e.target.value.length < 16) {
+        prevTask[e.target.name] = e.target.value;
+      }
+    } else if (e.target.name === 'text') {
+      if (e.target.value.length < 80) {
+        prevTask[e.target.name] = e.target.value;
+      }
+    } else {
+      prevTask[e.target.name] = e.target.value;
+    }
+    setEditTask(prevTask);
+  }
+
   useEffect(() => {
-    !shortText.length ? setAlertShortName(true) : setAlertShortName(false);
-  },[shortText.length])
+    !editTask.name.length ? setAlertShortName(true) : setAlertShortName(false);
+  },[editTask.name.length])
 
   const saveButtonFunction = () => {
     handleModalEdit();
-    handleSaveClick();
+    updateTaskInState(editTask.id, editTask)
   }
 
   const backButtonFunction = () => {
     handleModalEdit();
-    handleBackClick();
+    setEditTask(task);
   }
 
 
@@ -37,16 +50,7 @@ const ModalEditTask = ({
         <Modal.Title><strong>Editing Task</strong></Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <EditingTask 
-          shortText={shortText} handleShortTextChange={handleShortTextChange} 
-          important={important} handleImportantChange={handleImportantChange} 
-          category={category} handleCategoryChange={handleCategoryChange} 
-          time={time} handleTimeChange={handleTimeChange} 
-          text={text} handleTextChange={handleTextChange}
-          id={id}
-          handleSaveClick={handleSaveClick} handleBackClick={handleBackClick} 
-          modalShortName={modalShortName} handleModalShortName={handleModalShortName}
-        />
+        <EditingTask  task={editTask} handleChange={handleChange} />
       </Modal.Body>
       <Modal.Footer style={{ backgroundColor:'#014F86', color:'#fff0f3'}} className="justify-content-between">
       <p>
@@ -55,7 +59,7 @@ const ModalEditTask = ({
       <div>
         <Button 
           variant="light" 
-          onClick={shortText.length ? saveButtonFunction : undefined} 
+          onClick={editTask.name.length ? saveButtonFunction : undefined} 
           className="me-3"> 
           <strong> Save </strong>
         </Button>
@@ -69,5 +73,13 @@ const ModalEditTask = ({
     </Modal>
   );
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    updateTaskInState : (id, task) => {
+      dispatch(updateTask(id,task))
+    }
+  }
+}
  
-export default ModalEditTask;
+export default connect(null, mapDispatchToProps)(ModalEditTask);

@@ -12,7 +12,7 @@ const ModalDeleteTask = (props) => {
         Are you sure you want to delete this task? 
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="primary" onClick={props.deleteFunction}> Yes </Button>
+        <Button variant="primary" onClick={props.deleteTask}> Yes </Button>
         <Button variant="primary" onClick={props.handle}> No </Button>
       </Modal.Footer>
     </Modal>
