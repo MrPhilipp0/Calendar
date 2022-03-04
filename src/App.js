@@ -3,8 +3,10 @@ import Header from './components/Header/Header';
 import Importants from './components/LeftSide/Importants';
 import Pages from './components/Calendar/Pages';
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-import { TaskContext } from './components/Context/TaskToContext';
 import { BlockFlagContext } from './components/Context/BlockFlagContext';
+
+import { Provider } from 'react-redux';
+import store from './store/Store';
 
 import './styles/App.css';
 import { Col, Row, Container } from 'react-bootstrap';
@@ -12,93 +14,6 @@ import Footer from './components/Footer';
 
 import { faBriefcase, faCarSide, faCartShopping, faCouch, faPersonRunning, faPizzaSlice, faSuitcaseRolling, faPen, faClipboard, faClipboardCheck, faArrowUpRightFromSquare, faUndo, faPlusSquare, faTrashAlt, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
 import StartSide from './layouts/StartSide';
-
-const testTasks = [ // pomocnicza tablica z taskami
-  {
-    idDay: '12.02.2022',
-    link: '/Calendar/tasks/12.02.2022',
-    weekDay: 'Saturday',
-    tasks: [
-      {
-        id: 0, 
-        editing: false,
-        checked: true,
-        shortName: 'Example 1',
-        text: 'Example text 1',
-        important: 3,
-        category: 'Shopping',
-        time: '14:30',
-      },
-      {
-        id: 2, 
-        editing: false,
-        checked: false,
-        shortName: 'Example 3',
-        text: 'Example text 3',
-        important: 2,
-        category: 'Working',
-        time: '20:15',
-      },
-      {
-        id: 3, 
-        editing: false,
-        checked: true,
-        shortName: 'Example 4',
-        text: 'Example text 4',
-        important: 1,
-        category: 'Travel',
-        time: '06:15',
-      },
-      {
-        id: 4, 
-        editing: false,
-        checked: false,
-        shortName: 'Example 5',
-        text: 'Example text 5',
-        important: 2,
-        category: 'Free Time',
-        time: '14:15',
-      },
-      {
-        id: 5, 
-        editing: false,
-        checked: false,
-        shortName: 'Example 6',
-        text: 'Example text 6',
-        important: 3,
-        category: 'Shopping',
-        time: '04:15',
-      },
-      {
-        id: 6, 
-        editing: false,
-        checked: true,
-        shortName: 'Example 7',
-        text: 'Example text 7',
-        important: 1,
-        category: 'Working',
-        time: '10:15',
-      },
-    ]
-  },
-  {
-    idDay:'22.02.2022',
-    link: '/Calendar/tasks/22.02.2022',
-    weekDay: 'Tuesday',
-    tasks:[
-      {
-        id: 1,
-        editing: false,
-        checked: false,
-        shortName: 'Example 2',
-        text: 'Example text 2',
-        important: 1,
-        category: 'Free Time',
-        time: '22:00',
-      },
-    ]
-  }
-];
 
 export const IconsCategory = {
   Shopping: faCartShopping,
@@ -139,23 +54,11 @@ export const TasksColors = {
 const App = () => {
 
   const [date, setDate] = useState(DATE); //główny stan zarządzający datą
-  const [tasksList, setTasksList] = useState(testTasks);
   const [blockFlag, setBlockFlag] = useState(false);
 
   const handleSetBlockFlag = (value) => {
     setBlockFlag(value);
   }
-
-  // useEffect(()=> {
-  //   let editingCounter = 0;
-  //   tasksList.forEach(day => {
-  //     day.tasks.forEach(task => {
-  //       task.editing && editingCounter++;
-  //     })
-  //   });
-  //   editingCounter > 0 ? setBlockFlag(true) : setBlockFlag(false);
-  // },[tasksList])
-
   // funkcja zarządzająca przyciskami na głównej stronie kalendarza (przejście w lewo, prawo, today itd)
   const handleClick = e => {
     let month = date.month;
@@ -210,7 +113,7 @@ const App = () => {
 
 
   return (
-    <TaskContext.Provider value={{tasksList, setTasksList}}>
+    // <TaskContext.Provider value={{tasksList, setTasksList}}>
       <div className="d-flex flex-column APP">
         
       
@@ -234,7 +137,7 @@ const App = () => {
         <Footer/>
 
       </div>
-    </TaskContext.Provider>
+    // </TaskContext.Provider>
   );
 };
 
@@ -249,12 +152,14 @@ const DATE = {
 
 const APPP = () => {
   return (
-    <Router>
-      <Routes>
-        <Route path="/start-side/" element={<StartSide />} />
-        <Route path="*" element={<App/>} />
-      </Routes>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <Routes>
+          <Route path="/start-side/" element={<StartSide />} />
+          <Route path="*" element={<App/>} />
+        </Routes>
+      </Router>
+    </Provider>
   )
 }
 
