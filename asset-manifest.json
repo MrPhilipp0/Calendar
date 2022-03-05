@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/Calendar/static/css/main.a3afb8f6.chunk.css",
-    "main.js": "/Calendar/static/js/main.eeefc879.chunk.js",
-    "main.js.map": "/Calendar/static/js/main.eeefc879.chunk.js.map",
-    "runtime-main.js": "/Calendar/static/js/runtime-main.9f50e07a.js",
-    "runtime-main.js.map": "/Calendar/static/js/runtime-main.9f50e07a.js.map",
-    "static/js/2.0b15400b.chunk.js": "/Calendar/static/js/2.0b15400b.chunk.js",
-    "static/js/2.0b15400b.chunk.js.map": "/Calendar/static/js/2.0b15400b.chunk.js.map",
-    "static/js/3.36687ca3.chunk.js": "/Calendar/static/js/3.36687ca3.chunk.js",
-    "static/js/3.36687ca3.chunk.js.map": "/Calendar/static/js/3.36687ca3.chunk.js.map",
-    "index.html": "/Calendar/index.html",
-    "static/css/main.a3afb8f6.chunk.css.map": "/Calendar/static/css/main.a3afb8f6.chunk.css.map",
-    "static/js/2.0b15400b.chunk.js.LICENSE.txt": "/Calendar/static/js/2.0b15400b.chunk.js.LICENSE.txt",
-    "static/media/App.css": "/Calendar/static/media/bg.5c8b9a2d.svg",
-    "static/media/hello.15319332.svg": "/Calendar/static/media/hello.15319332.svg"
+    "main.css": "/start-side/static/css/main.0dfaea4a.chunk.css",
+    "main.js": "/start-side/static/js/main.39a57ef9.chunk.js",
+    "main.js.map": "/start-side/static/js/main.39a57ef9.chunk.js.map",
+    "runtime-main.js": "/start-side/static/js/runtime-main.a6ad9ca8.js",
+    "runtime-main.js.map": "/start-side/static/js/runtime-main.a6ad9ca8.js.map",
+    "static/js/2.c71f70fb.chunk.js": "/start-side/static/js/2.c71f70fb.chunk.js",
+    "static/js/2.c71f70fb.chunk.js.map": "/start-side/static/js/2.c71f70fb.chunk.js.map",
+    "static/js/3.e68f7e85.chunk.js": "/start-side/static/js/3.e68f7e85.chunk.js",
+    "static/js/3.e68f7e85.chunk.js.map": "/start-side/static/js/3.e68f7e85.chunk.js.map",
+    "index.html": "/start-side/index.html",
+    "static/css/main.0dfaea4a.chunk.css.map": "/start-side/static/css/main.0dfaea4a.chunk.css.map",
+    "static/js/2.c71f70fb.chunk.js.LICENSE.txt": "/start-side/static/js/2.c71f70fb.chunk.js.LICENSE.txt",
+    "static/media/App.css": "/start-side/static/media/bg.5c8b9a2d.svg",
+    "static/media/hello.15319332.svg": "/start-side/static/media/hello.15319332.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.9f50e07a.js",
-    "static/js/2.0b15400b.chunk.js",
-    "static/css/main.a3afb8f6.chunk.css",
-    "static/js/main.eeefc879.chunk.js"
+    "static/js/runtime-main.a6ad9ca8.js",
+    "static/js/2.c71f70fb.chunk.js",
+    "static/css/main.0dfaea4a.chunk.css",
+    "static/js/main.39a57ef9.chunk.js"
   ]
 }
