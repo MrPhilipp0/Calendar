@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const Timer = () => {
 
@@ -7,16 +7,26 @@ const Timer = () => {
   useEffect(() => {
     let interval = null;
     interval = setInterval(() => {
-      setTime(time => new Date());
+      setTime(new Date());
     }, 1000);
     return () => clearInterval(interval);
   }, [time])
 
   return ( 
     <div className="me-3 display-6 pb-2">
-      <label >{time.getHours()}</label>
+      <label>
+        {time.getHours()}
+      </label>
       :
-      {time.getMinutes() < 10 ? <label>0{time.getMinutes()}</label> : <label>{time.getMinutes()}</label>}
+      {
+        time.getMinutes() < 10 ? 
+        <label>
+          0{time.getMinutes()}
+        </label> : 
+        <label>
+          {time.getMinutes()}
+        </label>
+      }
     </div>
    );
 }

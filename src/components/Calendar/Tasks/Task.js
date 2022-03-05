@@ -1,13 +1,13 @@
-import React, { useRef, useState } from 'react';
-import TaskInHoursList from './TaskVariants/TaskInHoursList';
-
-import '../../../styles/App.css';
+import { useRef, useState } from 'react';
 import { Col } from 'react-bootstrap';
-import ModalEditTask from '../../Modals/ModalEditTask';
-import gsap from 'gsap/all';
-
 import { connect } from 'react-redux';
+
+import TaskInHoursList from './TaskVariants/TaskInHoursList';
+import ModalEditTask from '../../Modals/ModalEditTask';
 import { deleteTask, checkTask } from '../../../actions/taskActions';
+
+import gsap from 'gsap/all';
+import '../../../styles/App.css';
 
 const Task = (props) => {
   

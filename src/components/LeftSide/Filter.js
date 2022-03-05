@@ -1,7 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Col, Dropdown, Row } from 'react-bootstrap';
-import '../../styles/App.css';
+
 import gsap from 'gsap';
+import '../../styles/App.css';
 
 const Filter = ({setFilter, categories, animation}) => {
 
@@ -9,7 +10,7 @@ const Filter = ({setFilter, categories, animation}) => {
   const [categoryCheckboxes, setCategoryCheckboxes] = useState(categories);
   const [verifiedCheckboxes, setVerifiedCheckboxes] = useState('All');
   const [timeCheckboxes, setTimeCheckboxes] = useState('AllTime');
-  const [isActive, setIsActive] = useState(false);
+  const [isActive, setIsActive] = useState(false); //visibility
 
   const handleIsActive = () => {
     isActive && animation(0);
@@ -68,9 +69,9 @@ const Filter = ({setFilter, categories, animation}) => {
   }, [categoryCheckboxes, verifiedCheckboxes, timeCheckboxes, setFilter]);
 
 
+  // GSAP Animations
   const wrapper = useRef(null);
 
-  // GSAP Animations
   useEffect(() => {
     const menu = wrapper.current;
     isActive && gsap.fromTo(menu, {opacity: 0}, {duration: .8, opacity: 1});
@@ -78,6 +79,7 @@ const Filter = ({setFilter, categories, animation}) => {
 
   return (
     <Dropdown ref={wrapper} className="d-grid static" autoClose="outside" onToggle={handleIsActive} drop={isActive ? 'up' : 'down'}  x-placement="bottom-end">
+
       {/* Button filter */}
       <Dropdown.Toggle id="dropdown-autoclose-outside" >
         Filter
@@ -87,7 +89,7 @@ const Filter = ({setFilter, categories, animation}) => {
         <div className="d-inlineblock mx-2 ">
           <Row className="justify-content-center">
 
-            {/* Categories */}
+            {/* CATEGORIES */}
             <Col className="d-inline border-end">
               <p className="d-flex justify-content-center">Categories</p>
 
@@ -109,7 +111,7 @@ const Filter = ({setFilter, categories, animation}) => {
                 
             <Col className="d-flex flex-column justify-content-between">
 
-              {/* Verification */}
+              {/* VERIFICATION */}
               <div>
                 <p className="d-flex justify-content-center">Verification</p>
 
@@ -132,11 +134,11 @@ const Filter = ({setFilter, categories, animation}) => {
                 </div>
               </div>
               
-              {/* Time */}
+              {/* TIME */}
               <div>
                 <p className="d-flex justify-content-center"> Last / Actual tasks</p>
 
-                {/* Time -> past */}
+                {/* Time -> Past */}
                 <div key={'time0'} className="form-check">
                   <input className="form-check-input mt-0 time" type="radio" value='Past' name="Time radio" id="Past" onChange={handleCheckboxChange}/>
                   <label className="form-check-label" htmlFor="Past">{'\xa0'} Past </label>

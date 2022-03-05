@@ -1,24 +1,27 @@
 import React, { useState } from 'react';
-import { NAMES_MONTH } from '../Calendar';
-import { Link, useLocation} from 'react-router-dom';
-import { Form, Row, Col, Button } from 'react-bootstrap';
-import ModalBackNewTask from '../../Modals/BackNewTask.js';
-import SimpleOverlayTriggerObject from '../../OverlayTriggers/SimpleOverlayTriggerObject';
-
 import { connect } from 'react-redux';
+import { Link, useLocation} from 'react-router-dom';
+
 import { addTask } from '../../../actions/taskActions';
+import { NAMES_MONTH } from '../../../store/constants';
+import SimpleOverlayTriggerObject from '../../OverlayTriggers/OverlayTriggerObject';
+
+import { Form, Row, Col, Button } from 'react-bootstrap';
+import ModalBackNewTask from '../../Modals/ModalBackNewTask';
 
 const AddTask = (props) => {
   
   const location = useLocation();
-  let {defaultTime} = location.state || '00:00';
-  defaultTime = (defaultTime < 10 ? '0' + defaultTime : defaultTime) + ':00'
-  const taskDate = location.pathname.slice(16,location.pathname.length-8).split('.');
+  let {defaultTime} = location.state || '00:00'; //pobranie domyślnej godziny
+  defaultTime = (defaultTime < 10 ? '0' + defaultTime : defaultTime) + ':00';
+  const taskDate = location.pathname.slice(16,location.pathname.length-8).split('.'); //tablica rozdzielonej daty
   const idDay = location.pathname.slice(16,location.pathname.length-8);
 
+    // weekDay odpowwiada za nazwę dnia tygodnia, która jest przypisana do taska
     let weekDay = new Date(taskDate[2], taskDate[1]-1, taskDate[0], 0, 0);
     weekDay = Intl.DateTimeFormat("en-US", { weekday: 'long'}).format(weekDay);
 
+  // Domyślna struktura taska
   const START_TASK = {
     name: '',
     text: '',
@@ -29,6 +32,7 @@ const AddTask = (props) => {
     weekDay,
     link: `/calendar/tasks/${idDay}`,
   }
+
 
   const [newTask, setNewTask] = useState(START_TASK);
 
@@ -60,6 +64,7 @@ const AddTask = (props) => {
 
   const addNewTaskButton = () => {
     if (newTask.name.length === 0 || newTask.category === '0' || newTask.time === undefined) {
+      // Walidacja związana z niewybraną nazwą, kategorią i czasem
       const elements = [];
 
       !newTask.name.length && elements.push(' short name');
@@ -101,7 +106,7 @@ const AddTask = (props) => {
     }
   }
 
-  
+  // wyświetlanie komunikatu przy powrocie podczas dodawawnia nowego taska
   const [modalBack, setModalBack] = useState(false);
   const handleModalBack = () => setModalBack(!modalBack);
   const backModalFunction = () => {
@@ -182,23 +187,6 @@ const AddTask = (props) => {
           </Form>
         </div>
       </div> 
-
-      <div>
-        {props.currentTasks.map(task => (
-          <div>
-            <p>name = {task.name}</p>
-            <p>priority = {task.priority}</p>
-            <p>category = {task.category}</p>
-            <p>text = {task.text}</p>
-            <p>time = {task.time}</p>
-            <p>idDay = {task.idDay}</p>
-            <p>weekDay = {task.weekDay}</p>
-            <p>link = {task.link}</p>
-            <p>id = {task.id}</p>
-            <p>check = {task.check}</p>
-          </div>
-        ))}
-      </div>
     </React.Fragment>
   );
 }
@@ -211,11 +199,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-//chwilowo do wyświetlenia tasksów
-const mapStateToProps = state => {
-  return {
-    currentTasks: state.TasksReducer.tasks,
-  };
-} 
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddTask);
+export default connect(null, mapDispatchToProps)(AddTask);

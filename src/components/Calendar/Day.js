@@ -1,31 +1,36 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import SimpleOverlayTriggerObject from '../OverlayTriggers/SimpleOverlayTriggerObject';
-import { actualDate } from '../../App';
-
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+
+import { ACTUAL_DATE } from '../../store/constants';
+import OverlayTriggerObject from '../OverlayTriggers/OverlayTriggerObject';
+
 
 const Day = (props) => {
+  // przypisanie do zmiennej stanu magazynu z zadaniami konkretnego dnia
   const tasksInThisDay = props.currentTasks.filter(item => item.idDay === props.id);
 
+  // stała z linkiem do danego dnia
+  const link = `/calendar/tasks/${props.id}`; 
+
   const actualDay = 
-  (actualDate.getDate() < 10 ? '0' + actualDate.getDate() : actualDate.getDate())
+  (ACTUAL_DATE.getDate() < 10 ? '0' + ACTUAL_DATE.getDate() : ACTUAL_DATE.getDate())
    + '.' + 
-  (Number(actualDate.getMonth()+1) < 10 ? '0' + Number(actualDate.getMonth()+1) : Number(actualDate.getMonth()+1))
+  (Number(ACTUAL_DATE.getMonth()+1) < 10 ? '0' + Number(ACTUAL_DATE.getMonth()+1) : Number(ACTUAL_DATE.getMonth()+1))
    + '.' + 
-  actualDate.getFullYear(); 
+  ACTUAL_DATE.getFullYear(); 
   
+  // zmienna zarządzająca klasami stylów 
   let dayStyle = {
     width: '14.285714285714286%',
     minHeight:'70px',
     backgroundColor:'#61A5C2',
-  }; //zmienna zarządzająca klasami stylów 
-
+  }; 
   if (actualDay === props.id) {
     dayStyle.backgroundColor = '#014F86';
   }
-  const link = `/calendar/tasks/${props.id}`; // stała z linkiem do danego dnia
 
+  // ************************************
+  // Zarządzanie wiadomością jakie taski mamy konkretnego dnia po najechaniu na dzień
   const dayTasksCounter = () => {
     if (tasksInThisDay.length > 0) {
       return (
@@ -35,13 +40,12 @@ const Day = (props) => {
             <text fontSize="450%" className="fw-bold" x="75" y="125" width="300%" height="300%" fill="black" transform="translate(0 -20)" >{tasksInThisDay.length}</text>
           </svg>
         </div>
-
       );
     }
   }
 
+  // Tekst w wiadomości (max 5 tasków na dzień)
   const dayObjectText = () => {
-    // const day = tasksList.filter(day => day.idDay === props.id);
     let object = null;
     if (tasksInThisDay.length > 0) {
       object = JSON.parse(JSON.stringify(tasksInThisDay));
@@ -49,7 +53,9 @@ const Day = (props) => {
       object = object.map((task, index) => {
         return (
           <div key={index + '_text'}>
-            <label><strong>{task.name}</strong></label>
+            <label>
+              <strong>{task.name}</strong>
+            </label>
             <div className="d-flex justify-content-between">
               <p className="me-2">{task.category}</p>
               <p>{task.time}</p>
@@ -90,28 +96,18 @@ const Day = (props) => {
       </div>
     </Link>
   }
-  
-  // funkcja która dla dnia który istnieje tworzy konkretny blok z linkiem do niego, jeżeli nie istnieje to tworzy pusty div.
-  const day = () => {
-    if (props.number) {
-      if (tasksInThisDay.length > 0) {
-        return (
-          SimpleOverlayTriggerObject({...dayObject})
-        )
-      } else {
-        return (
-          dayObject.object
-        )
-      }
-    } else {
-      return (
-        <div className=" text-center border" key={props.keys} style={{width: '14.285714285714286%', backgroundColor:'#A9D6E5',minHeight:'70px'}}></div>
-      )
-    }
-  }
-  
+
   return ( 
-    day()
+    // jeżeli props.number === 0 to znaczy że nie istnieje taki dzień w danym miesiącu w danym miejscu
+    props.number ? (
+      tasksInThisDay.length > 0 ? OverlayTriggerObject({...dayObject}) : dayObject.object
+    ) : (
+      <div 
+        key={props.keys} 
+        className="text-center border" 
+        style={{width: '14.285714285714286%', backgroundColor:'#A9D6E5',minHeight:'70px'}}>
+      </div>
+    )
   );
 }
 

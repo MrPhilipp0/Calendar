@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react';
-import { Col, Row } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IconsCategory } from '../../../App';
+import { useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import Task from './Task';
-import SimpleOverlayTriggerObject from '../../OverlayTriggers/SimpleOverlayTriggerObject';
-
 import { connect } from 'react-redux';
 
+import { ICONS } from '../../../store/constants';
+import OverlayTriggerObject from '../../OverlayTriggers/OverlayTriggerObject';
+import Task from './Task';
+
+import { Col, Row } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const HoursList = (props) => {
 
@@ -17,7 +17,7 @@ const HoursList = (props) => {
 
   const dayTasks = props.currentTasks.filter(task => task.idDay === idDay)
 
-
+  // Sprawdzanie czy w danej godzinie występują jakieś zadania i zwrócenie ich do wyświetlenia
   const checkTasksHour = hour => {
     const tasksInHour = dayTasks.filter(task => (Number(task.time.split(':')[0]) === hour));
 
@@ -33,7 +33,7 @@ const HoursList = (props) => {
   
 
   //Przy odpaleniu danego dnia, automatyczne scrolowanie do pierwszego taska
-  const referenceToScroll = React.useRef(null);
+  const referenceToScroll = useRef(null);
 
   useEffect(() => {
     const element = [...referenceToScroll.current.querySelectorAll('.TASK')];
@@ -45,25 +45,28 @@ const HoursList = (props) => {
       {
         hoursList.map(hour => (
           <Row key={hour + '_hour'} className="mx-1 py-1 border-3 border-bottom border-dark">
+
             <Col xs={1} className="p-0 m-0 justify-content-center d-flex">
               <p className="fw-bold h6 ps-2 ps-sm-0">{hour}{':00'}</p>
             </Col>
+
             <Col xs={10}>
               <Row style={{ transition:'2s'}} className="ps-2 ps-sm-0">
                 {dayTasks && checkTasksHour(hour)}
               </Row>
             </Col>
+
             <Col xs={1} className="d-flex justify-content-center">
-            <SimpleOverlayTriggerObject
-              id={hour + '_addTask'}
-              text="Add task"
-              placement="left"
-              object = {
-                <Link to={linkToAddTask} state={{defaultTime: hour}}>
-                  <FontAwesomeIcon className="fs-4" icon={IconsCategory.add}/>
-                </Link>
-              }
-            />
+              <OverlayTriggerObject
+                id={hour + '_addTask'}
+                text="Add task"
+                placement="left"
+                object = {
+                  <Link to={linkToAddTask} state={{defaultTime: hour}}>
+                    <FontAwesomeIcon className="fs-4" icon={ICONS.add}/>
+                  </Link>
+                }
+              />
               
             </Col>
           </Row>

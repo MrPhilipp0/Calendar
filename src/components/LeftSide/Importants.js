@@ -1,70 +1,20 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useRef, useEffect, useState, useContext } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import { BlockFlagContext } from '../Context/BlockFlagContext';
-import { actualDate } from '../../App';
-import SimpleOverlayTriggerObject from '../OverlayTriggers/SimpleOverlayTriggerObject';
-import Filter from './Filter';
 import { checkTask } from '../../actions/taskActions';
+import Filter from './Filter';
+import OverlayTriggerObject from '../OverlayTriggers/OverlayTriggerObject';
+
+import { ACTUAL_DATE, ICONS, DEFAULT_FILTER_OBJECT, DEFAULT_FILTER_CATEGORIES } from '../../store/constants';
 
 import { Button, Col,Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IconsCategory } from '../../App';
 import gsap from 'gsap';
 
 import '../../styles/App.css';
 
-
-const DEFAULT_FILTER_CATEGORIES = [
-  {
-    name: 'Shopping',
-    status: true,
-    type: 'category',
-  },
-  {
-    name: 'Working',
-    status: true,
-    type: 'category',
-  },
-  {
-    name:'Food',
-    status: true,
-    type: 'category',
-  },
-  {
-    name: 'Free Time',
-    status: true,
-    type: 'category',
-  },
-  {
-    name: 'Sport',
-    status: true,
-    type: 'category',
-  },
-  {
-    name: 'Travel',
-    status: true,
-    type: 'category', 
-  },
-  {
-    name: 'Holiday',
-    status: true,
-    type: 'category',
-  },
-  {
-    name: 'Other',
-    status: true,
-    type: 'category',
-  },
-];
-
-// Domyślne ustawienia filtra
-const DEFAULT_FILTER_OBJECT = {
-  categories: DEFAULT_FILTER_CATEGORIES,
-  verified: 'All',
-  time: 'AllTime',
-}
 
 const sortingTasksFunctionByDate = (a, b) => {
   let date1 = a.idDay.split('.');
@@ -90,7 +40,7 @@ const setStyle = () => {
     : {maxHeight:"60vh", overflowY:'auto'}
 }
 
-const Importants = ({currentTasks, checkTaskInState}) => {
+const Importants = ({currentTasks, checkTask}) => {
 
   const mapStorageTasks = () => {
     let tasks = [];
@@ -114,7 +64,7 @@ const Importants = ({currentTasks, checkTaskInState}) => {
     return tasks;
   }
 
-  const {blockFlag} = React.useContext(BlockFlagContext);
+  const {blockFlag} = useContext(BlockFlagContext);
 
   const [mainTasksArray, setMainTasksArray] = useState(mapStorageTasks());
   const [tasksArrayWithFilter, setTasksArrayWithFilter] = useState(mainTasksArray);
@@ -163,7 +113,7 @@ const Importants = ({currentTasks, checkTaskInState}) => {
       shortTasks: [...wrapper.current.querySelectorAll( '.importantShortTask')],
       weekDays: [...wrapper.current.querySelectorAll( '.dayElement')],
     };
-    // Konwersja obiektu elements do tablicy w celu usunięcia wszystkich animacji
+    // Wyodrębnienie właściwości elements do tablicy w celu usunięcia wszystkich animacji
     gsap.killTweensOf(Object.values(elements).flat());
     if (mainTasksArray.length > 0) {
       gsap.effects.moveFromLeft([...elements.shortTasks], {stagger: .1, delay: a});
@@ -201,9 +151,9 @@ const Importants = ({currentTasks, checkTaskInState}) => {
         const taskDate = new Date(taskDay[2], taskDay[1]-1, taskDay[0], taskTime[0], taskTime[1]);
 
         if (filter.time === 'Future') {
-          return taskDate > actualDate
+          return taskDate > ACTUAL_DATE
         } else if (filter.time === 'Past') {
-          return taskDate < actualDate
+          return taskDate < ACTUAL_DATE
         } else {
           return true;
         }
@@ -218,45 +168,55 @@ const Importants = ({currentTasks, checkTaskInState}) => {
   return (
     <div ref={wrapper} className="rounded text-center mt-2 mb-5 pt-3 mx-1 fs-6" style={{color:'rgba(240, 239, 235)'}} onLoad={animationFunction}>
       <div className="d-flex justify-content-center titleImportant">
+
+        {/* Visibility list*/}
         <Button onClick={handleSetVisibilityTasksList} className="my-3 p-1 px-2 me-3">
-          <FontAwesomeIcon icon={visibilityTasksList ? IconsCategory.showTasks : IconsCategory.hiddenTasks} className="p-0"/>
+          <FontAwesomeIcon icon={visibilityTasksList ? ICONS.showTasks : ICONS.hiddenTasks} className="p-0"/>
         </Button>
+        
         <p className="fs-2 m-0 mt-2">
           <b>Your tasks:</b>
         </p>
       </div>
 
+      {/* FILTER */}
       <div className="py-2 border-bottom border-top" >
         <Filter setFilter={setFilter} categories={DEFAULT_FILTER_CATEGORIES} animation={animationFunction}/>
       </div>
 
       <Row key='rowKey' className="m-0 tasksList" style={setStyle()} hidden={!visibilityTasksList}>
+
+        {/* MAP DAYS */} 
         {
           tasksArrayWithFilter.map(day => (
             <Col key={day.idDay} md={12} className="border-bottom py-1">
               <div className="d-flex ms-0 h5 justify-content-between dayElement">
+
+                {/* Weekday */}
                 <label className="fw-bold">
                   {day.weekDay}
                 </label>
                 <div>
+                  {/* Date */}
                   <label className="pe-2">
                     {day.idDay}
                   </label>
 
-                  {/* Go to task */}
-                  <SimpleOverlayTriggerObject 
+                  {/* Go to the task */}
+                  <OverlayTriggerObject 
                     id={day.idDay} 
                     text="Click to go to day" 
                     placement="top" 
                     object={
                       <Link to={!blockFlag ? day.link : '#'} className="pe-2" style={blockFlag ? {pointerEvents:'none', color:'grey'} : null}>
-                        <FontAwesomeIcon icon={IconsCategory.goToTask} className="p-0"/>
+                        <FontAwesomeIcon icon={ICONS.goToTask} className="p-0"/>
                       </Link>
                     } 
                   />
                 </div>
               </div>
-
+              
+              {/* MAP TASKS */}
               {
                 day.tasks.map(task => (
                   <Col md={12} className="border-bottom py-1 importantShortTask" key={task.id + '_object'}>
@@ -264,33 +224,33 @@ const Importants = ({currentTasks, checkTaskInState}) => {
                       <Col xs={4} className="d-flex">
 
                         {/* Category icon */}
-                        <SimpleOverlayTriggerObject 
+                        <OverlayTriggerObject 
                           id={task.id}
                           text={task.category}
                           placement="top"
                           object = {
                             <div>
-                              <FontAwesomeIcon className="pe-3 mt-1" icon={IconsCategory[task.category]} color={task.check ? '#b5c99a' : '#ffc8dd'}/>
+                              <FontAwesomeIcon className="pe-3 mt-1" icon={ICONS[task.category]} color={task.check ? '#b5c99a' : '#ffc8dd'}/>
                             </div>
                           }
                         />
                         
-
                         {/* Time */}
                         <span className="me-2" style={{color: task.check ? '#87986a' : '#ffb3c1'}}>
                           {task.time}
                         </span>
+
                       </Col>
                       <Col xs={1} className="d-flex me-3">
 
                         {/* Check */}
-                        <SimpleOverlayTriggerObject 
+                        <OverlayTriggerObject 
                           id={task.id}
                           text={task.check ? 'Not done!' : 'Done!'}
                           placement="top"
                           object = {
                             <div style={{cursor:'pointer'}}>
-                              <FontAwesomeIcon className="p-0 mt-1"  color={task.check ? 'green' : 'red'} icon={task.check ? IconsCategory.check : IconsCategory.noCheck} onClick={() => checkTaskInState(task.id)}/>
+                              <FontAwesomeIcon className="p-0 mt-1"  color={task.check ? 'green' : 'red'} icon={task.check ? ICONS.check : ICONS.noCheck} onClick={() => checkTask(task.id)}/>
                             </div>
                           }
                         />
@@ -305,6 +265,7 @@ const Importants = ({currentTasks, checkTaskInState}) => {
                         <p className="mb-1" style={{textDecoration: task.check && 'line-through', color: task.check ? '#87986a' : '#ffb3c1'}}>
                           {task.name}
                         </p>
+
                       </Col>
                       <Col xs={3} className="pe-2">
 
@@ -337,7 +298,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    checkTaskInState : id => {
+    checkTask : id => {
       dispatch(checkTask(id));
     }
   }

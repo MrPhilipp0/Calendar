@@ -1,4 +1,3 @@
-import React from 'react';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 
 // const exampleObject = {
@@ -11,22 +10,24 @@ import { OverlayTrigger, Popover } from 'react-bootstrap';
 //   </label>
 // }
 
-const SimpleOverlayTriggerObject = (props) => {
+// Wyświetlanie krótkiego tekstu przy danym elemencie (np. button) po operacji hover / focus / click 
+
+const OverlayTriggerObject = ({ref, id, placement, text, object}) => {
   return ( 
     <OverlayTrigger
-        ref={props.ref}
-        key={props.id + '_overlayTrigger'}
-        placement={props.placement}
+        ref={ref}
+        key={id + '_overlayTrigger'}
+        placement={placement}
         overlay={
           <Popover>
             <Popover.Body>
-              {props.text} 
+              {text} 
             </Popover.Body>
           </Popover>
         }>
-        {props.object}
+        {object}
       </OverlayTrigger>
    );
 }
  
-export default SimpleOverlayTriggerObject;
+export default OverlayTriggerObject;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import EditingTask from '../Calendar/Tasks/TaskVariants/EditingTask';
 
@@ -6,12 +6,12 @@ import { connect } from 'react-redux';
 import { updateTask } from '../../actions/taskActions';
 
 const ModalEditTask = ({ 
-  task, modalEdit, handleModalEdit,
+  task, 
+  modalEdit, handleModalEdit,
   updateTaskInState}) => {
 
-  const [alertShortName, setAlertShortName] = useState(false); 
-
-  const [editTask, setEditTask] = useState(task);
+  const [alertName, setAlertName] = useState(false); 
+  const [editTask, setEditTask] = useState(task); //state with editing task
 
   const handleChange = e => {
     const prevTask = JSON.parse(JSON.stringify(editTask));
@@ -29,13 +29,14 @@ const ModalEditTask = ({
     setEditTask(prevTask);
   }
 
+  // Showing AlertName
   useEffect(() => {
-    !editTask.name.length ? setAlertShortName(true) : setAlertShortName(false);
+    !editTask.name.length ? setAlertName(true) : setAlertName(false);
   },[editTask.name.length])
 
   const saveButtonFunction = () => {
     handleModalEdit();
-    updateTaskInState(editTask.id, editTask)
+    updateTaskInState(editTask.id, editTask);
   }
 
   const backButtonFunction = () => {
@@ -45,30 +46,40 @@ const ModalEditTask = ({
 
 
   return (
-    <Modal size="xl" show={modalEdit} onHide={handleModalEdit} backdrop="static" keyboard={false} >
-      <Modal.Header style={{ backgroundColor:'#014F86', color:'#fff0f3'}} closeButton={false}>
+    <Modal 
+      size="xl" 
+      show={modalEdit} 
+      onHide={handleModalEdit} 
+      backdrop="static" 
+      keyboard={false} >
+
+      <Modal.Header style={{ backgroundColor:'#014F86', color:'#fff0f3' }} closeButton={false}>
         <Modal.Title><strong>Editing Task</strong></Modal.Title>
       </Modal.Header>
+
       <Modal.Body>
-        <EditingTask  task={editTask} handleChange={handleChange} />
+        <EditingTask task={editTask} handleChange={handleChange} />
       </Modal.Body>
+
       <Modal.Footer style={{ backgroundColor:'#014F86', color:'#fff0f3'}} className="justify-content-between">
-      <p>
-        {alertShortName && 'You must write your short name task!'}
-      </p>
-      <div>
-        <Button 
-          variant="light" 
-          onClick={editTask.name.length ? saveButtonFunction : undefined} 
-          className="me-3"> 
-          <strong> Save </strong>
-        </Button>
-        <Button
-          variant="light" 
-          onClick={backButtonFunction}> 
-          <strong> Back </strong> 
-        </Button>
-      </div>
+        <p>
+          {alertName && 'You must write your short name task!'}
+        </p>
+        <div>
+
+          <Button 
+            variant="light" 
+            onClick={editTask.name.length ? saveButtonFunction : undefined} 
+            className="me-3"> 
+            <strong> Save </strong>
+          </Button>
+          <Button
+            variant="light" 
+            onClick={backButtonFunction}> 
+            <strong> Back </strong> 
+          </Button>
+          
+        </div>
       </Modal.Footer>
     </Modal>
   );

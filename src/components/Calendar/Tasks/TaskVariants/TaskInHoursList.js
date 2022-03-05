@@ -1,11 +1,10 @@
-import React from 'react';
+import { ICONS, TASKS_COLORS } from '../../../../store/constants'
 import ModalDeleteTask from '../../../Modals/ModalDeleteTask';
-import SimpleOverlayTriggerObject from '../../../OverlayTriggers/SimpleOverlayTriggerObject';
+import OverlayTriggerObject from '../../../OverlayTriggers/OverlayTriggerObject';
+
 import { Button, ButtonGroup, Col, ToggleButton } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IconsCategory } from '../../../../App';
 import '../../../../styles/App.css';
-import { TasksColors } from '../../../../App';
 
 const TaskInHoursList = ({ task, deleteTask, checkTask, 
   handleModalEdit, 
@@ -17,7 +16,7 @@ const TaskInHoursList = ({ task, deleteTask, checkTask,
     placement: 'top',
     object: 
     <label className="my-auto fs-5">
-      <FontAwesomeIcon icon={IconsCategory[task.category]}/>
+      <FontAwesomeIcon icon={ICONS[task.category]}/>
     </label>
   }
 
@@ -34,21 +33,24 @@ const TaskInHoursList = ({ task, deleteTask, checkTask,
   return (
     <Col style={{boxShadow: '4px 3px 8px black'}}>
       <ModalDeleteTask state={modalDelete} handle={handleModalDelete} deleteTask={deleteTask}/>
-      <div style={{background:TasksColors[task.category]}} className="d-flex taskInHoursList" id={`NoEditingTask${task.id}`} >
+      <div style={{background:TASKS_COLORS[task.category]}} className="d-flex taskInHoursList" id={`NoEditingTask${task.id}`} >
 
         <div className="flex-grow-1" onClick={() => handleModalEdit()}>
+          {/* Time + Name */}
           <div className="d-flex">
             <p className="ms-1 p-1 mb-0"><strong>{task.time}</strong></p>
             <p className="h5 text-center fw-bold p-1 ms-2 mt-1 mb-0" style={{textDecoration: task.check && 'line-through'}}>{task.name}</p>
           </div>
+          {/* Category + Text */}
           <div className="d-flex">
             <div className="mx-2 mt-1">
-              {SimpleOverlayTriggerObject({...categoryOverlayTrigger})}
+              {OverlayTriggerObject({...categoryOverlayTrigger})}
             </div>
             <p className="text-break m-2" style={{fontSize:"13px"}}>{task.text}</p>
           </div>
         </div>
         <div className="mt-1 mb-1 my-auto mx-1">
+          {/* Check + Delete */}
           <ButtonGroup vertical className="py-1">
             <ToggleButton
               className="shadow-none"
@@ -59,14 +61,16 @@ const TaskInHoursList = ({ task, deleteTask, checkTask,
               value="1"
               onChange={checkTask}
             >
-              <FontAwesomeIcon className="fs-6" icon={task.check ? IconsCategory.check : IconsCategory.noCheck}/>
+              <FontAwesomeIcon className="fs-6" icon={task.check ? ICONS.check : ICONS.noCheck}/>
             </ToggleButton>
+
             <Button className="px-2" onClick={handleModalDelete}>
-              <FontAwesomeIcon className="fs-6 mt-1" icon={IconsCategory.delete}/>
+              <FontAwesomeIcon className="fs-6 mt-1" icon={ICONS.delete}/>
             </Button>
           </ButtonGroup>
-        </div>
 
+        </div>
+        
         <div className="d-flex flex-column justify-content-center m-1 mx-1" onClick={handleModalEdit}>
           {priorityStars()}
         </div>

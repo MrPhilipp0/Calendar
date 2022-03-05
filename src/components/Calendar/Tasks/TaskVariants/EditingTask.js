@@ -1,16 +1,12 @@
-import React from 'react';
 import { Col, Row, Form } from 'react-bootstrap';
-
 
 const EditingTask = ({task, handleChange}) => {
 
-  const handleSubmit = e => e.preventDefault();
-
   return (
-    <Form noValidate onSubmit={handleSubmit} className="m-2" id={`EdiitngTask${task.id}`}>
+    <Form noValidate onSubmit={e => e.preventDefault()} className="m-2" id={`EdiitngTask${task.id}`}>
       <Row noValidate className="mb-2">
 
-        {/* Short name */}
+        {/* Name */}
         <Col sm="6">
           <Form.Group className="mt-0">
             <Form.Label>

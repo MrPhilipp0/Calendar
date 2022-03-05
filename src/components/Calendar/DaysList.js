@@ -1,10 +1,8 @@
-import React from 'react';
 import Day from './Day';
-import { NAMES_WEEKDAY } from './Calendar';
+import { NAMES_WEEKDAY } from '../../store/constants';
 
 const DaysList = ({date}) => {
 
-  // const day = date.day;
   const month = date.month;
   const year = date.year;
   const firstDayOfMonth = new Date(year, month, 1,0,0,0,0); //pierwszy dzień w danym miesiacu
@@ -17,39 +15,40 @@ const DaysList = ({date}) => {
   const weeks = [[],[],[],[],[],[]];
 
   // iterowanie po tablicy 42 elementów (tak jakby 6 tygodni), przypisanie wartości dopiero od pierwszego dnia w miesiącu oraz dnia tygodnia
-  const days = () => {
-    let j=1;
-    for(let i=0; i < objects.length; i++) {
-      const dayNumber = j < 10 ? '0' + j : j;
-      const monthNumber = Number(month +1) < 10 ? '0' + Number(month +1) : Number(month +1);
+  let j=1;
+  for (let i=0; i < objects.length; i++) {
+    const dayNumber = j < 10 ? '0' + j : j;
+    const monthNumber = Number(month +1) < 10 ? '0' + Number(month +1) : Number(month +1);
 
-      if(i >= indexOfFirstDayOfMonth - 1 && i <= numberOfLastDayOfMonth - 2 + indexOfFirstDayOfMonth) {
-        objects[i] = {
-          number: j,
-          id: dayNumber + '.' + monthNumber + '.' + year,
-        };
-        j++;
-      } else { 
-        objects[i] = {
-          number: 0,
-          id: '-' + i + '.' + monthNumber + '.' + year,
-        };
-      }
-      weeks[Math.floor((i)/7)].push(objects[i]);
+    if(i >= indexOfFirstDayOfMonth - 1 && i <= numberOfLastDayOfMonth - 2 + indexOfFirstDayOfMonth) {
+      objects[i] = {
+        number: j,
+        id: dayNumber + '.' + monthNumber + '.' + year,
+      };
+      j++;
+    } else { 
+      objects[i] = {
+        number: 0,
+        id: '-' + i + '.' + monthNumber + '.' + year,
+      };
     }
+    weeks[Math.floor((i)/7)].push(objects[i]);
   }
-  
-  days();
 
   // obcięcie tablicy tworzącej dni do 5 tygodni, jeżeli miesiąc mieści się w nich.
   if (weeks[5][0].number === 0) weeks.length = 5; 
   
-  // mapowanie po tablicy objects w celu utworzenia wszystkich dni w miesiącu
-  // const Days = objects.map(day => <Day key={day.key} keys={day.key} number={day.number} date={date}/>);
 
   const Weeks = weeks.map((week, index) => (
     <div key={index + '_week'} className="d-flex justify-content-center mx-0 my-0" >
-      {week.map((day,index) => <Day key={day.id} id={day.id} number={day.number} date={date} weekday={NAMES_WEEKDAY[index]}/>)}
+      {week.map((day,index) => 
+        <Day 
+          key={day.id} 
+          id={day.id} 
+          number={day.number} 
+          date={date} 
+          weekday={NAMES_WEEKDAY[index]}
+        />)}
     </div>
   ))
   
