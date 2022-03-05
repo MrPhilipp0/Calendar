@@ -14,8 +14,8 @@ const AddTask = (props) => {
   const location = useLocation();
   let {defaultTime} = location.state || '00:00'; //pobranie domyślnej godziny
   defaultTime = (defaultTime < 10 ? '0' + defaultTime : defaultTime) + ':00';
-  const taskDate = location.pathname.slice(7,location.pathname.length-8).split('.'); //tablica rozdzielonej daty
-  const idDay = location.pathname.slice(7,location.pathname.length-8);
+  const taskDate = location.pathname.slice(16,location.pathname.length-8).split('.'); //tablica rozdzielonej daty
+  const idDay = location.pathname.slice(16,location.pathname.length-8);
 
     // weekDay odpowwiada za nazwę dnia tygodnia, która jest przypisana do taska
     let weekDay = new Date(taskDate[2], taskDate[1]-1, taskDate[0], 0, 0);
@@ -30,7 +30,7 @@ const AddTask = (props) => {
     time: defaultTime,
     idDay,
     weekDay,
-    link: `/tasks/${idDay}`,
+    link: `/schedule/tasks/${idDay}`,
   }
 
 
@@ -95,7 +95,7 @@ const AddTask = (props) => {
   const backButton = () => {
     if (newTask.name.length === 0 && newTask.text.length === 0) { 
       return (
-        <Link to={'/tasks/' + idDay}>
+        <Link to={'/schedule/tasks/' + idDay}>
           <Button variant="primary" onClick={() => props.setBlockFlag(false)}>BACK</Button>
         </Link>
       )
@@ -125,7 +125,7 @@ const AddTask = (props) => {
         {/* Header */}
         <div style={{ backgroundColor:'#014F86', color:'#fff0f3'}} className="d-flex mb-1 rounded">
           <p className="my-3 fs-3 fw-bold ms-4">ADD NEW TASK</p>
-          <p className="my-3 fs-3 fw-light ms-auto me-4"> {taskDate[0]} {NAMES_MONTH[taskDate[1]]} {taskDate[2]} </p>
+          <p className="my-3 fs-3 fw-light ms-auto me-4"> {taskDate[0]} {NAMES_MONTH[Number(taskDate[1])]} {taskDate[2]} </p>
         </div>
 
         <div style={{ backgroundImage: 'linear-gradient(to right top, #fdc5f5, #edcbfe, #ddd2ff, #d0d7ff, #c6dbff, #bcdbff, #b2dafe, #a7dafc, #95d6fa, #81d1f7, #69cdf4, #4cc9f0)'}} className="p-1 px-2">

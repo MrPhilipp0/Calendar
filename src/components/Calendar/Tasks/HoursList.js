@@ -12,8 +12,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 const HoursList = (props) => {
 
   const location = useLocation();
-  const idDay = location.pathname.slice(7);
-  const linkToAddTask = `/tasks/${idDay}/addTask`;
+  const idDay = location.pathname.slice(16);
+  const linkToAddTask = `/schedule/tasks/${idDay}/addTask`;
 
   const dayTasks = props.currentTasks.filter(task => task.idDay === idDay)
 

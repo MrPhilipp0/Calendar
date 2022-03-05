@@ -10,8 +10,8 @@ const App = () => {
     <Provider store={store}>
       <Router>
         <Routes>
-          <Route index element={<StartSide />} />
-          <Route path="tasks/*" element={<Schedule />} />
+          <Route path="schedule" element={<StartSide />} />
+          <Route path="schedule/tasks/*" element={<Schedule />} />
         </Routes>
       </Router>
     </Provider>

@@ -12,7 +12,7 @@ const Tasks = () => {
 
   // użycie lokalizacji w celu zdobycia daty konkretnego dnia
   const location = useLocation();
-  const taskDate = location.pathname.slice(7).split('.'); 
+  const taskDate = location.pathname.slice(16).split('.'); 
 
   const {blockFlag} = useContext(BlockFlagContext);
   const wrapper = useRef(null);
@@ -30,7 +30,7 @@ const Tasks = () => {
     <div className="rounded-3 my-2 mx-1 mx-md-2" ref={!blockFlag ? wrapper : null}>
 
       <div style={{ backgroundColor:'#014F86', color:'#fff0f3'}} className="d-flex rounded">
-        <Link to={!blockFlag && '/tasks/'}> 
+        <Link to={!blockFlag && '/schedule/tasks/'}> 
           <FontAwesomeIcon className="fs-1 my-3 ms-3" style={{color:'black'}} icon={ICONS.back}/>
         </Link>
         <p className="my-3 fs-3 fw-bold ms-4">TASKS</p>
