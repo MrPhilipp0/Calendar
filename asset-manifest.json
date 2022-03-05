@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/Schedule/start-side/static/css/main.e938eba3.chunk.css",
-    "main.js": "/Schedule/start-side/static/js/main.5f61afc4.chunk.js",
-    "main.js.map": "/Schedule/start-side/static/js/main.5f61afc4.chunk.js.map",
-    "runtime-main.js": "/Schedule/start-side/static/js/runtime-main.e34e3677.js",
-    "runtime-main.js.map": "/Schedule/start-side/static/js/runtime-main.e34e3677.js.map",
-    "static/js/2.9261dd34.chunk.js": "/Schedule/start-side/static/js/2.9261dd34.chunk.js",
-    "static/js/2.9261dd34.chunk.js.map": "/Schedule/start-side/static/js/2.9261dd34.chunk.js.map",
-    "static/js/3.0b45d0d3.chunk.js": "/Schedule/start-side/static/js/3.0b45d0d3.chunk.js",
-    "static/js/3.0b45d0d3.chunk.js.map": "/Schedule/start-side/static/js/3.0b45d0d3.chunk.js.map",
-    "index.html": "/Schedule/start-side/index.html",
-    "static/css/main.e938eba3.chunk.css.map": "/Schedule/start-side/static/css/main.e938eba3.chunk.css.map",
-    "static/js/2.9261dd34.chunk.js.LICENSE.txt": "/Schedule/start-side/static/js/2.9261dd34.chunk.js.LICENSE.txt",
-    "static/media/App.css": "/Schedule/start-side/static/media/bg.5c8b9a2d.svg",
-    "static/media/hello.15319332.svg": "/Schedule/start-side/static/media/hello.15319332.svg"
+    "main.css": "/Schedule/static/css/main.5f047133.chunk.css",
+    "main.js": "/Schedule/static/js/main.9c0223ce.chunk.js",
+    "main.js.map": "/Schedule/static/js/main.9c0223ce.chunk.js.map",
+    "runtime-main.js": "/Schedule/static/js/runtime-main.6ec522eb.js",
+    "runtime-main.js.map": "/Schedule/static/js/runtime-main.6ec522eb.js.map",
+    "static/js/2.1b1639e5.chunk.js": "/Schedule/static/js/2.1b1639e5.chunk.js",
+    "static/js/2.1b1639e5.chunk.js.map": "/Schedule/static/js/2.1b1639e5.chunk.js.map",
+    "static/js/3.4d707882.chunk.js": "/Schedule/static/js/3.4d707882.chunk.js",
+    "static/js/3.4d707882.chunk.js.map": "/Schedule/static/js/3.4d707882.chunk.js.map",
+    "index.html": "/Schedule/index.html",
+    "static/css/main.5f047133.chunk.css.map": "/Schedule/static/css/main.5f047133.chunk.css.map",
+    "static/js/2.1b1639e5.chunk.js.LICENSE.txt": "/Schedule/static/js/2.1b1639e5.chunk.js.LICENSE.txt",
+    "static/media/App.css": "/Schedule/static/media/bg.5c8b9a2d.svg",
+    "static/media/hello.15319332.svg": "/Schedule/static/media/hello.15319332.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.e34e3677.js",
-    "static/js/2.9261dd34.chunk.js",
-    "static/css/main.e938eba3.chunk.css",
-    "static/js/main.5f61afc4.chunk.js"
+    "static/js/runtime-main.6ec522eb.js",
+    "static/js/2.1b1639e5.chunk.js",
+    "static/css/main.5f047133.chunk.css",
+    "static/js/main.9c0223ce.chunk.js"
   ]
 }
