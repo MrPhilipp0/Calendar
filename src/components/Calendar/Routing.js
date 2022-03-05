@@ -9,8 +9,8 @@ const Routing = ({handleClick, date, handleSetBlockFlag, handleChangeDate}) => {
   return (
     <Routes>
       <Route path="/" element={<Calendar click={handleClick} date={date} handleChangeDate={handleChangeDate}/>} />
-      <Route path="/calendar/tasks/:id" element={<Tasks/>} />
-      <Route path="/calendar/tasks/:id/addTask" element ={<AddTask setBlockFlag={handleSetBlockFlag}/>} />
+      <Route path=":id" element={<Tasks/>} />
+      <Route path=":id/addTask" element ={<AddTask setBlockFlag={handleSetBlockFlag}/>} />
     </Routes>
   );
 }

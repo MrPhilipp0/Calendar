@@ -10,7 +10,7 @@ const Day = (props) => {
   const tasksInThisDay = props.currentTasks.filter(item => item.idDay === props.id);
 
   // stała z linkiem do danego dnia
-  const link = `/calendar/tasks/${props.id}`; 
+  const link = `/tasks/${props.id}`; 
 
   const actualDay = 
   (ACTUAL_DATE.getDate() < 10 ? '0' + ACTUAL_DATE.getDate() : ACTUAL_DATE.getDate())

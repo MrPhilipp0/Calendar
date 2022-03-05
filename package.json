@@ -1,6 +1,6 @@
 {
-  "homepage": "https://mrphilipp0.github.io/start-side",
-  "name": "calendar",
+  "homepage": "https://mrphilipp0.github.io/schedule/",
+  "name": "schedule",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

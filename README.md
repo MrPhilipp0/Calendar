@@ -1,1 +1,1 @@
-# https://mrphilipp0.github.io/Calendar/
+# https://mrphilipp0.github.io/schedule/

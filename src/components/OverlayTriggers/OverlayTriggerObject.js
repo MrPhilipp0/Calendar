@@ -1,4 +1,5 @@
 import { OverlayTrigger, Popover } from 'react-bootstrap';
+import { MOBILE } from '../../store/constants';
 
 // const exampleObject = {
 //   id: id,
@@ -11,9 +12,10 @@ import { OverlayTrigger, Popover } from 'react-bootstrap';
 // }
 
 // Wyświetlanie krótkiego tekstu przy danym elemencie (np. button) po operacji hover / focus / click 
-
 const OverlayTriggerObject = ({ref, id, placement, text, object}) => {
-  return ( 
+  return MOBILE ? (
+    object
+  ) : (
     <OverlayTrigger
         ref={ref}
         key={id + '_overlayTrigger'}
@@ -27,7 +29,7 @@ const OverlayTriggerObject = ({ref, id, placement, text, object}) => {
         }>
         {object}
       </OverlayTrigger>
-   );
+  )
 }
  
 export default OverlayTriggerObject;

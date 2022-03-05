@@ -14,8 +14,8 @@ const AddTask = (props) => {
   const location = useLocation();
   let {defaultTime} = location.state || '00:00'; //pobranie domyślnej godziny
   defaultTime = (defaultTime < 10 ? '0' + defaultTime : defaultTime) + ':00';
-  const taskDate = location.pathname.slice(16,location.pathname.length-8).split('.'); //tablica rozdzielonej daty
-  const idDay = location.pathname.slice(16,location.pathname.length-8);
+  const taskDate = location.pathname.slice(7,location.pathname.length-8).split('.'); //tablica rozdzielonej daty
+  const idDay = location.pathname.slice(7,location.pathname.length-8);
 
     // weekDay odpowwiada za nazwę dnia tygodnia, która jest przypisana do taska
     let weekDay = new Date(taskDate[2], taskDate[1]-1, taskDate[0], 0, 0);
@@ -30,7 +30,7 @@ const AddTask = (props) => {
     time: defaultTime,
     idDay,
     weekDay,
-    link: `/calendar/tasks/${idDay}`,
+    link: `/tasks/${idDay}`,
   }
 
 
@@ -95,7 +95,7 @@ const AddTask = (props) => {
   const backButton = () => {
     if (newTask.name.length === 0 && newTask.text.length === 0) { 
       return (
-        <Link to={'/calendar/tasks/' + idDay}>
+        <Link to={'/tasks/' + idDay}>
           <Button variant="primary" onClick={() => props.setBlockFlag(false)}>BACK</Button>
         </Link>
       )
@@ -119,7 +119,7 @@ const AddTask = (props) => {
   return (
     <React.Fragment>
       {props.setBlockFlag(true)}
-      <ModalBackNewTask state={modalBack} handle={handleModalBack} link={'/calendar/tasks/' + idDay} backFunction={backModalFunction}/>
+      <ModalBackNewTask state={modalBack} handle={handleModalBack} link={'/tasks/' + idDay} backFunction={backModalFunction}/>
       <div className="d-flex flex-column rounded-3 my-2 mx-md-2">
 
         {/* Header */}

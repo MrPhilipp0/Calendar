@@ -1,9 +1,9 @@
 {
-  "short_name": "Schedule",
+  "short_name": "schedule",
   "name": "Simple schedule App",
-  "start_url": "*/start-side/",
+  "start_url": "/",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff",
-  "homepage": "https://mrphilipp0.github.io/start-side/"
+  "homepage": "https://mrphilipp0.github.io/schedule/"
 }

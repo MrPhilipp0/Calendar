@@ -7,7 +7,7 @@ import { checkTask } from '../../actions/taskActions';
 import Filter from './Filter';
 import OverlayTriggerObject from '../OverlayTriggers/OverlayTriggerObject';
 
-import { ACTUAL_DATE, ICONS, DEFAULT_FILTER_OBJECT, DEFAULT_FILTER_CATEGORIES } from '../../store/constants';
+import { MOBILE, ACTUAL_DATE, ICONS, DEFAULT_FILTER_OBJECT, DEFAULT_FILTER_CATEGORIES } from '../../store/constants';
 
 import { Button, Col,Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -32,12 +32,6 @@ const sortingTasksFunctionByTime = (a, b) => {
   time1 = 60 * time1[0] + time1[1];
   time2 = 60 * time2[0] + time2[1];
   return time1 - time2
-}
-
-const setStyle = () => {
-  return document.body.clientWidth < 768 ?
-    {maxHeight:"30vh", overflowY:'auto'}
-    : {maxHeight:"60vh", overflowY:'auto'}
 }
 
 const Importants = ({currentTasks, checkTask}) => {
@@ -184,7 +178,7 @@ const Importants = ({currentTasks, checkTask}) => {
         <Filter setFilter={setFilter} categories={DEFAULT_FILTER_CATEGORIES} animation={animationFunction}/>
       </div>
 
-      <Row key='rowKey' className="m-0 tasksList" style={setStyle()} hidden={!visibilityTasksList}>
+      <Row key='rowKey' className="m-0 tasksList" style={MOBILE ? {maxHeight:"30vh", overflowY:'auto'} : {maxHeight:"60vh", overflowY:'auto'}} hidden={!visibilityTasksList}>
 
         {/* MAP DAYS */} 
         {

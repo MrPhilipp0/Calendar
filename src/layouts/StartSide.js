@@ -10,21 +10,19 @@ const StartSide = () => {
 
   const wrapper = useRef(null);
 
-  useEffect(() => {
-    const [elements] = wrapper.current.children;
-    const woman = elements.getElementById('woman');
-    const womanCheck = elements.getElementById('womanCheck');
-    const man = elements.getElementById('man');
-    const checks = elements.querySelectorAll('.check');
-    const days = elements.querySelectorAll('.day');
-    const calendar = elements.getElementById('calendar');
+  // useEffect(() => {
+  //   const [elements] = wrapper.current.children;
+  //   const woman = elements.getElementById('woman');
+  //   const womanCheck = elements.getElementById('womanCheck');
+  //   const man = elements.getElementById('man');
+  //   const checks = elements.querySelectorAll('.check');
+  //   const days = elements.querySelectorAll('.day');
+  //   const calendar = elements.getElementById('calendar');
 
-    console.log([...checks]);
+  //   const tl = gsap.timeline({defaults: {ease: 'power4.inOut'}});
 
-    const tl = gsap.timeline({defaults: {ease: 'power4.inOut'}});
-
-    tl.fromTo([...checks], {x:'-10000%'}, {x:'0%', stagger: .1, duration: 3});
-  },[])
+  //   tl.fromTo([...checks], {x:'-10000%'}, {x:'0%', stagger: .1, duration: 3});
+  // },[])
 
 
   return (
@@ -43,7 +41,7 @@ const StartSide = () => {
           <HelloSVG />
         </div>
         <Button variant="dark" size='lg' className="p-sm-3 px-sm-5 display-5 position-absolute align-items-center" style={{marginTop:'40vh'}} disabled> SIGN IN </Button>
-        <Link to="/" className="display-5 position-absolute align-items-center"  style={{marginTop:'60vh'}}>
+        <Link to="tasks" className="display-5 position-absolute align-items-center"  style={{marginTop:'60vh'}}>
           <Button className="p-sm-3 px-sm-5" variant="dark" size='lg'> CONTINUE WITHOUT LOGIN </Button>
         </Link>
       </div>
