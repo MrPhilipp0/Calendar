@@ -102,7 +102,7 @@ const Importants = ({currentTasks, checkTask}) => {
     extendTimeline: false
   });
 
-  const animationFunction = (a = 1) => {
+  const animationFunction = (a = 0) => {
     const elements = {
       shortTasks: [...wrapper.current.querySelectorAll( '.importantShortTask')],
       weekDays: [...wrapper.current.querySelectorAll( '.dayElement')],

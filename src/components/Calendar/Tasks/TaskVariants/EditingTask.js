@@ -1,24 +1,23 @@
 import { Col, Row, Form } from 'react-bootstrap';
+import { CATEGORIES } from '../../../../store/constants';
+
+const margins = 'mt-2 ms-2 fw-bold';
 
 const EditingTask = ({task, handleChange}) => {
 
   return (
     <Form noValidate onSubmit={e => e.preventDefault()} className="m-2" id={`EdiitngTask${task.id}`}>
-      <Row noValidate className="mb-2">
+      <Row noValidate>
 
         {/* Name */}
-        <Col sm="6">
-          <Form.Group className="mt-0">
-            <Form.Label>
-              <div className="text-center m-0 p-0"> Short Name </div>
-            </Form.Label>
-            <Form.Control id="inputShortName" type="text" onChange={handleChange} name='name' value={task.name}/>
-          </Form.Group>
-        </Col>
+        <Form.Group as={Col} lg={6} className="mt-2">
+          <Form.Label className={margins}> Name </Form.Label>
+          <Form.Control id="inputDescription" type="input" onChange={handleChange} name='name' value={task.name}/>
+        </Form.Group>
 
         {/* Priority */}
-        <Form.Group as={Col} sm="2" className="lh-1 mt-2 mt-sm-0">
-          <Form.Label className="mt-2"> Priority </Form.Label>
+        <Form.Group as={Col} lg={3} className="mt-2">
+          <Form.Label className={margins}> Priority </Form.Label>
           <Form.Select name='priority' value={task.priority} onChange={handleChange}>
             <option value={1}>1</option>
             <option value={2}>2</option>
@@ -27,37 +26,34 @@ const EditingTask = ({task, handleChange}) => {
         </Form.Group>
 
         {/* Category */}
-        <Form.Group as={Col} sm="2" className="lh-1 ps-sm-0 mt-2 mt-sm-0">
-          <Form.Label className="mt-2">Category</Form.Label>
-          <Form.Select className="ps-1 pe-0" name='category' value={task.category} onChange={handleChange}>
-            <option value="Shopping">Shopping</option>
-            <option value="Working">Working</option>
-            <option value="Food">Food</option>
-            <option value="Free Time">Free Time</option>
-            <option value="Sport">Sport</option>
-            <option value="Travel">Travel</option>
-            <option value="Holiday">Holiday</option>
-            <option value="Other">Other</option>
+        <Form.Group as={Col} lg={3} className="mt-2">
+          <Form.Label className={margins}>Category</Form.Label>
+          <Form.Select className="ps-2 pe-0" name='category' value={task.category} onChange={handleChange}>
+            {CATEGORIES.map((category, index) => <option key={index} value={category}>{category}</option>)}
           </Form.Select>
-        </Form.Group>
-
-        {/* Time */}
-        <Form.Group as={Col} sm="2" className="lh-1 ps-sm-0 mt-2 mt-sm-0">
-          <Form.Label className="mt-2"> Time </Form.Label>
-          <Form.Control className="ps-1 pe-0" id="inputTime" type="time" onChange={handleChange} name='time' value={task.time}/>
         </Form.Group>
       </Row>
 
-      {/* Description */}
       <Row>
-        <Form.Group className="mt-1" as={Col} sm={12}>
-          <Form.Label>
-            <div className="text-center m-0 p-0"> Description </div>
-          </Form.Label>
+        
+        {/* Time */}
+        <Form.Group as={Col} lg={3} className="mt-2">
+          <Form.Label className={margins}> Time </Form.Label>
+          <Form.Control className="ps-2 pe-2" id="inputTime" type="time" onChange={handleChange} name='time' value={task.time}/>
+        </Form.Group>
+        
+        {/* Date */}
+        <Form.Group as={Col} lg={3} className="mt-2">
+          <Form.Label className={margins}> Date </Form.Label>
+          <Form.Control className="ps-2 pe-2" id="inputDate" type="date" onChange={handleChange} name='date' value={task.idDay.split('.').reverse().join('-')}/>
+        </Form.Group>
+
+        {/* Description */}
+        <Form.Group as={Col} lg={6} className="mt-2">
+          <Form.Label className={margins}> Description </Form.Label>
           <Form.Control style={{minHeight:'5rem'}} as="textarea" id="inputDescription" onChange={handleChange} name='text' value={task.text}/>
         </Form.Group>
       </Row>
-
     </Form>
   );
 }

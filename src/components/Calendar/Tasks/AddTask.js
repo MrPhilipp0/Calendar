@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, useLocation} from 'react-router-dom';
 
 import { addTask } from '../../../actions/taskActions';
-import { NAMES_MONTH } from '../../../store/constants';
+import { NAMES_MONTH, CATEGORIES } from '../../../store/constants';
 import SimpleOverlayTriggerObject from '../../OverlayTriggers/OverlayTriggerObject';
 
 import { Form, Row, Col, Button } from 'react-bootstrap';
@@ -153,14 +153,7 @@ const AddTask = (props) => {
                 <Form.Label className="my-1 fw-bold">CATEGORY</Form.Label>
                 <Form.Select name='category' className="ps-1 pe-0" onChange={handleChange}>
                   <option value="0"></option>
-                  <option value="Shopping">Shopping</option>
-                  <option value="Working">Working</option>
-                  <option value="Food">Food</option>
-                  <option value="Free Time">Free Time</option>
-                  <option value="Sport">Sport</option>
-                  <option value="Travel">Travel</option>
-                  <option value="Holiday">Holiday</option>
-                  <option value="Other">Other</option>
+                  {CATEGORIES.map((category, index) => <option key={index} value={category}>{category}</option>)}
                 </Form.Select>
               </Form.Group>
             </Row>

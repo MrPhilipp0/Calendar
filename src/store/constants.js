@@ -30,6 +30,8 @@ const ICONS = {
   year: <i className="bi bi-calendar3 "></i>,
 };
 
+const CATEGORIES = ["Shopping", "Working", "Food", "Free Time", "Sport", "Travel", "Holiday", "Other"];
+
 const TASKS_COLORS = {
   Shopping: "rgba(155, 93, 229,1)",
   Working: "rgba(198, 92, 205,1)",
@@ -98,4 +100,4 @@ const DEFAULT_FILTER_OBJECT = {
 
 const MOBILE = document.body.clientWidth < 768 ? true : false;
 
-export {ACTUAL_DATE, ICONS, TASKS_COLORS, NAMES_MONTH, NAMES_WEEKDAY, DEFAULT_FILTER_CATEGORIES, DEFAULT_FILTER_OBJECT, MOBILE}
+export {ACTUAL_DATE, ICONS, TASKS_COLORS, NAMES_MONTH, NAMES_WEEKDAY, DEFAULT_FILTER_CATEGORIES, DEFAULT_FILTER_OBJECT, MOBILE, CATEGORIES}

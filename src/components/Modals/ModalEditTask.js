@@ -15,16 +15,21 @@ const ModalEditTask = ({
 
   const handleChange = e => {
     const prevTask = JSON.parse(JSON.stringify(editTask));
-    if (e.target.name === 'name') {
-      if (e.target.value.length < 16) {
-        prevTask[e.target.name] = e.target.value;
+    const eName = e.target.name;
+    const eValue = e.target.value;
+    if (eName === 'name') {
+      if (eValue.length < 16) {
+        prevTask[eName] = eValue;
       }
-    } else if (e.target.name === 'text') {
-      if (e.target.value.length < 80) {
-        prevTask[e.target.name] = e.target.value;
+    } else if (eName === 'text') {
+      if (eValue.length < 80) {
+        prevTask[eName] = eValue;
       }
+    } else if (eName === 'date') {
+      const newDate = eValue.split('-').reverse().join('.');
+      prevTask['idDay'] = newDate;
     } else {
-      prevTask[e.target.name] = e.target.value;
+      prevTask[eName] = eValue;
     }
     setEditTask(prevTask);
   }
@@ -47,11 +52,12 @@ const ModalEditTask = ({
 
   return (
     <Modal 
-      size="xl" 
+      size="xl"
       show={modalEdit} 
       onHide={handleModalEdit} 
       backdrop="static" 
-      keyboard={false} >
+      keyboard={false} 
+      >
 
       <Modal.Header style={{ backgroundColor:'#014F86', color:'#fff0f3' }} closeButton={false}>
         <Modal.Title><strong>Editing Task</strong></Modal.Title>
