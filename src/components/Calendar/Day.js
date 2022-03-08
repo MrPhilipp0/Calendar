@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { ACTUAL_DATE } from '../../store/constants';
+import { ACTUAL_DATE, COLORS } from '../../store/constants';
 import OverlayTriggerObject from '../OverlayTriggers/OverlayTriggerObject';
 
 
@@ -22,11 +22,11 @@ const Day = (props) => {
   // zmienna zarządzająca klasami stylów 
   let dayStyle = {
     width: '14.285714285714286%',
-    minHeight:'70px',
-    backgroundColor:'#61A5C2',
+    minHeight: '70px',
+    backgroundColor: COLORS.blue3,
   }; 
   if (actualDay === props.id) {
-    dayStyle.backgroundColor = '#014F86';
+    dayStyle.backgroundColor = COLORS.blue5;
   }
 
   // ************************************
@@ -36,7 +36,7 @@ const Day = (props) => {
       return (
         <div>
           <svg className="mb-0"viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" width="45">
-            <path fill="#f72585" d="M45.2,-51.4C58.8,-42.5,70.2,-28.4,72.9,-12.9C75.6,2.6,69.6,19.7,61.1,36C52.5,52.4,41.5,68.1,26.5,74.2C11.5,80.2,-7.6,76.7,-22.9,68.6C-38.2,60.5,-49.8,48,-59.7,33.3C-69.5,18.6,-77.5,1.8,-78,-16.9C-78.5,-35.6,-71.3,-56.1,-57.1,-64.8C-42.8,-73.6,-21.4,-70.7,-2.8,-67.3C15.8,-64,31.6,-60.3,45.2,-51.4Z" transform="translate(100 80)" />
+            <path fill={COLORS.pink4} d="M45.2,-51.4C58.8,-42.5,70.2,-28.4,72.9,-12.9C75.6,2.6,69.6,19.7,61.1,36C52.5,52.4,41.5,68.1,26.5,74.2C11.5,80.2,-7.6,76.7,-22.9,68.6C-38.2,60.5,-49.8,48,-59.7,33.3C-69.5,18.6,-77.5,1.8,-78,-16.9C-78.5,-35.6,-71.3,-56.1,-57.1,-64.8C-42.8,-73.6,-21.4,-70.7,-2.8,-67.3C15.8,-64,31.6,-60.3,45.2,-51.4Z" transform="translate(100 80)" />
             <text fontSize="450%" className="fw-bold" x="75" y="125" width="300%" height="300%" fill="black" transform="translate(0 -20)" >{tasksInThisDay.length}</text>
           </svg>
         </div>
@@ -105,7 +105,7 @@ const Day = (props) => {
       <div 
         key={props.keys} 
         className="text-center border" 
-        style={{width: '14.285714285714286%', backgroundColor:'#A9D6E5',minHeight:'70px'}}>
+        style={{width: '14.285714285714286%', backgroundColor:COLORS.blue2,minHeight:'70px'}}>
       </div>
     )
   );

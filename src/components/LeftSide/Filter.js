@@ -91,7 +91,7 @@ const Filter = ({setFilter, categories, animation}) => {
 
             {/* CATEGORIES */}
             <Col className="d-inline border-end">
-              <p className="d-flex justify-content-center">Categories</p>
+              <p className="d-flex justify-content-center"><b>Categories</b></p>
 
               {/* Categories -> Switch all categories */}
               <div className="form-check form-switch">
@@ -113,7 +113,7 @@ const Filter = ({setFilter, categories, animation}) => {
 
               {/* VERIFICATION */}
               <div>
-                <p className="d-flex justify-content-center">Verification</p>
+                <p className="d-flex justify-content-center"><b>Verification</b></p>
 
                 {/* Verification -> All */}
                 <div key={'check0'} className="form-check">
@@ -136,7 +136,7 @@ const Filter = ({setFilter, categories, animation}) => {
               
               {/* TIME */}
               <div>
-                <p className="d-flex justify-content-center"> Last / Actual tasks</p>
+                <p className="d-flex justify-content-center"> <b> Last / Actual tasks </b></p>
 
                 {/* Time -> Past */}
                 <div key={'time0'} className="form-check">

@@ -100,4 +100,27 @@ const DEFAULT_FILTER_OBJECT = {
 
 const MOBILE = document.body.clientWidth < 768 ? true : false;
 
-export {ACTUAL_DATE, ICONS, TASKS_COLORS, NAMES_MONTH, NAMES_WEEKDAY, DEFAULT_FILTER_CATEGORIES, DEFAULT_FILTER_OBJECT, MOBILE, CATEGORIES}
+const COLORS = {
+  blue1: 'rgba(224, 251, 252, 1)',
+  blue2: 'rgba(169, 214, 229, 1)',
+  blue3: 'rgba(97, 165, 194, 1)',
+  blue4: 'rgba(44, 125, 160, 1)',
+  blue5: 'rgba(1, 79, 134, 1)',
+
+  pink1: 'rgba(247, 230, 233, 1)',
+  pink2: 'rgba(247, 213, 226, 1)',
+  pink3: 'rgba(255, 179, 193, 1)',
+  pink4: 'rgba(247, 106, 171, 1)',
+
+  green1: 'rgba(194, 214, 167, 1)',
+  green2: 'rgba(122, 145, 83, 1)',
+
+  dark1: 'rgba(1, 22, 39, 1)',
+
+
+  changeOpacity: function(color, value) {
+    return color.slice(0, color.length-2) + value;
+  }
+}
+
+export {ACTUAL_DATE, ICONS, TASKS_COLORS, NAMES_MONTH, NAMES_WEEKDAY, DEFAULT_FILTER_CATEGORIES, DEFAULT_FILTER_OBJECT, MOBILE, CATEGORIES, COLORS}

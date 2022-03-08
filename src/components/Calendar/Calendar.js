@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-import { ACTUAL_DATE, ICONS, NAMES_MONTH, NAMES_WEEKDAY } from '../../store/constants';
+import { ACTUAL_DATE, COLORS, ICONS, NAMES_MONTH, NAMES_WEEKDAY } from '../../store/constants';
 import DaysList from './DaysList';
 import OverlayTriggerObject from '../OverlayTriggers/OverlayTriggerObject';
 
@@ -146,13 +146,13 @@ const Calendar = ({date, click, handleChangeDate}) => {
 
   return ( 
     <div style={{margin:'0 5px'}} className='flex-shrink-0 rounded-3 my-3 mx-md-2' id="Calendar" ref={calendarWrapper}>
-      <div className="d-flex rounded justify-content-between" style={{backgroundColor:'rgba(1, 79, 134, 0.8)'}}>
+      <div className="d-flex rounded justify-content-between" style={{backgroundColor: COLORS.changeOpacity(COLORS.dark1, .6)}}>
         <div className="d-flex">
           {/* Left arrow button */}
           <OverlayTriggerObject { ...leftArrowButton}/>
           
           {/* Year + month */}
-          <div style={{color:'#fff0f3'}}>
+          <div style={{color: 'white'}}>
             <p className="m-0 mt-1 mx-1 mx-sm-3 fs-4"> <strong> {date.year} </strong> </p>
             <p className="m-0 p-0 mx-1 mx-sm-3 fs-4 fw-light"> {NAMES_MONTH[date.month]} </p>
           </div>
@@ -178,7 +178,7 @@ const Calendar = ({date, click, handleChangeDate}) => {
 
       </div>
       
-      <div className="px-0 border border-3 border-light rounded" style={{backgroundColor:'#2C7DA0'}}>
+      <div className="px-0 border border-3 border-light rounded" style={{backgroundColor: COLORS.blue4}}>
 
         {/* Weekday names */}
         <div className="d-flex justify-content-center border-bottom" >

@@ -1,4 +1,5 @@
 import { useRef, useEffect } from 'react';
+import { COLORS } from '../../store/constants';
 import gsap from 'gsap';
 
 import Timer from './Timer';
@@ -24,7 +25,7 @@ const Header = () => {
   return (
     <div ref={headerWrapper} id="header">
       <header>
-        <nav className="navbar d-flex justify-content-between ms-2 mt-2" style={{opacity:1, color:'#e0fbfc'}}>
+        <nav className="navbar d-flex justify-content-between ms-2 mt-2" style={{opacity:1, color: COLORS.blue1}}>
           <div className="d-flex" >
             <p className="h1 fw-bolder">Schedule</p>
             {SVGIcon}

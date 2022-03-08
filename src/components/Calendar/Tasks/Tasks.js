@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 
 import { BlockFlagContext } from '../../Context/BlockFlagContext';
 import HoursList from './HoursList';
-import { NAMES_MONTH, ICONS } from "../../../store/constants";
+import { NAMES_MONTH, ICONS, COLORS } from "../../../store/constants";
 
 import gsap from 'gsap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -27,9 +27,9 @@ const Tasks = () => {
   },[location])
 
   return ( 
-    <div className="rounded-3 my-2 mx-1 mx-md-2" ref={!blockFlag ? wrapper : null}>
+    <div className="rounded-3 my-3 mx-1 mx-md-2" ref={!blockFlag ? wrapper : null}>
 
-      <div style={{ backgroundColor:'#014F86', color:'#fff0f3'}} className="d-flex rounded">
+      <div style={{ backgroundColor: COLORS.changeOpacity(COLORS.dark1, .6), color: COLORS.pink1}} className="d-flex rounded">
         <Link to={!blockFlag && '/schedule/tasks/'}> 
           <FontAwesomeIcon className="fs-1 my-3 ms-3" style={{color:'black'}} icon={ICONS.back}/>
         </Link>
