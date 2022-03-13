@@ -2,13 +2,13 @@ import { useState } from 'react';
 
 import Footer from '../components/Footer';
 import Header from '../components/Header/Header';
-import YourTasks from '../components/LeftSide/YourTasks';
 import Routing from '../components/Calendar/Routing';
 import { ACTUAL_DATE, COLORS } from '../store/constants';
 import { BlockFlagContext } from '../components/Context/BlockFlagContext';
 
 import '../styles/App.css';
 import { Col, Row, Container } from 'react-bootstrap';
+import YourTasks from '../components/LeftSide/YourTasks';
 
 const DATE = {
   day: ACTUAL_DATE.getDate(),

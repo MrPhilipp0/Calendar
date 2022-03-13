@@ -5,6 +5,7 @@ body {
   background-size: cover;
   height: 100%;
   overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 .APP {
@@ -23,11 +24,6 @@ body {
 
 .Days {
   transition: 0.5s;
-}
-
-.Days:hover {
-  cursor: pointer;
-  transform: scale(1.1);
 }
 
 .taskInHoursList:hover {
@@ -70,4 +66,8 @@ a {
 
 .startSideSVGWrapper svg {
   max-width: 90%;
+}
+
+.center_svg {
+  transform-origin: 3% 4%;
 }

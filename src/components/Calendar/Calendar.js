@@ -11,46 +11,15 @@ import '../../styles/App.css';
 
 const Calendar = ({date, click, handleChangeDate}) => {
 
-  const calendarWrapper = useRef(null);
-
-  gsap.registerEffect({
-    name: 'calendar',
-    effect: (targets, config) => {
-      return gsap.fromTo(targets, {
-        autoAlpha: 0,
-      }, {
-        autoAlpha: 1,
-        duration: config.duration,
-        stagger: config.stagger,
-      });
-    },
-    defaults : {duration: 1, stagger: .1},
-    extendTimeline: false,
-  })
-
-  const animationDays = () => {
-    const calendar = calendarWrapper.current;
-    const weeksList = [...calendar.children[1].children[1].children];
-      gsap.killTweensOf([calendar, weeksList]);
-
-      gsap.effects.calendar([...weeksList], {stagger: 0.15, duration: 1});
-  }
-
-  const animationCalendar = () => {
-    const calendar = calendarWrapper.current;
-    const weeksList = [...calendar.children[1].children[1].children];
-
-      gsap.effects.calendar(calendar);
-      gsap.effects.calendar([...weeksList], {stagger: 0.15, duration: 1});
-  }
+  let calendarWrapper = useRef(null);
 
   useEffect(() => {
-    animationDays();
+    const days = calendarWrapper.querySelectorAll('.Days');
+    const tl = gsap.timeline({autoRemoveChildren: true});
+    gsap.set([...days], {opacity: 1, scale: 1})
+
+    tl.fromTo([...days],{opacity: 0, scale: .9},{opacity: 1, scale:1,  stagger: {from: 'edges', amount: .5, grid: 'auto'}, duration: .002})
   },[date])
-
-  useEffect(() => {
-    animationCalendar();
-  },[]);
 
   const leftArrowButton = {
     id: 'left',
@@ -136,7 +105,7 @@ const Calendar = ({date, click, handleChangeDate}) => {
         {ICONS.year}
       </Dropdown.Toggle> 
 
-      <Dropdown.Menu style={{maxHeight:"10rem", overflowY:'auto'}} >
+      <Dropdown.Menu align='end' style={{maxHeight:"10rem", overflowY:'auto'}} >
         {dropdownYearOptions()}
       </Dropdown.Menu>
 
@@ -145,7 +114,7 @@ const Calendar = ({date, click, handleChangeDate}) => {
 
 
   return ( 
-    <div style={{margin:'0 5px'}} className='flex-shrink-0 rounded-3 my-3 mx-md-2' id="Calendar" ref={calendarWrapper}>
+    <div className='flex-shrink-0 rounded-3 my-3 mx-md-2' id="Calendar" ref={el => calendarWrapper = el}>
       <div className="d-flex rounded justify-content-between" style={{backgroundColor: COLORS.changeOpacity(COLORS.dark1, .6)}}>
         <div className="d-flex">
           {/* Left arrow button */}
@@ -166,7 +135,7 @@ const Calendar = ({date, click, handleChangeDate}) => {
             <OverlayTriggerObject {...currentMonthButton} />
 
             {/* Change month and year */}
-            <div className="d-flex position-relative" style={{zIndex: 0}} >
+            <div className="d-flex position-relative" >
               <OverlayTriggerObject {...changeMonthButton} />
               <OverlayTriggerObject  {...changeYearButton} />
             </div>

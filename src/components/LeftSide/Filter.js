@@ -4,7 +4,7 @@ import { Col, Dropdown, Row } from 'react-bootstrap';
 import gsap from 'gsap';
 import '../../styles/App.css';
 
-const Filter = ({setFilter, categories, animation}) => {
+const Filter = ({setFilter, categories, animationMoveFromLeft, animationMoveToLeft}) => {
 
   const [switchAllCategories, setSwitchAllCategories] = useState(true);
   const [categoryCheckboxes, setCategoryCheckboxes] = useState(categories);
@@ -13,7 +13,7 @@ const Filter = ({setFilter, categories, animation}) => {
   const [isActive, setIsActive] = useState(false); //visibility
 
   const handleIsActive = () => {
-    isActive && animation(0);
+    isActive ? animationMoveFromLeft() : animationMoveToLeft();
     setIsActive(!isActive);
   };
 
@@ -102,8 +102,8 @@ const Filter = ({setFilter, categories, animation}) => {
               {/* Categories -> Single categories */}
               {categoryCheckboxes.map((category, index) => (
                 <div key={index} className="input-group-text py-1">
-                  <input className="form-check-input mt-0 category" type="checkbox" value={category.name} checked={category.status} aria-label="Checkbox for following text input" onChange={handleCheckboxChange}/>
-                  <label>{'\xa0'} {category.name} </label>
+                  <input className="form-check-input mt-0 category" type="checkbox" id={category.name} value={category.name} checked={category.status} aria-label="Checkbox for following text input" onChange={handleCheckboxChange}/>
+                  <label htmlFor={category.name}>{'\xa0'} {category.name} </label>
                 </div>
               ))}
             </Col>

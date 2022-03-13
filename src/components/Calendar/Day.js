@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { ACTUAL_DATE, COLORS } from '../../store/constants';
 import OverlayTriggerObject from '../OverlayTriggers/OverlayTriggerObject';
 
+import '../../styles/App.css';
 
 const Day = (props) => {
   // przypisanie do zmiennej stanu magazynu z zadaniami konkretnego dnia
@@ -80,13 +81,14 @@ const Day = (props) => {
     }
   }
 
+
   const dayObject = {
     id: props.id,
     text: dayObjectText(),
     placement: overlayTriggerPlacement(),
     object: 
     <Link to={link} style={dayStyle} className="border col-success text-reset text-decoration-none Days actualDayStyle">
-      <div> 
+      <div className="Days"> 
         <p className="flex-shrink-1 fw-bold text-end me-2 mt-1 mb-0 lh-1">
           {props.number} 
         </p>
@@ -96,6 +98,8 @@ const Day = (props) => {
       </div>
     </Link>
   }
+
+  
 
   return ( 
     // jeżeli props.number === 0 to znaczy że nie istnieje taki dzień w danym miesiącu w danym miejscu

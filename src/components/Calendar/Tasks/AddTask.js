@@ -39,7 +39,7 @@ const AddTask = (props) => {
   const handleChange = e => {
     const prevTask = JSON.parse(JSON.stringify(newTask));
     if (e.target.name === 'name') {
-      if (e.target.value.length < 16) {
+      if (e.target.value.length < 21) {
         prevTask[e.target.name] = e.target.value;
       }
     } else if (e.target.name === 'text') {
