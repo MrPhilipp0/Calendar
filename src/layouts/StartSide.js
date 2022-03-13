@@ -22,8 +22,6 @@ const StartSide = () => {
     const buttons = wrapperButtons;
     // const signInBtn = buttons.getElementById('signInBtn');
     // const continueBtn = buttons.getElementById('continueBtn');
-    
-    console.log(buttons.current);
 
     const tl = gsap.timeline({defaults: {ease: 'power4.in'}, yoyo: true});
 
