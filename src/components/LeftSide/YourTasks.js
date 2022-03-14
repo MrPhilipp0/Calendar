@@ -118,7 +118,7 @@ const YourTasks = ({currentTasks, checkTask}) => {
       day.tasks = day.tasks.filter(task => (
 
         // Filtration by verification
-        (filter.verified === 'All' ? true : (filter.verified === 'Check' ? task.checked : !task.checked))
+        (filter.verified === 'All' ? true : (filter.verified === 'Check' ? task.check : !task.check))
         &&
 
         // Filtration by categories

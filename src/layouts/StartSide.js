@@ -1,10 +1,12 @@
 import React, { useEffect, useRef } from 'react';
-import { Button } from 'react-bootstrap';
 import { ReactComponent as HelloSVG } from '../SVG/hello.svg';
-import gsap from 'gsap';
-import '../styles/App.css';
+import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
+import { MOBILE } from '../store/constants';
+
+import gsap from 'gsap';
+import '../styles/App.css';
 
 const StartSide = () => {
 
@@ -46,11 +48,11 @@ const StartSide = () => {
       </div>
 
       {/* SVG */}
-      <div className="startSideSVGWrapper mt-3 my-md-0">
+      <div className="startSideSVGWrapper my-3">
         <div ref={wrapperSVG} style={{display:'flex', justifyContent:'center'}}>
-          <HelloSVG />
+          <HelloSVG className={MOBILE ? 'startSideSVGMobile' : 'startSideSVGDesktop'}/>
         </div>
-        <div ref={wrapperButtons} className="d-flex flex-column position-absolute align-items-center" style={{marginTop:'40vh'}}>
+        <div ref={wrapperButtons} className="d-flex flex-column position-absolute align-items-center" style={{top:'65%'}}>
           <Button variant="dark" size='lg' className="mb-4 p-sm-3 px-sm-5 display-5 fw-bold rounded-3 signInBtn" disabled> SIGN IN </Button>
           <Link to="tasks" className="display-5 continueBtn border border-5 border-dark rounded-3">
             <Button className="p-sm-3 px-sm-5 fw-bold" variant="light" size='lg'> CONTINUE WITHOUT LOGIN </Button>
