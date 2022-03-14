@@ -46,12 +46,12 @@ const StartSide = () => {
       </div>
 
       {/* SVG */}
-      <div className="startSideSVGWrapper my-md-3">
+      <div className="startSideSVGWrapper mt-3 my-md-0">
         <div ref={wrapperSVG} style={{display:'flex', justifyContent:'center'}}>
           <HelloSVG />
         </div>
         <div ref={wrapperButtons} className="d-flex flex-column position-absolute align-items-center" style={{marginTop:'40vh'}}>
-          <Button variant="light" size='lg' className="mb-4 p-sm-3 px-sm-5 display-5 fw-bold rounded-3 signInBtn" disabled> SIGN IN </Button>
+          <Button variant="dark" size='lg' className="mb-4 p-sm-3 px-sm-5 display-5 fw-bold rounded-3 signInBtn" disabled> SIGN IN </Button>
           <Link to="tasks" className="display-5 continueBtn border border-5 border-dark rounded-3">
             <Button className="p-sm-3 px-sm-5 fw-bold" variant="light" size='lg'> CONTINUE WITHOUT LOGIN </Button>
           </Link>

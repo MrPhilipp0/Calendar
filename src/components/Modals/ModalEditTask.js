@@ -18,7 +18,7 @@ const ModalEditTask = ({
     const eName = e.target.name;
     const eValue = e.target.value;
     if (eName === 'name') {
-      if (eValue.length < 16) {
+      if (eValue.length < 21) {
         prevTask[eName] = eValue;
       }
     } else if (eName === 'text') {

@@ -39,7 +39,7 @@ const TaskInHoursList = ({ task, deleteTask, checkTask,
           {/* Time + Name */}
           <div className="d-flex">
             <p className="ms-1 p-1 mb-0"><strong>{task.time}</strong></p>
-            <p className="h5 text-center fw-bold p-1 ms-2 mt-1 mb-0" style={{textDecoration: task.check && 'line-through'}}>{task.name}</p>
+            <div className="h5 text-start fw-bold p-1 ms-2 mt-1 mb-0" style={{textDecoration: task.check && 'line-through'}}>{task.name}</div>
           </div>
           {/* Category + Text */}
           <div className="d-flex">
@@ -49,9 +49,9 @@ const TaskInHoursList = ({ task, deleteTask, checkTask,
             <p className="text-break m-2" style={{fontSize:"13px"}}>{task.text}</p>
           </div>
         </div>
-        <div className="mt-1 mb-1 my-auto mx-1">
+        <div className="m-1 justify-content-center d-flex flex-column">
           {/* Check + Delete */}
-          <ButtonGroup vertical className="py-1">
+          <ButtonGroup vertical className="py-1 ">
             <ToggleButton
               className="shadow-none"
               id={task.id}
@@ -64,7 +64,7 @@ const TaskInHoursList = ({ task, deleteTask, checkTask,
               <FontAwesomeIcon className="fs-6" icon={task.check ? ICONS.check : ICONS.noCheck}/>
             </ToggleButton>
 
-            <Button className="px-2" onClick={handleModalDelete}>
+            <Button className="px-2 mt-1" onClick={handleModalDelete}>
               <FontAwesomeIcon className="fs-6 mt-1" icon={ICONS.delete}/>
             </Button>
           </ButtonGroup>

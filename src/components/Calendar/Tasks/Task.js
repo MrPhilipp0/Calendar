@@ -39,7 +39,7 @@ const Task = (props) => {
   }
 
   return (
-    <Col xl={6} className="mb-1 TASK" ref={taskWrapper}>
+    <Col xs='auto' className="mb-1 TASK" ref={taskWrapper}>
       <ModalEditTask 
         modalEdit={modalEdit} handleModalEdit={handleModalEdit}
         task={task}
