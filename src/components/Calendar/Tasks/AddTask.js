@@ -125,7 +125,7 @@ const AddTask = (props) => {
         {/* Header */}
         <div style={{ backgroundColor:'#014F86', color:'#fff0f3'}} className="d-flex mb-1 rounded">
           <p className="my-3 fs-3 fw-bold ms-4">ADD NEW TASK</p>
-          <p className="my-3 fs-3 fw-light ms-auto me-4"> {taskDate[0]} {NAMES_MONTH[Number(taskDate[1])]} {taskDate[2]} </p>
+          <p className="my-3 fs-3 fw-light ms-auto me-4"> {taskDate[0]} {NAMES_MONTH[Number(taskDate[1])-1]} {taskDate[2]} </p>
         </div>
 
         <div style={{ backgroundImage: 'linear-gradient(to right top, #fdc5f5, #edcbfe, #ddd2ff, #d0d7ff, #c6dbff, #bcdbff, #b2dafe, #a7dafc, #95d6fa, #81d1f7, #69cdf4, #4cc9f0)'}} className="p-1 px-2">

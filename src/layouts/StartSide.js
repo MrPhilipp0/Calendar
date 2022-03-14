@@ -19,9 +19,7 @@ const StartSide = () => {
     const days = elements.querySelectorAll('.day');
     const calendar = elements.getElementById('kalendarz');
     
-    const buttons = wrapperButtons;
-    // const signInBtn = buttons.getElementById('signInBtn');
-    // const continueBtn = buttons.getElementById('continueBtn');
+    const buttons = wrapperButtons.current.children;
 
     const tl = gsap.timeline({defaults: {ease: 'power4.in'}, yoyo: true});
 
@@ -33,7 +31,7 @@ const StartSide = () => {
       .fromTo([...checks], {y: '-=1000'}, {y:'+=1000', stagger: .1, duration: 3}, 'myLabel -=3.5')
       .to([...checks], {scale: 1.2, duration: .5}, 'myLabel +=1.2')
       .to([...checks], {scale: 1, duration: .3})
-      .fromTo([...buttons.current.children], {y: '+=1000', autoAlpha: 0}, {y: '-=1000', autoAlpha: 1, duration: .5, stagger: .001, ease:'power3.out'}, '-=1')
+      .fromTo([...buttons], {y: '100%', autoAlpha: 0}, {y: '0%', autoAlpha: 1, duration: .3, stagger: 1, ease:'power3.in'}, '-=1')
   },[])
 
 
@@ -42,13 +40,13 @@ const StartSide = () => {
 
       {/* Header */}
       <div className="py-3 mt-0 mb-auto" style={{ backgroundColor:'#014F86', color:'#fff0f3'}}>
-        <div className="col-md-4 d-flex align-items-center ms-5">
+        <div className="d-flex align-items-center ms-4 ms-md-5">
           <label className="h1 fw-bolder m-0" style={{color:'#e0fbfc'}}> Schedule </label>
         </div>
       </div>
 
       {/* SVG */}
-      <div className="startSideSVGWrapper">
+      <div className="startSideSVGWrapper my-md-3">
         <div ref={wrapperSVG} style={{display:'flex', justifyContent:'center'}}>
           <HelloSVG />
         </div>

@@ -28,7 +28,7 @@ const Calendar = ({date, click, handleChangeDate}) => {
     object:
       <Button 
         id='left'
-        className="p-0 my-2 mx-1 mx-sm-3 shadow-none"  
+        className="px-2 p-md-0 my-2 mx-2 mx-sm-3 shadow-none"  
         onClick={click}> 
         {ICONS.leftArrow} 
       </Button>
@@ -41,7 +41,7 @@ const Calendar = ({date, click, handleChangeDate}) => {
     object:
       <Button 
         id='right'
-        className="p-0 my-2 mx-1 mx-sm-3 shadow-none"  
+        className="px-2 p-md-0 my-2 mx-2 mx-sm-3 shadow-none"  
         onClick={click}> 
         {ICONS.rightArrow} 
       </Button>
@@ -121,7 +121,7 @@ const Calendar = ({date, click, handleChangeDate}) => {
           <OverlayTriggerObject { ...leftArrowButton}/>
           
           {/* Year + month */}
-          <div style={{color: 'white'}}>
+          <div className="mt-1" style={{color: 'white'}}>
             <p className="m-0 mt-1 mx-1 mx-sm-3 fs-4"> <strong> {date.year} </strong> </p>
             <p className="m-0 p-0 mx-1 mx-sm-3 fs-4 fw-light"> {NAMES_MONTH[date.month]} </p>
           </div>

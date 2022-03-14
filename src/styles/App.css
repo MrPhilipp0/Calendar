@@ -5,7 +5,6 @@ body {
   background-size: cover;
   height: 100%;
   overflow-x: hidden;
-  overflow-y: hidden;
 }
 
 .APP {
@@ -50,7 +49,7 @@ a {
   background-image: linear-gradient(to bottom, #f8f9fa, #f2f6f9, #ecf3f7, #e6f1f4, #dfeef1, #d8eef0, #d2edef, #cbeded, #c3efed, #bbf1eb, #b4f2e9, #adf4e5);
   background-repeat: no-repeat;
   background-size: cover;
-  min-height: 100vh;
+  height: 100vh;
 }
 
 .startSideSVGWrapper {
