@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { ICONS } from '../../../store/constants';
+import { ICONS, COLORS } from '../../../store/constants';
 import OverlayTriggerObject from '../../OverlayTriggers/OverlayTriggerObject';
 import Task from './Task';
 
@@ -63,7 +63,7 @@ const HoursList = (props) => {
                 placement="left"
                 object = {
                   <Link to={linkToAddTask} state={{defaultTime: hour}}>
-                    <FontAwesomeIcon className="fs-4" icon={ICONS.add}/>
+                    <FontAwesomeIcon className="fs-4" style={{color:`${COLORS.blue5}`}} icon={ICONS.add}/>
                   </Link>
                 }
               />

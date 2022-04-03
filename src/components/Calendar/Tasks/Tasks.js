@@ -7,6 +7,7 @@ import { NAMES_MONTH, ICONS, COLORS } from "../../../store/constants";
 
 import gsap from 'gsap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Button } from 'react-bootstrap';
 
 const Tasks = () => {
 
@@ -27,17 +28,19 @@ const Tasks = () => {
   },[location])
 
   return ( 
-    <div className="rounded-3 my-3 mx-1 mx-md-2" ref={!blockFlag ? wrapper : null}>
+    <div className="rounded-3 my-5 mx-1 mx-md-2 shadow" ref={!blockFlag ? wrapper : null}>
 
-      <div style={{ backgroundColor: COLORS.changeOpacity(COLORS.dark1, .6), color: COLORS.pink1}} className="d-flex rounded">
-        <Link to={!blockFlag && '/schedule/tasks/'}> 
-          <FontAwesomeIcon className="fs-1 my-3 ms-3" style={{color:'black'}} icon={ICONS.back}/>
+      <div style={{backgroundColor: COLORS.blue5, color: 'white'}} className="d-flex rounded">
+        <Link className="ms-2 fs-2" to={!blockFlag && '/schedule/tasks/'}> 
+          <Button className="mt-2" style={{borderRadius:'9px', borderColor:COLORS.blue3, background:COLORS.blue3}} >
+            <FontAwesomeIcon  style={{color:'black'}} icon={ICONS.back}/>
+          </Button>
         </Link>
-        <p className="my-3 fs-3 fw-bold ms-4">TASKS</p>
-        <p className="my-3 fs-3 fw-light ms-auto me-4"> {taskDate[0]} {NAMES_MONTH[taskDate[1] - 1]} {taskDate[2]} </p>
+        <p className="ms-3 mt-2 pt-1 fs-5">Tasks</p>
+        <p className="ms-auto me-4 mt-2 pt-1 fs-5"> {taskDate[0]} {NAMES_MONTH[taskDate[1] - 1]} {taskDate[2]} </p>
       </div>
 
-      <div style={{background:'rgba(255, 255, 255, 0.4)', maxHeight:"60vh", overflowY:'auto', overflowX: 'hidden'}} className='flex-grow-1 border border-3 border-light'>
+      <div style={{background: COLORS.changeOpacity(COLORS.white, 0.7), maxHeight:"60vh", overflowY:'auto', overflowX: 'hidden'}} className='flex-grow-1 border border-3 border-light'>
         <HoursList key={taskDate}/>
       </div>
     </div>

@@ -1,9 +1,10 @@
 body {
-  /* background-image: linear-gradient(to bottom, #f8f9fa, #f2f6f9, #ecf3f7, #e6f1f4, #dfeef1, #d8eef0, #d2edef, #cbeded, #c3efed, #bbf1eb, #b4f2e9, #adf4e5); */
+  /* background-image: linear-gradient(to bottom, #f8f9fa, #f2f6f9, #ecf3f7, #e6f1f4, #dfeef1, #d8eef0, #d2edef, #cbeded, #c3efed, #bbf1eb, #b4f2e9, #adf4e5);
   background-image: url(D:\PROGRAMOWANIE\HTML,CSS,JS\PROJECTS\calendar\src\SVG\bg.svg);
   background-repeat: no-repeat;
   background-size: cover;
-  height: 100%;
+  height: 100%; */
+  background-color: rgba(235, 243, 247, 1);
   overflow-x: hidden;
 }
 
@@ -23,6 +24,9 @@ body {
 
 .Days {
   transition: 0.5s;
+  width: 14.285714285714286%;
+  min-height: 70px;
+  color: black;
 }
 
 .taskInHoursList:hover {
@@ -46,13 +50,14 @@ a {
 
 .startSide {
   display: grid;
-  background-image: linear-gradient(to bottom, #f8f9fa, #f2f6f9, #ecf3f7, #e6f1f4, #dfeef1, #d8eef0, #d2edef, #cbeded, #c3efed, #bbf1eb, #b4f2e9, #adf4e5);
+  background-color: rgba(235, 243, 247, 1);
   background-repeat: no-repeat;
   background-size: cover;
   height: 100vh;
 }
 
 .startSideSVGWrapper {
+  background-color: white;
   display: flex;
   position: relative;
   width: 90%;
@@ -61,7 +66,6 @@ a {
   align-items: center;
   margin: 0 auto;
   border-radius: 1rem;
-  box-shadow: 3px 2px 8px black;
 }
 
 .startSideSVGDesktop {

@@ -5,9 +5,9 @@ import { BlockFlagContext } from '../Context/BlockFlagContext';
 import { checkTask } from '../../actions/taskActions';
 import Filter from './Filter';
 
-import { MOBILE, ACTUAL_DATE, ICONS, DEFAULT_FILTER_OBJECT, DEFAULT_FILTER_CATEGORIES } from '../../store/constants';
+import { MOBILE, ACTUAL_DATE, ICONS, DEFAULT_FILTER_OBJECT, DEFAULT_FILTER_CATEGORIES, COLORS } from '../../store/constants';
 
-import { Button, Container } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import gsap from 'gsap';
 
@@ -25,7 +25,7 @@ const sortingTasksFunctionByDate = (a, b) => {
   return date1 - date2
 }
 
-const sortingTasksFunctionByTime = (a, b) => {
+export const sortingTasksFunctionByTime = (a, b) => {
   let time1 = a.time.split(':');
   let time2 = b.time.split(':');
   time1 = 60 * time1[0] + time1[1];
@@ -85,8 +85,8 @@ const YourTasks = ({currentTasks, checkTask}) => {
     };
 
     const tl = gsap.timeline({autoRemoveChildren: true});
-    tl.fromTo([...elements.weekDays] , {x:'-125%', autoAlpha: .1}, {x:'0%', autoAlpha:1, stagger:.2, duration: 2, ease:'power4.out'})
-      .fromTo([...elements.tasks], {x:'-125%', autoAlpha: .1}, {x:'0%', autoAlpha:1, stagger:.1, duration: 1.5, delay:-2,  ease:'power4.out'});
+    tl.fromTo([...elements.weekDays] , {x:'-125%', autoAlpha: .1}, {x:'0%', autoAlpha:1, stagger:.1, duration: 1, ease:'power4.out'})
+      .fromTo([...elements.tasks], {x:'-125%', autoAlpha: .1}, {x:'0%', autoAlpha:1, stagger:0.005, duration: 1.5, delay:-1.8,  ease:'power4.out'});
   };
 
   const moveToLeft = (visibility = false) => {
@@ -96,8 +96,8 @@ const YourTasks = ({currentTasks, checkTask}) => {
     };
 
     const tl = gsap.timeline({autoRemoveChildren: true});
-    tl.to([...elements.weekDays] , {x:'-100%', autoAlpha:0, stagger:.2, duration: .6, ease:'power4.in'})
-      .to([...elements.tasks], {x:'-100%', autoAlpha:0, stagger:.1, duration: .5, delay: -1,  ease:'power4.in'})
+    tl.to([...elements.weekDays] , {x:'-50%', autoAlpha:0, stagger:.1, duration: .4, ease:'expo'})
+      .to([...elements.tasks], {x:'-50%', autoAlpha:0, stagger:0.005, duration: .4, delay: -1.3,  ease:'expo'})
       .then(() => visibility && setVisibilityTasksList(!visibilityTasksList));
   };
   
@@ -151,11 +151,11 @@ const YourTasks = ({currentTasks, checkTask}) => {
       <div className="d-flex justify-content-center">
 
         {/* Visibility list*/}
-        <Button onClick={handleSetVisibilityTasksList} className="my-3 p-1 px-2 me-3">
-          <FontAwesomeIcon icon={visibilityTasksList ? ICONS.showTasks : ICONS.hiddenTasks} className="p-0"/>
+        <Button onClick={handleSetVisibilityTasksList} style={{borderRadius:'9px', borderColor:COLORS.blue3, background:COLORS.blue3}} className="my-3 p-1 px-2 me-3">
+          <FontAwesomeIcon icon={visibilityTasksList ? ICONS.showTasks : ICONS.hiddenTasks} className="p-0 fs-4"/>
         </Button>
         
-        <p className="fs-2 m-0 mt-2">
+        <p className="fs-1 m-0 mt-2">
           <b>Your tasks:</b>
         </p>
       </div>
@@ -165,9 +165,9 @@ const YourTasks = ({currentTasks, checkTask}) => {
         <Filter setFilter={setFilter} categories={DEFAULT_FILTER_CATEGORIES} animationMoveFromLeft={moveFromLeft} animationMoveToLeft={moveToLeft}/>
       </div>
 
-      <Container 
+      <div 
         ref={el => dayElementWrapper = el} 
-        className="m-0 px-2 tasksList align-items-start" 
+        className="ps-0 pe-2 tasksList align-items-start" 
         style={MOBILE ? {maxHeight:"30vh", overflowY:'auto', overflowX:'hidden'} : {height:"60vh", overflowY:'auto',overflowX:'hidden'}} 
         hidden={!visibilityTasksList}>
 
@@ -182,7 +182,7 @@ const YourTasks = ({currentTasks, checkTask}) => {
             No tasks, add new task or change filter.
           </label>
         } 
-      </Container>
+      </div>
     </div>
   );
 }

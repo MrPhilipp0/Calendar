@@ -4,6 +4,9 @@ import EditingTask from '../Calendar/Tasks/TaskVariants/EditingTask';
 
 import { connect } from 'react-redux';
 import { updateTask } from '../../actions/taskActions';
+import { COLORS } from '../../store/constants';
+
+const buttonStyle = {borderRadius:'50px', borderColor:COLORS.blue2, backgroundColor:COLORS.blue2, color:COLORS.dark1};
 
 const ModalEditTask = ({ 
   task, 
@@ -11,37 +14,50 @@ const ModalEditTask = ({
   updateTaskInState}) => {
 
   const [alertName, setAlertName] = useState(false); 
+  const [alertTime, setAlertTime] = useState(false); 
+  const [alertDate, setAlertDate] = useState(false); 
   const [editTask, setEditTask] = useState(task); //state with editing task
 
   const handleChange = e => {
     const prevTask = JSON.parse(JSON.stringify(editTask));
     const eName = e.target.name;
     const eValue = e.target.value;
-    if (eName === 'name') {
-      if (eValue.length < 21) {
+
+    switch (eName) {
+      case 'name':
+        if (e.target.value.length < 31) {
+          prevTask[eName] = eValue;
+        }
+        break;
+      case 'text':
+        if (e.target.value.length < 80) {
+          prevTask[eName] = eValue;
+        }
+        break;
+      case 'date':
+        prevTask['idDay'] = eValue.split('-').reverse().join('.');
+        break;
+      case 'priority':
+        prevTask[eName] = Number(eValue);
+        break;
+      default:
         prevTask[eName] = eValue;
-      }
-    } else if (eName === 'text') {
-      if (eValue.length < 80) {
-        prevTask[eName] = eValue;
-      }
-    } else if (eName === 'date') {
-      const newDate = eValue.split('-').reverse().join('.');
-      prevTask['idDay'] = newDate;
-    } else {
-      prevTask[eName] = eValue;
+        break;
     }
     setEditTask(prevTask);
   }
 
-  // Showing AlertName
+  // Show Alerts
   useEffect(() => {
     !editTask.name.length ? setAlertName(true) : setAlertName(false);
-  },[editTask.name.length])
+    !editTask.time.length ? setAlertTime(true) : setAlertTime(false);
+    !editTask.idDay.length ? setAlertDate(true) : setAlertDate(false);
+  },[editTask.name.length, editTask.time.length, editTask.idDay.length])
 
   const saveButtonFunction = () => {
     handleModalEdit();
     updateTaskInState(editTask.id, editTask);
+    console.log(editTask);
   }
 
   const backButtonFunction = () => {
@@ -67,22 +83,23 @@ const ModalEditTask = ({
         <EditingTask task={editTask} handleChange={handleChange} />
       </Modal.Body>
 
-      <Modal.Footer style={{ backgroundColor:'#014F86', color:'#fff0f3'}} className="justify-content-between">
-        <p>
-          {alertName && 'You must write your short name task!'}
-        </p>
+      <Modal.Footer className="justify-content-between" style={{backgroundColor:COLORS.blue5}}>
+        <div className="d-flex flex-column">
+          <p> {alertName && 'You must write your short name task!'} </p>
+          <p> {alertTime && 'You must write correct time'} </p>
+          <p> {alertDate && 'You must write correct date'} </p>
+        </div>
         <div>
-
           <Button 
-            variant="light" 
-            onClick={editTask.name.length ? saveButtonFunction : undefined} 
+            style={buttonStyle}
+            onClick={(editTask.name.length && editTask.time.length && editTask.idDay.length) ? saveButtonFunction : undefined} 
             className="me-3"> 
-            <strong> Save </strong>
+            Save
           </Button>
           <Button
-            variant="light" 
+            style={buttonStyle}
             onClick={backButtonFunction}> 
-            <strong> Back </strong> 
+            Back
           </Button>
           
         </div>

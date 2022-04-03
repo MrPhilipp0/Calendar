@@ -3,10 +3,12 @@ import { ReactComponent as HelloSVG } from '../SVG/hello.svg';
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
-import { MOBILE } from '../store/constants';
+import { MOBILE, COLORS } from '../store/constants';
 
 import gsap from 'gsap';
 import '../styles/App.css';
+
+const buttonStyle = {borderRadius:'50px', borderColor:COLORS.blue5, backgroundColor:COLORS.blue5};
 
 const StartSide = () => {
 
@@ -33,7 +35,7 @@ const StartSide = () => {
       .fromTo([...checks], {y: '-=1000'}, {y:'+=1000', stagger: .1, duration: 3}, 'myLabel -=3.5')
       .to([...checks], {scale: 1.2, duration: .5}, 'myLabel +=1.2')
       .to([...checks], {scale: 1, duration: .3})
-      .fromTo([...buttons], {y: '100%', autoAlpha: 0}, {y: '0%', autoAlpha: 1, duration: .3, stagger: 1, ease:'power3.in'}, '-=1')
+      .fromTo([...buttons], {y: '100%', opacity: 0}, {y: '0%', opacity: 1, duration: .3, ease:'power3.in'}, )
   },[])
 
 
@@ -48,14 +50,14 @@ const StartSide = () => {
       </div>
 
       {/* SVG */}
-      <div className="startSideSVGWrapper my-3">
+      <div className="startSideSVGWrapper my-3 shadow-lg">
         <div ref={wrapperSVG} style={{display:'flex', justifyContent:'center'}}>
           <HelloSVG className={MOBILE ? 'startSideSVGMobile' : 'startSideSVGDesktop'}/>
         </div>
         <div ref={wrapperButtons} className="d-flex flex-column position-absolute align-items-center" style={{top:'65%'}}>
-          <Button variant="dark" size='lg' className="mb-4 p-sm-3 px-sm-5 display-5 fw-bold rounded-3 signInBtn" disabled> SIGN IN </Button>
-          <Link to="tasks" className="display-5 continueBtn border border-5 border-dark rounded-3">
-            <Button className="p-sm-3 px-sm-5 fw-bold" variant="light" size='lg'> CONTINUE WITHOUT LOGIN </Button>
+          <Button style={{color:COLORS.dark1, ...buttonStyle}} size='lg' className="mb-4 p-sm-3 px-sm-5 display-5 shadow signInBtn" disabled> Sign In </Button>
+          <Link to="tasks" className="display-5 continueBtn" style={{opacity:'0'}}>
+            <Button style={buttonStyle} className="p-sm-3 px-sm-5 shadow" size='lg'> Continue without login </Button>
           </Link>
         </div>
       </div>

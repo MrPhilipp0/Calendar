@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { connect } from 'react-redux';
 
 import { ACTUAL_DATE, COLORS, ICONS, NAMES_MONTH, NAMES_WEEKDAY } from '../../store/constants';
 import DaysList from './DaysList';
@@ -7,11 +8,21 @@ import OverlayTriggerObject from '../OverlayTriggers/OverlayTriggerObject';
 import { Button, Dropdown } from 'react-bootstrap';
 import gsap from 'gsap';
 import '../../styles/App.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+const buttonStyle = {borderRadius:'9px', borderColor:COLORS.blue3, backgroundColor:COLORS.blue3};
 
 
-const Calendar = ({date, click, handleChangeDate}) => {
+const Calendar = ({date, click, handleChangeDate, currentTasks}) => {
 
   let calendarWrapper = useRef(null);
+
+  const tasksCounterInMonth = currentTasks.filter(task => (
+    Number(task.idDay.slice(3,5)) === date.month+1
+    &&
+    Number(task.idDay.slice(6)) === date.year
+    )
+  ).length;
 
   useEffect(() => {
     const days = calendarWrapper.querySelectorAll('.Days');
@@ -28,9 +39,10 @@ const Calendar = ({date, click, handleChangeDate}) => {
     object:
       <Button 
         id='left'
-        className="px-2 p-md-0 my-2 mx-2 mx-sm-3 shadow-none"  
-        onClick={click}> 
-        {ICONS.leftArrow} 
+        className="my-2 mx-1 mx-md-2"  
+        onClick={() => click('left')}
+        style={buttonStyle}> 
+        <FontAwesomeIcon icon={ICONS.leftArrow}/>
       </Button>
   }
 
@@ -41,9 +53,10 @@ const Calendar = ({date, click, handleChangeDate}) => {
     object:
       <Button 
         id='right'
-        className="px-2 p-md-0 my-2 mx-2 mx-sm-3 shadow-none"  
-        onClick={click}> 
-        {ICONS.rightArrow} 
+        className="my-2 mx-1 me-md-2"  
+        onClick={() => click('right')}
+        style={buttonStyle}> 
+        <FontAwesomeIcon icon={ICONS.rightArrow}/>
       </Button>
   }
 
@@ -54,21 +67,22 @@ const Calendar = ({date, click, handleChangeDate}) => {
     object:
       <Button 
         id='currentMonth'
-        className="p-0 my-2 mx-1 mx-sm-3 shadow-none"  
-        onClick={click}> 
-        {ICONS.currentMonth} 
+        className="my-2"  
+        onClick={() => click('currentMonth')}
+        style={buttonStyle}> 
+        <FontAwesomeIcon icon={ICONS.currentMonth}/>
       </Button>
   }
 
   const changeMonthButton = {
     id: 'changeMonth',
     text: 'Change month',
-    placement: 'top',
+    placement: 'left',
     object:
-      <Dropdown className="p-0 my-1 mx-1">
+      <Dropdown className="my-2 mx-1">
 
-        <Dropdown.Toggle className="p-1" variant="success" id="dropdown-basic">
-          {ICONS.month}
+        <Dropdown.Toggle className="px-1" style={{borderRadius: buttonStyle.borderRadius}} variant="success" id="dropdown-basic">
+          <FontAwesomeIcon icon={ICONS.month}/>
         </Dropdown.Toggle>
 
         <Dropdown.Menu style={{maxHeight:"10rem", overflowY:'auto'}} >
@@ -97,12 +111,12 @@ const Calendar = ({date, click, handleChangeDate}) => {
   const changeYearButton = {
     id: 'changeYear',
     text: 'Change year',
-    placement: 'top',
+    placement: 'left',
     object: 
-    <Dropdown className="p-0 my-1 mx-1">
+    <Dropdown className="my-2">
 
-      <Dropdown.Toggle className="p-1" variant="success" id="dropdown-basic">
-        {ICONS.year}
+      <Dropdown.Toggle className="px-1" variant="success" style={{borderRadius: buttonStyle.borderRadius}} id="dropdown-basic">
+        <FontAwesomeIcon icon={ICONS.year}/>
       </Dropdown.Toggle> 
 
       <Dropdown.Menu align='end' style={{maxHeight:"10rem", overflowY:'auto'}} >
@@ -114,31 +128,28 @@ const Calendar = ({date, click, handleChangeDate}) => {
 
 
   return ( 
-    <div className='flex-shrink-0 rounded-3 my-3 mx-md-2' id="Calendar" ref={el => calendarWrapper = el}>
-      <div className="d-flex rounded justify-content-between" style={{backgroundColor: COLORS.changeOpacity(COLORS.dark1, .6)}}>
+    <div className='flex-shrink-0 rounded rounded-5 my-5 mx-1 mx-md-2 shadow' style={{backgroundColor: COLORS.changeOpacity(COLORS.white, 0.7)}} id="Calendar" ref={el => calendarWrapper = el}>
+      <div className="d-flex rounded justify-content-between" style={{backgroundColor: COLORS.blue5}}>
         <div className="d-flex">
           {/* Left arrow button */}
           <OverlayTriggerObject { ...leftArrowButton}/>
           
           {/* Year + month */}
           <div className="mt-1" style={{color: 'white'}}>
-            <p className="m-0 mt-1 mx-1 mx-sm-3 fs-4"> <strong> {date.year} </strong> </p>
-            <p className="m-0 p-0 mx-1 mx-sm-3 fs-4 fw-light"> {NAMES_MONTH[date.month]} </p>
+            <p className="ms-sm-3 mb-0 pt-2 fs-5">{NAMES_MONTH[date.month]} <strong> {date.year} </strong> </p>
           </div>
 
         </div>
 
         <div className="d-flex">
-          <div className="d-flex flex-column my-auto">
+          <div className="d-flex">
             
             {/* Current date */}
             <OverlayTriggerObject {...currentMonthButton} />
 
             {/* Change month and year */}
-            <div className="d-flex position-relative" >
-              <OverlayTriggerObject {...changeMonthButton} />
-              <OverlayTriggerObject  {...changeYearButton} />
-            </div>
+            <OverlayTriggerObject {...changeMonthButton} />
+            <OverlayTriggerObject  {...changeYearButton} />
 
           </div>
           {/* Right arrow button */}
@@ -147,25 +158,55 @@ const Calendar = ({date, click, handleChangeDate}) => {
 
       </div>
       
-      <div className="px-0 border border-3 border-light rounded" style={{backgroundColor: COLORS.blue4}}>
+      <div>
 
         {/* Weekday names */}
-        <div className="d-flex justify-content-center border-bottom" >
+        <div className="d-flex justify-content-center border-bottom border-2 mx-2">
           {NAMES_WEEKDAY.map((day, index) => 
             <div 
               key={index + '_weekday'} 
-              className=" text-center py-1 border-start border-end" 
-              style={{width: '14.285714285714286%'}}
+              className=" text-center py-1" 
+              style={{width: '14.285714285714286%', letterSpacing:'1px'}}
             > 
               <strong> {day} </strong>
             </div>)
           }
         </div>
 
-        <DaysList date={date}/>
+        <div className="mx-2 my-1 border-bottom border-2">
+          <DaysList date={date}/>
+        </div>
+
+        {/* Done / noDone + tasksCounter */}
+        <div className="ms-2 ms-md-4 d-flex justify-content-between">
+          <label className="d-flex">
+            <svg width="13" viewBox="0 0 10 10" className="mb-3 me-2">
+              <circle cx="5" cy="5" r="5" fill={COLORS.pink2}/>
+            </svg>
+            <p>No done</p>
+            <svg width="13" viewBox="0 0 10 10" className="ms-2 ms-md-5 mb-3 me-2">
+              <circle cx="5" cy="5" r="5" fill={COLORS.green1}/>
+            </svg>
+            <p>Done</p>
+          </label>
+          <div className="d-flex me-2 me-md-4">
+            <strong>
+              {tasksCounterInMonth}
+            </strong>
+            <p>
+              {'\xa0'} {tasksCounterInMonth === 1 ? 'task' : 'tasks'} in <b>{NAMES_MONTH[date.month]}</b>
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );
 }
+
+const mapStateToProps = state => {
+  return {
+    currentTasks: state.TasksReducer.tasks,
+  };
+} 
  
-export default Calendar;
+export default connect(mapStateToProps)(Calendar);

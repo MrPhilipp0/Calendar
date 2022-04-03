@@ -25,11 +25,10 @@ const Schedule = () => {
   const handleSetBlockFlag = value => setBlockFlag(value);
 
   // funkcje zarządzająca przyciskami na głównej stronie kalendarza (przejście w lewo, prawo, today, zmiana roku i miesiaca)
-  const handleClick = e => {
+  const handleClick = (name) => {
     let newDate = JSON.parse(JSON.stringify(date));
-    const target = e.target.id;
 
-    switch (target) {
+    switch (name) {
       case 'left':
         newDate.month--;
         break;
@@ -67,7 +66,7 @@ const Schedule = () => {
       <Container fluid>
         <Row>
           <BlockFlagContext.Provider value={{blockFlag, setBlockFlag}}>
-            <Col md={4} lg={3} xxl={3} className="p-0 px-1 ps-sm-2" style={{backgroundColor: COLORS.changeOpacity(COLORS.dark1, .85)}}>
+            <Col md={4} lg={3} xxl={3} className="p-0 px-1 ps-sm-2" style={{backgroundColor: COLORS.blue5}}>
               <Header />
               <YourTasks/>
             </Col>

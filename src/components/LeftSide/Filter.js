@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Col, Dropdown, Row } from 'react-bootstrap';
 
+import { COLORS } from '../../store/constants';
 import gsap from 'gsap';
 import '../../styles/App.css';
 
@@ -74,14 +75,14 @@ const Filter = ({setFilter, categories, animationMoveFromLeft, animationMoveToLe
 
   useEffect(() => {
     const menu = wrapper.current;
-    isActive && gsap.fromTo(menu, {opacity: 0}, {duration: .8, opacity: 1});
+    isActive && gsap.fromTo(menu, {opacity: 0}, {duration: .5, opacity: 1});
   },[isActive])
 
   return (
     <Dropdown ref={wrapper} className="d-grid static" autoClose="outside" onToggle={handleIsActive} drop={isActive ? 'up' : 'down'}  x-placement="bottom-end">
 
       {/* Button filter */}
-      <Dropdown.Toggle id="dropdown-autoclose-outside" >
+      <Dropdown.Toggle id="dropdown-autoclose-outside" style={{borderRadius:'50px', borderColor:COLORS.blue3, backgroundColor:COLORS.blue3}}>
         Filter
       </Dropdown.Toggle>
       
