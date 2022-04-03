@@ -1,24 +1,28 @@
 {
   "files": {
-    "main.css": "/schedule/static/css/main.3705d037.chunk.css",
-    "main.js": "/schedule/static/js/main.3d6eedec.chunk.js",
-    "main.js.map": "/schedule/static/js/main.3d6eedec.chunk.js.map",
-    "runtime-main.js": "/schedule/static/js/runtime-main.708b0f7d.js",
-    "runtime-main.js.map": "/schedule/static/js/runtime-main.708b0f7d.js.map",
-    "static/js/2.0a1d11cf.chunk.js": "/schedule/static/js/2.0a1d11cf.chunk.js",
-    "static/js/2.0a1d11cf.chunk.js.map": "/schedule/static/js/2.0a1d11cf.chunk.js.map",
-    "static/js/3.bc3e19b8.chunk.js": "/schedule/static/js/3.bc3e19b8.chunk.js",
-    "static/js/3.bc3e19b8.chunk.js.map": "/schedule/static/js/3.bc3e19b8.chunk.js.map",
+    "main.css": "/schedule/static/css/main.b1a23077.chunk.css",
+    "main.js": "/schedule/static/js/main.f469ee3c.chunk.js",
+    "main.js.map": "/schedule/static/js/main.f469ee3c.chunk.js.map",
+    "runtime-main.js": "/schedule/static/js/runtime-main.7117b892.js",
+    "runtime-main.js.map": "/schedule/static/js/runtime-main.7117b892.js.map",
+    "static/js/2.ed04f49f.chunk.js": "/schedule/static/js/2.ed04f49f.chunk.js",
+    "static/js/2.ed04f49f.chunk.js.map": "/schedule/static/js/2.ed04f49f.chunk.js.map",
+    "static/js/3.1f9db4e5.chunk.js": "/schedule/static/js/3.1f9db4e5.chunk.js",
+    "static/js/3.1f9db4e5.chunk.js.map": "/schedule/static/js/3.1f9db4e5.chunk.js.map",
     "index.html": "/schedule/index.html",
-    "static/css/main.3705d037.chunk.css.map": "/schedule/static/css/main.3705d037.chunk.css.map",
-    "static/js/2.0a1d11cf.chunk.js.LICENSE.txt": "/schedule/static/js/2.0a1d11cf.chunk.js.LICENSE.txt",
-    "static/media/App.css": "/schedule/static/media/bg.5c8b9a2d.svg",
-    "static/media/hello.d98a5da3.svg": "/schedule/static/media/hello.d98a5da3.svg"
+    "static/css/main.b1a23077.chunk.css.map": "/schedule/static/css/main.b1a23077.chunk.css.map",
+    "static/js/2.ed04f49f.chunk.js.LICENSE.txt": "/schedule/static/js/2.ed04f49f.chunk.js.LICENSE.txt",
+    "static/media/addTask.06963c48.svg": "/schedule/static/media/addTask.06963c48.svg",
+    "static/media/editingTask.f0fcfe7f.svg": "/schedule/static/media/editingTask.f0fcfe7f.svg",
+    "static/media/hello.d98a5da3.svg": "/schedule/static/media/hello.d98a5da3.svg",
+    "static/media/priority_1.f78b4b5c.svg": "/schedule/static/media/priority_1.f78b4b5c.svg",
+    "static/media/priority_2.984c0884.svg": "/schedule/static/media/priority_2.984c0884.svg",
+    "static/media/priority_3.44793916.svg": "/schedule/static/media/priority_3.44793916.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.708b0f7d.js",
-    "static/js/2.0a1d11cf.chunk.js",
-    "static/css/main.3705d037.chunk.css",
-    "static/js/main.3d6eedec.chunk.js"
+    "static/js/runtime-main.7117b892.js",
+    "static/js/2.ed04f49f.chunk.js",
+    "static/css/main.b1a23077.chunk.css",
+    "static/js/main.f469ee3c.chunk.js"
   ]
 }
