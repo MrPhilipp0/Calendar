@@ -11,7 +11,7 @@ const testState = [
     priority: 3,
     text: "Jajka, mleko, chleb, piwo",
     time: "12:00",
-    weekDay: "Thursday",
+    weekDay: "Sunday",
   },
   {
     category: "Food",
@@ -23,7 +23,7 @@ const testState = [
     priority: 1,
     text: "Restauracja albo zamówimy jedzenie",
     time: "22:00",
-    weekDay: "Thursday",
+    weekDay: "Sunday",
   },
   {
     category: "Free Time",
@@ -35,7 +35,7 @@ const testState = [
     priority: 2,
     text: "Iść ze znajomymi do kina na Tytanic",
     time: "20:00",
-    weekDay: "Thursday",
+    weekDay: "Sunday",
   },
   {
     category: "Shopping",
@@ -47,7 +47,7 @@ const testState = [
     priority: 1,
     text: "Masło, makaron, ryż",
     time: "10:00",
-    weekDay: "Wednesday",
+    weekDay: "Saturday",
   },
   {
     category: "Other",
@@ -59,7 +59,7 @@ const testState = [
     priority: 1,
     text: "",
     time: "06:00",
-    weekDay: "Wednesday",
+    weekDay: "Saturday",
   },
   {
     category: "Free Time",
@@ -71,7 +71,7 @@ const testState = [
     priority: 1,
     text: "Gdynia U7",
     time: "18:00",
-    weekDay: "Sunday",
+    weekDay: "Wednesday",
   },
   {
     category: "Shopping",
@@ -83,7 +83,7 @@ const testState = [
     priority: 3,
     text: "Kupić kurtkę na wiosnę",
     time: "11:00",
-    weekDay: "Saturday",
+    weekDay: "Tuesday",
   },
   {
     category: "Sport",
@@ -95,7 +95,7 @@ const testState = [
     priority: 2,
     text: "Iść przejechać się rowerem",
     time: "16:00",
-    weekDay: "Saturday",
+    weekDay: "Tuesday",
   },
   {
     category: "Free Time",
@@ -107,7 +107,7 @@ const testState = [
     priority: 1,
     text: "",
     time: "18:00",
-    weekDay: "Sunday",
+    weekDay: "Wednesday",
   },
 ];
 
