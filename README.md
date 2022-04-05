@@ -1,6 +1,6 @@
-Schedule App
-============
-[![Live Demo](https://img.shields.io/badge/demo-online-green.svg)](https://mrphilipp0.github.io/schedule/)
+# Schedule App
+
+### Click here! 👉 [![Live Demo](https://img.shields.io/badge/demo-online-green.svg)](https://mrphilipp0.github.io/schedule/)
 
 ## Spis treści
 * [Główne informacje](#główne-informacje)
@@ -11,9 +11,11 @@ Schedule App
 
 ## Główne informacje
 
-Schedule App, czyli połązcenie TODO App z kalendarzem. Umożliwia dodawanie zadań do konkretnej daty. Poza tym oczywiście możliwe jest edytowanie, czy usuwanie zadań. Wszystkie składniki aplikacji zostały wymyślone, stworzone i zapisane wyłącznie przez moją osobę.
+Schedule App, czyli połączenie TODO App z kalendarzem. Umożliwia dodawanie zadań do konkretnej daty. Poza tym oczywiście możliwe jest edytowanie, czy usuwanie zadań. Wszystkie składniki aplikacji zostały wymyślone, stworzone i zapisane wyłącznie przez moją osobę.
 
-![Kalendarz](https://imgur.com/62NP8kc.png)
+<p>
+  <img src="https://imgur.com/NoGgk76.png" alt="main_page" />
+</p>
 
 ## Technologie i biblioteki
 Przy tworzeniu projektu wykorzystane zostały między innymi:
@@ -26,11 +28,15 @@ Przy tworzeniu projektu wykorzystane zostały między innymi:
 ## Działanie aplikacji
 Możliwe jest dodawanie zadania na konkretny dzień, o danej godzinie. Każde zadanie posiada odpowiednie cechy, które sprawiają, że są dużo czytelniejsze, takie jak: kategoria, priorytet, nazwa, czy opis.
 
-![Dodawanie_zadania](https://imgur.com/20VlKWq.png)
+<p>
+   <img src="https://imgur.com/my6B66N.png" alt="add_task" />
+</p>
 
-Oczywiście zadanie możemy dowolnie edytować oraz odznaczać je przy ukończeniu. Sekcja 'Your tasks' to skrócona lista zadań, z możliwością filtrowania jej po kategoriach, czasie, czy dane zadanie jest aktywne. 
+W sekcji 'Your tasks' po lewej stronie widnieją nawsze aktualne oraz ukończone zadania. Listę możemy również filtrować i wyświetlać jedydnie zadadnia, które nas interesują. Każde istniejące zadanie możemy dowolnie edytować oraz odznaczać je przy ukończeniu.
 
-![Your_tasks](https://imgur.com/ind0U3Y.png)
+<p>
+   <img src="https://imgur.com/HuPeH52.png" alt="editing_task" />
+</p>
 
 ### Responsywność i animacje
 Za pomocą między innymi Bootstrap5 na całkiem przyzwoitym poziomie działa responsywność. Dodatkowo zastosowano nadzędzie GSAP, który urozmaica projekt, dodając animacje przejścia itp.
@@ -44,4 +50,4 @@ Projekt jest w bardzo wczesnej fazie. Mam w planach rozbudowywać go o kolejne f
 ### Plany na przyszłość:
 - Przede wszystkim podłączenie bazy danych użytkowników oraz umożliwienie zarejestrowania się, a później zalogowania w celu wyświetlania zadań tylko danego użytkownika
 - Dodanie motywów kolorystycznych (light mode, dark mode oraz inne konkretne palety kolorów)
-- Rozwinięcie aplikacji pod względem wizualnym
+- Dodanie jakiegoś API, na przykład wyświetlanie pogody na konkretny dzień
